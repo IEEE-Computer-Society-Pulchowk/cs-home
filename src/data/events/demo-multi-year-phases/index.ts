@@ -1,0 +1,88 @@
+import type { EventRecord } from "../types";
+
+export const DemoMultiYearPhases: EventRecord = {
+  slug: "demo-multi-year-phases",
+  title: "Demo: Multi-Year Event with Phases",
+  category: "Demo",
+  description:
+    "A demonstration event showing multiple years and phases, with some phases completed, some upcoming, and some dates TBD.",
+  thumbnail: "/events/demo.jpg",
+  recurrence: "annual",
+  years: {
+    "2023": {
+      title: "Demo Launch",
+      slogan: "Groundwork and planning completed.",
+      phases: [
+        {
+          phase: 1,
+          title: "Planning",
+          date: "Feb 01, 2023",
+          location: "Pulchowk Campus",
+          duration: "Morning session",
+          body: "Planning sessions and community outreach.",
+        },
+        {
+          phase: 2,
+          title: "Execution",
+          date: "Mar 15, 2023",
+          location: "Pulchowk Campus",
+          duration: "Full day",
+          body: "Main event day; hands-on activities and talks.",
+        },
+      ],
+    },
+    "2024": {
+      title: "Demo Growth",
+      slogan: "Expanded edition with workshops and competitions.",
+      phases: [
+        {
+          phase: 1,
+          title: "Registration",
+          date: "Mar 01, 2024",
+          location: "Pulchowk Campus",
+          duration: "Registration window",
+          body: "Open registration for teams and participants.",
+          registrationUrl: "#register-2024",
+        },
+        {
+          phase: 2,
+          title: "Workshops",
+          date: "Apr 10, 2024",
+          location: "Pulchowk Campus",
+          duration: "Half day",
+          body: "Pre-event workshops to skill up participants.",
+        },
+        {
+          phase: 3,
+          title: "Main Event",
+          date: "Apr 20, 2024",
+          location: "Pulchowk Campus",
+          duration: "Full day",
+          body: "The demo main day — competitions and showcases.",
+        },
+      ],
+    },
+    "2025": {
+      title: "Demo Future",
+      slogan: "Upcoming plans for the demo event.",
+      phases: [
+        {
+          phase: 1,
+          title: "Call for Proposals",
+          date: "TBD",
+          location: "TBD",
+          duration: "TBD",
+          body: "We will open a call for proposals and volunteer mentors.",
+        },
+        {
+          phase: 2,
+          title: "Execution",
+          date: "TBD",
+          location: "TBD",
+          duration: "TBD",
+          body: "Planned main event; exact schedule TBD.",
+        },
+      ],
+    },
+  },
+};
