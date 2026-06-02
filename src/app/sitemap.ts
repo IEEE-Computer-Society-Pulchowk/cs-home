@@ -2,7 +2,9 @@ import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blogs";
 import { getAllEvents } from "@/lib/events";
 
-const SITE_URL = "https://ieeepsb.org";
+export const dynamic = "force-static";
+
+const SITE_URL = "https://ieeecs.pcampus.edu.np";
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const posts = getAllPosts(["slug"]);
