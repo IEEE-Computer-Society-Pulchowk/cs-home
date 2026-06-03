@@ -24,10 +24,10 @@ const HomeHero: React.FC = () => {
                         </span>
                     </div>
                     <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight mb-6">
-                        Advancing Technology
+                        Advancing Excellence
                         <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-400">
-                            for Humanity
+                            in Computing and Technology
                         </span>
                     </h1>
                     <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
