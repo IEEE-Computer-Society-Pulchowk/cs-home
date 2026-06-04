@@ -1,5 +1,6 @@
 import React from "react";
 import SmartImage from "@/components/smart-image";
+import { getPersonProfilePath } from "@/data/people";
 
 interface PersonAvatarProps {
   src: string;
@@ -18,6 +19,8 @@ export const PersonAvatar: React.FC<PersonAvatarProps> = ({
   className = "relative w-full h-full",
   isClickable = true,
 }) => {
+  const profilePath = isClickable ? getPersonProfilePath(id) : undefined;
+
   return (
     <div className={`bg-orange-100 rounded-xl overflow-hidden flex items-center justify-center ${className}`}>
       <div className="absolute inset-0">
@@ -26,7 +29,7 @@ export const PersonAvatar: React.FC<PersonAvatarProps> = ({
           alt={alt}
           fill
           sizes={sizes}
-          href={isClickable ? `/people/${encodeURIComponent(id)}` : undefined}
+          href={profilePath}
           className="object-cover"
         />
       </div>

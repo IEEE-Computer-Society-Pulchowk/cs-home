@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
-import {
-  PEOPLE_LIST,
-  getCanonicalPersonId,
-  getPersonByLookupId,
-} from "@/data/people";
+import { PEOPLE_LIST, getPersonBySlug } from "@/data/people";
 import { getPersonTeamRoles } from "@/data/team";
 import PersonAvatar from "@/components/person-avatar";
 
 export async function generateStaticParams() {
-  return PEOPLE_LIST.map((person) => ({ id: person.id }));
+  return PEOPLE_LIST.map((person) => ({ id: person.slug }));
 }
 
 export async function generateMetadata({
@@ -20,7 +16,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const person = getPersonByLookupId(id);
+  const person = getPersonBySlug(id);
 
   if (!person) {
     return {
@@ -40,16 +36,10 @@ export default async function PersonProfilePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const person = getPersonByLookupId(id);
+  const person = getPersonBySlug(id);
 
   if (!person) {
     notFound();
-  }
-
-  const canonicalId = getCanonicalPersonId(id);
-
-  if (canonicalId && canonicalId !== id) {
-    redirect(`/people/${encodeURIComponent(canonicalId)}`);
   }
 
   const roles = getPersonTeamRoles(person.id);

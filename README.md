@@ -40,12 +40,12 @@ All user-facing content (people, teams, blogs, events, gallery items) is statica
 Individual profile records are stored centrally and shared between blogs, team committees, and lookup paths.
 
 * **File to edit:** [src/data/people.ts](file:///home/asp/Projects/cs-home/src/data/people.ts)
-* **Image Assets:** Drop portrait photos in `public/people/` (named `<person-id>.png` or `<person-id>.jpg`).
+* **Image Assets:** Drop portrait photos in `public/people/` (named `<person-slug>.png` or `<person-slug>.jpg`, lowercase slug).
 
 To add a person, append an entry to the `PEOPLE` object:
 ```typescript
 "PUL081BCT013": person("PUL081BCT013", "Abishek Parajuli", 101478591, {
-  imageUrl: "/people/PUL081BCT013.png", // Optional: Custom image path. If omitted, falls back to /people/<id>.png
+  imageUrl: "/people/abishek-parajuli.png", // Optional: Custom image path. If omitted, falls back to /people/<slug>.png
   linkedin: "https://www.linkedin.com/in/abishek-parajuli-866b89370", // Optional
   github: "https://github.com/abishekparajuli-np",                     // Optional
   instagram: "https://www.instagram.com/abishekparajuli_17",           // Optional

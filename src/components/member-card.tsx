@@ -3,6 +3,7 @@ import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { TeamMember } from "../types";
 import Link from "next/link";
 import PersonAvatar from "@/components/person-avatar";
+import { getPersonPortraitPath, getPersonProfilePath } from "@/data/people";
 
 interface MemberCardProps {
   member: TeamMember;
@@ -27,7 +28,8 @@ const getSocialIcon = (label: string) => {
 };
 
 const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
-  const fallbackImage = member.imageUrl ?? `/people/${member.id}.png`;
+  const profilePath = getPersonProfilePath(member.id);
+  const fallbackImage = member.imageUrl ?? getPersonPortraitPath(member.slug);
 
   const socialLinks = [
     member.linkedin ? { label: "LinkedIn", url: member.linkedin } : null,
@@ -50,7 +52,7 @@ const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
 
       <div className="p-5 flex flex-col items-center text-center flex-grow">
         <h3 className="font-semibold text-gray-900 text-lg leading-tight group-hover:text-ieee-cs-orange transition-colors duration-200">
-          <Link href={`/people/${encodeURIComponent(member.id)}`}>
+          <Link href={profilePath ?? "#"}>
             {member.name}
           </Link>
         </h3>

@@ -6,6 +6,9 @@ const toSlug = (name: string) =>
     .replace(/\s+/g, "-")
     .replace(/[^a-z0-9-]/g, "");
 
+export const getPersonPortraitPath = (slug: string, ext = "png") =>
+  `/people/${slug}.${ext}`;
+
 function buildPeople<
   T extends Record<
     string,
@@ -13,15 +16,19 @@ function buildPeople<
   >
 >(data: T): Record<keyof T, Person> & Record<string, Person> {
   return Object.fromEntries(
-    Object.entries(data).map(([id, { slug, imageUrl, ...rest }]) => [
-      id,
-      {
+    Object.entries(data).map(([id, { slug, imageUrl, ...rest }]) => {
+      const personSlug = slug ?? toSlug(rest.name);
+
+      return [
         id,
-        slug: slug ?? toSlug(rest.name),
-        imageUrl: imageUrl ?? `/people/${id}.png`,
-        ...rest,
-      } as Person,
-    ])
+        {
+          id,
+          slug: personSlug,
+          imageUrl: imageUrl ?? getPersonPortraitPath(personSlug),
+          ...rest,
+        } as Person,
+      ];
+    })
   ) as Record<keyof T, Person> & Record<string, Person>;
 }
 
@@ -230,7 +237,31 @@ export const PEOPLE_LIST = Object.values(PEOPLE).sort((left, right) =>
   left.name.localeCompare(right.name)
 );
 
-export const getPersonById = (personId: string): Person | undefined => PEOPLE[personId];
+const resolvePersonId = (personId: string): string | undefined => {
+  const trimmed = personId.trim();
+
+  if (!trimmed) {
+    return undefined;
+  }
+
+  if (PEOPLE[trimmed]) {
+    return trimmed;
+  }
+
+  const normalized = trimmed.toLowerCase();
+  return PEOPLE_LIST.find((person) => person.id.toLowerCase() === normalized)?.id;
+};
+
+export const getPersonById = (personId: string): Person | undefined => {
+  const canonicalId = resolvePersonId(personId);
+  return canonicalId ? PEOPLE[canonicalId] : undefined;
+};
+
+export const getPersonIdStaticParams = (): Array<{ id: string }> =>
+  PEOPLE_LIST.flatMap((person) => {
+    const ids = new Set([person.id, person.id.toLowerCase()]);
+    return Array.from(ids, (id) => ({ id }));
+  });
 
 export const getPersonBySlug = (slug: string): Person | undefined =>
   PEOPLE_LIST.find((p) => p.slug === slug);
@@ -259,8 +290,9 @@ export const getCanonicalPersonId = (lookupId: string): string | undefined => {
     return undefined;
   }
 
-  if (PEOPLE[trimmedLookup]) {
-    return trimmedLookup;
+  const byId = resolvePersonId(trimmedLookup);
+  if (byId) {
+    return byId;
   }
 
   const byMembership = getPersonByMembershipId(trimmedLookup);
@@ -278,11 +310,11 @@ export const getPersonByLookupId = (lookupId: string): Person | undefined => {
 };
 
 export const getPersonProfilePath = (lookupId: string): string | undefined => {
-  const canonicalId = getCanonicalPersonId(lookupId);
+  const person = getPersonByLookupId(lookupId);
 
-  if (!canonicalId) {
+  if (!person) {
     return undefined;
   }
 
-  return `/people/${encodeURIComponent(canonicalId)}`;
+  return `/people/${encodeURIComponent(person.slug)}`;
 };

@@ -1,5 +1,6 @@
 export interface TeamMember {
   id: string;
+  slug: string;
   name: string;
   role: string;
   imageUrl?: string;

@@ -1,23 +1,21 @@
 import { notFound, redirect } from "next/navigation";
 import {
-  PEOPLE_LIST,
-  getPersonByMembershipId,
+  getPersonById,
+  getPersonIdStaticParams,
   getPersonProfilePath,
 } from "@/data/people";
 
 export async function generateStaticParams() {
-  return PEOPLE_LIST.filter((person) => person.membership && person.membership > 100).map((person) => ({
-    id: String(person.membership),
-  }));
+  return getPersonIdStaticParams();
 }
 
-export default async function PersonMembershipIdRedirectPage({
+export default async function PersonIdRedirectPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const person = getPersonByMembershipId(id);
+  const person = getPersonById(id);
 
   if (!person) {
     notFound();

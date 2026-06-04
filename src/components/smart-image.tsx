@@ -10,6 +10,8 @@ interface SmartImageProps {
   href?: string;
   className?: string;
   fill?: boolean;
+  width?: number;
+  height?: number;
   sizes?: string;
   onClick?: (e: React.MouseEvent) => void;
   loading?: "lazy" | "eager";
@@ -18,34 +20,107 @@ interface SmartImageProps {
 
 const DEFAULT_FALLBACK = "/logo-orange.svg";
 
+type SmartImgProps = {
+  src: string;
+  alt: string;
+  className?: string;
+  style?: React.CSSProperties;
+  fill?: boolean;
+  sizes?: string;
+  width?: number;
+  height?: number;
+  loading?: "lazy" | "eager";
+  onLoad?: () => void;
+  onError?: () => void;
+  "aria-hidden"?: boolean;
+};
+
+const SmartImg = React.forwardRef<HTMLImageElement, SmartImgProps>(function SmartImg(
+  {
+    src,
+    alt,
+    className,
+    style,
+    fill,
+    sizes,
+    width,
+    height,
+    loading,
+    onLoad,
+    onError,
+    "aria-hidden": ariaHidden,
+  },
+  ref
+) {
+  const useNextImage = fill || (width !== undefined && height !== undefined);
+
+  if (useNextImage) {
+    return (
+      <Image
+        ref={ref}
+        src={src}
+        alt={alt}
+        fill={fill}
+        width={fill ? undefined : width}
+        height={fill ? undefined : height}
+        sizes={sizes}
+        className={className}
+        style={style}
+        loading={loading}
+        onLoad={onLoad}
+        onError={onError}
+        aria-hidden={ariaHidden}
+      />
+    );
+  }
+
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      ref={ref}
+      src={src}
+      alt={alt}
+      className={className}
+      style={style}
+      loading={loading}
+      onLoad={onLoad}
+      onError={onError}
+      aria-hidden={ariaHidden}
+    />
+  );
+});
+
 export default function SmartImage({
   src,
   alt,
   href,
   className,
   fill = false,
+  width,
+  height,
   sizes,
   onClick,
   loading = "lazy",
   style,
 }: SmartImageProps) {
-  // If the image is a local logo or SVG, we consider it instantly ready to prevent caching onLoad bugs
-  const isLogo = typeof src === "string" && (src === "/logo-orange.svg" || src === "/logo-white.svg" || src.endsWith(".svg"));
+  const isLogo =
+    typeof src === "string" &&
+    (src === "/logo-orange.svg" || src === "/logo-white.svg" || src.endsWith(".svg"));
 
-  // Start with fallback; flip to true only after real image confirms loaded
   const [ready, setReady] = React.useState(isLogo);
   const [failed, setFailed] = React.useState(false);
 
   const imgRef = React.useRef<HTMLImageElement>(null);
 
-  // Reset and check cached completeness when src changes or component updates
   React.useEffect(() => {
-    const nextIsLogo = typeof src === "string" && (src === "/logo-orange.svg" || src === "/logo-white.svg" || src.endsWith(".svg"));
-    
+    const nextIsLogo =
+      typeof src === "string" &&
+      (src === "/logo-orange.svg" || src === "/logo-white.svg" || src.endsWith(".svg"));
+
     if (nextIsLogo) {
       setReady(true);
       setFailed(false);
-    } else if (imgRef.current && imgRef.current.complete) {
+    } else if (imgRef.current?.complete) {
       setReady(true);
       setFailed(false);
     } else {
@@ -56,9 +131,8 @@ export default function SmartImage({
 
   const imageElement = fill ? (
     <div style={{ position: "absolute", inset: 0 }}>
-      {/* Real image: fetches in background, shown only when loaded */}
       {src && !failed && (
-        <Image
+        <SmartImg
           ref={imgRef}
           src={src}
           alt={alt || ""}
@@ -71,22 +145,23 @@ export default function SmartImage({
         />
       )}
 
-      {/* Fallback: visible until real image ready */}
       {!ready && (
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "transparent",
-        }}>
-          <Image
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "transparent",
+          }}
+        >
+          <SmartImg
             src={DEFAULT_FALLBACK}
             alt={alt || ""}
             style={{
-              width: "6rem", // w-24
-              height: "6rem", // h-24
+              width: "6rem",
+              height: "6rem",
               objectFit: "contain",
               opacity: 0.6,
             }}
@@ -97,39 +172,44 @@ export default function SmartImage({
     </div>
   ) : (
     <>
-      {/* Wrapper so fallback and real image occupy the same space */}
       <div style={{ position: "relative", display: "contents" }}>
-        {/* Real image: fetches in background, shown only when loaded */}
         {src && !failed && (
-          <Image
+          <SmartImg
             ref={imgRef}
             src={src}
             alt={alt || ""}
+            width={width}
+            height={height}
             className={className}
-            style={ready ? (style ?? {}) : { ...style, position: "absolute", opacity: 0, pointerEvents: "none", width: 0, height: 0 }}
+            style={
+              ready
+                ? (style ?? {})
+                : { ...style, position: "absolute", opacity: 0, pointerEvents: "none", width: 0, height: 0 }
+            }
             onLoad={() => setReady(true)}
             onError={() => setFailed(true)}
             loading={loading}
           />
         )}
 
-        {/* Fallback: visible until real image ready */}
         {!ready && (
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            height: "100%",
-            minHeight: "inherit",
-            backgroundColor: "transparent",
-          }}>
-            <Image
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              height: "100%",
+              minHeight: "inherit",
+              backgroundColor: "transparent",
+            }}
+          >
+            <SmartImg
               src={DEFAULT_FALLBACK}
               alt={alt || ""}
               style={{
-                width: "6rem", // w-24
-                height: "6rem", // h-24
+                width: "6rem",
+                height: "6rem",
                 objectFit: "contain",
                 opacity: 0.6,
               }}
