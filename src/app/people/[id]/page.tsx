@@ -8,7 +8,7 @@ import {
   getPersonByLookupId,
 } from "@/data/people";
 import { getPersonTeamRoles } from "@/data/team";
-import SmartImage from "@/components/smart-image";
+import PersonAvatar from "@/components/person-avatar";
 
 export async function generateStaticParams() {
   return PEOPLE_LIST.map((person) => ({ id: person.id }));
@@ -81,16 +81,14 @@ export default async function PersonProfilePage({
 
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="p-6 md:p-10 grid grid-cols-1 md:grid-cols-[220px_1fr] gap-8 items-start">
-            <div className="relative w-full max-w-[220px] aspect-square rounded-xl overflow-hidden bg-gray-50 border border-gray-100">
-              <SmartImage
-                src={imageSrc}
-                alt={person.name}
-                fill
-                sizes="(max-width: 768px) 70vw, 220px"
-                href={`/people/${encodeURIComponent(person.id)}`}
-                className="object-contain"
-              />
-            </div>
+            <PersonAvatar
+              src={imageSrc}
+              alt={person.name}
+              id={person.id}
+              sizes="(max-width: 768px) 70vw, 220px"
+              className="relative w-full max-w-[220px] aspect-square"
+              isClickable={false}
+            />
 
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">

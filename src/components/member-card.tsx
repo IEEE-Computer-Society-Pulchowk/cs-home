@@ -2,7 +2,7 @@ import React from "react";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { TeamMember } from "../types";
 import Link from "next/link";
-import SmartImage from "@/components/smart-image";
+import PersonAvatar from "@/components/person-avatar";
 
 interface MemberCardProps {
   member: TeamMember;
@@ -39,18 +39,13 @@ const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
     <div className="group relative bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:border-ieee-cs-orange/30 transition-all duration-300 flex flex-col overflow-hidden h-full">
       {/* Image / Placeholder */}
       <div className="p-4 pb-0">
-        <div className="relative w-full h-64 sm:h-72 bg-orange-100 rounded-xl overflow-hidden flex items-center justify-center">
-          <div className="absolute inset-0">
-            <SmartImage
-              src={fallbackImage}
-              alt={member.name}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              href={`/people/${encodeURIComponent(member.id)}`}
-              className="object-cover"
-            />
-          </div>
-        </div>
+        <PersonAvatar
+          src={fallbackImage}
+          alt={member.name}
+          id={member.id}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="relative w-full h-64 sm:h-72"
+        />
       </div>
 
       <div className="p-5 flex flex-col items-center text-center flex-grow">

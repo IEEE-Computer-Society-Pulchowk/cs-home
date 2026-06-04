@@ -81,7 +81,7 @@ export default function SmartImage({
           justifyContent: "center",
           backgroundColor: "transparent",
         }}>
-          <img
+          <Image
             src={DEFAULT_FALLBACK}
             alt={alt || ""}
             style={{
@@ -101,7 +101,7 @@ export default function SmartImage({
       <div style={{ position: "relative", display: "contents" }}>
         {/* Real image: fetches in background, shown only when loaded */}
         {src && !failed && (
-          <img
+          <Image
             ref={imgRef}
             src={src}
             alt={alt || ""}
@@ -124,7 +124,7 @@ export default function SmartImage({
             minHeight: "inherit",
             backgroundColor: "transparent",
           }}>
-            <img
+            <Image
               src={DEFAULT_FALLBACK}
               alt={alt || ""}
               style={{
