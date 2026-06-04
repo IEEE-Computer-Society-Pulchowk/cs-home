@@ -100,7 +100,7 @@ export const PEOPLE: Record<string, Person> = {
   "Pratik-Singh-Thapa": person("Pratik-Singh-Thapa", "Pratik Singh Thapa", 0, {}),
   "Tangsep-Chongbang": person("Tangsep-Chongbang", "Tangsep Chongbang", 0, {}),
   "Utsab-Raj-Bhattarai": person("Utsab-Raj-Bhattarai", "Utsab Raj Bhattarai", 0, {}),
-  "Janak-bhatta": person("Janak-bhatta", "Janak bhatta", 0, {}),
+  "Janak-Bhatta": person("Janak-Bhatta", "Janak Bhatta", 0, {}),
   "Snigdh-Karki": person("Snigdh-Karki", "Snigdh Karki", 0, {}),
   "Shreyam-Regmi": person("Shreyam-Regmi", "Shreyam Regmi", 0, {}),
   "Sunit-Shrestha": person("Sunit-Shrestha", "Sunit Shrestha", 0, {}),
