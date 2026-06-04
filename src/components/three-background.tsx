@@ -20,11 +20,19 @@ const ParticleField = () => {
     const color1 = new THREE.Color("#D97706"); // IEEE Blue
     const color2 = new THREE.Color("#F59E0B"); // Cyan/Teal
 
+    // Seeded random number generator (Linear Congruential Generator)
+    // to ensure render purity and stability.
+    let seed = 12345;
+    const random = () => {
+      seed = (seed * 9301 + 49297) % 233280;
+      return seed / 233280;
+    };
+
     for (let i = 0; i < count; i++) {
       // Create a spread that covers the screen but has depth
-      const x = (Math.random() - 0.5) * 25; // Wide spread
-      const y = (Math.random() - 0.5) * 15; // Vertical spread
-      const z = (Math.random() - 0.5) * 10; // Depth
+      const x = (random() - 0.5) * 25; // Wide spread
+      const y = (random() - 0.5) * 15; // Vertical spread
+      const z = (random() - 0.5) * 10; // Depth
 
       positions[i * 3] = x;
       positions[i * 3 + 1] = y;
@@ -35,7 +43,7 @@ const ParticleField = () => {
       initialPositions[i * 3 + 2] = z;
 
       // Colors
-      const mixedColor = color1.clone().lerp(color2, Math.random());
+      const mixedColor = color1.clone().lerp(color2, random());
       colors[i * 3] = mixedColor.r;
       colors[i * 3 + 1] = mixedColor.g;
       colors[i * 3 + 2] = mixedColor.b;
@@ -71,7 +79,7 @@ const ParticleField = () => {
 
       let x = ix + dx;
       let y = iy + dy;
-      let z = iz;
+      const z = iz;
 
       // Mouse interaction: Repulsion
       const distDx = x - mouseX;
@@ -137,7 +145,10 @@ const ThreeBackground: React.FC<{ className?: string }> = ({ className }) => {
   const [mounted, setMounted] = React.useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const handle = requestAnimationFrame(() => {
+      setMounted(true);
+    });
+    return () => cancelAnimationFrame(handle);
   }, []);
 
   if (!mounted) {

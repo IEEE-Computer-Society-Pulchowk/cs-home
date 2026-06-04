@@ -11,7 +11,7 @@ import {
 import ReactMarkdown from "react-markdown";
 import { transformPersonMentions } from "@/lib/mentions";
 import SmartImage from "@/components/smart-image";
-import { getPersonById, getPersonImageSource } from "@/data/people";
+import { getPersonById } from "@/data/people";
 
 export async function generateMetadata({
     params,
@@ -83,9 +83,7 @@ export default async function BlogPostPage({
     }
 
     const authorPerson = postData.authorId ? getPersonById(postData.authorId) : undefined;
-    const authorImage = getPersonImageSource(
-        authorPerson || { id: postData.authorId || "default" }
-    );
+    const authorImage = authorPerson?.imageUrl ?? `/people/${postData.authorId || "default"}.png`;
 
     // Fetch related posts for sidebar/bottom
     const allPosts = getAllPosts(["slug", "title", "category", "excerpt"]);

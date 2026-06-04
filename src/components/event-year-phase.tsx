@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { transformPersonMentions } from "@/lib/mentions";
 
@@ -33,18 +33,19 @@ export default function EventYearPhase({
   const entries = useMemo(() => Object.entries(years || {}), [years]);
   const now = useMemo(() => new Date(), []);
 
-  function parseDate(d?: string) {
-    if (!d) return NaN;
-    if (d.trim().toUpperCase() === "TBD") return NaN;
-    const parsed = Date.parse(d);
-    return Number.isFinite(parsed) ? parsed : NaN;
-  }
 
-  const [selectedYear, setSelectedYear] = useState<string | null>(null);
-  const [selectedPhaseIndex, setSelectedPhaseIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (entries.length === 0) return;
+  const initialSelection = useMemo(() => {
+    if (entries.length === 0) return { year: null, phaseIndex: null };
+
+    const parseDate = (d?: string) => {
+      if (!d) return NaN;
+      if (d.trim().toUpperCase() === "TBD") return NaN;
+      const parsed = Date.parse(d);
+      return Number.isFinite(parsed) ? parsed : NaN;
+    };
+
+    const nowTime = now.getTime();
 
     const conductedPhases = entries.flatMap(([year, details]) =>
       (details?.phases || [])
@@ -54,17 +55,14 @@ export default function EventYearPhase({
           phaseIndex,
           timestamp: parseDate(phase?.date),
         }))
-        .filter(({ timestamp }) => !Number.isNaN(timestamp) && timestamp <= now.getTime())
+        .filter(({ timestamp }) => !Number.isNaN(timestamp) && timestamp <= nowTime)
     );
 
     if (conductedPhases.length > 0) {
       const latestConducted = conductedPhases.reduce((latest, current) =>
         current.timestamp > latest.timestamp ? current : latest
       );
-
-      setSelectedYear(latestConducted.year);
-      setSelectedPhaseIndex(latestConducted.phaseIndex);
-      return;
+      return { year: latestConducted.year, phaseIndex: latestConducted.phaseIndex };
     }
 
     const upcomingPhases = entries.flatMap(([year, details]) =>
@@ -82,10 +80,7 @@ export default function EventYearPhase({
       const earliestUpcoming = upcomingPhases.reduce((earliest, current) =>
         current.timestamp < earliest.timestamp ? current : earliest
       );
-
-      setSelectedYear(earliestUpcoming.year);
-      setSelectedPhaseIndex(earliestUpcoming.phaseIndex);
-      return;
+      return { year: earliestUpcoming.year, phaseIndex: earliestUpcoming.phaseIndex };
     }
 
     const numericYears = entries
@@ -94,16 +89,19 @@ export default function EventYearPhase({
 
     if (numericYears.length) {
       const latest = numericYears.reduce((a, b) => (a.n > b.n ? a : b));
-      setSelectedYear(latest.y);
       const details = years[latest.y];
-      setSelectedPhaseIndex(details?.phases?.length ? 0 : null);
-      return;
+      return { year: latest.y, phaseIndex: details?.phases?.length ? 0 : null };
     }
 
     const last = entries[entries.length - 1];
-    setSelectedYear(last[0]);
-    setSelectedPhaseIndex(last[1]?.phases?.length ? 0 : null);
+    return { year: last[0], phaseIndex: last[1]?.phases?.length ? 0 : null };
   }, [entries, years, now]);
+
+  const [userSelectedYear, setSelectedYear] = useState<string | null>(null);
+  const [userSelectedPhaseIndex, setSelectedPhaseIndex] = useState<number | null>(null);
+
+  const selectedYear = userSelectedYear && years[userSelectedYear] ? userSelectedYear : initialSelection.year;
+  const selectedPhaseIndex = userSelectedYear && years[userSelectedYear] ? userSelectedPhaseIndex : initialSelection.phaseIndex;
 
   if (entries.length === 0) return null;
 

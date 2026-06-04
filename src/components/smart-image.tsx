@@ -38,17 +38,19 @@ export default function SmartImage({
 
   const imgRef = React.useRef<HTMLImageElement>(null);
 
-  // Reset when src changes
+  // Reset and check cached completeness when src changes or component updates
   React.useEffect(() => {
     const nextIsLogo = typeof src === "string" && (src === "/logo-orange.svg" || src === "/logo-white.svg" || src.endsWith(".svg"));
-    setReady(nextIsLogo);
-    setFailed(false);
-  }, [src]);
-
-  // Check if standard image is already loaded from cache when mounted
-  React.useEffect(() => {
-    if (imgRef.current && imgRef.current.complete) {
+    
+    if (nextIsLogo) {
       setReady(true);
+      setFailed(false);
+    } else if (imgRef.current && imgRef.current.complete) {
+      setReady(true);
+      setFailed(false);
+    } else {
+      setReady(false);
+      setFailed(false);
     }
   }, [src]);
 
@@ -57,6 +59,7 @@ export default function SmartImage({
       {/* Real image: fetches in background, shown only when loaded */}
       {src && !failed && (
         <Image
+          ref={imgRef}
           src={src}
           alt={alt || ""}
           fill

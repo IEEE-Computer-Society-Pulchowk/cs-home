@@ -13,9 +13,11 @@ const Navbar: React.FC = () => {
   const pathname = usePathname();
 
   // Close mobile menu on route change
-  useEffect(() => {
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setIsOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,12 +34,10 @@ const Navbar: React.FC = () => {
   }`;
 
   const textClass = scrolled || isOpen ? "text-gray-800" : "text-white";
-  const logoClass = scrolled || isOpen ? "text-ieee-cs-orange" : "text-white";
 
   // Force dark text on non-home pages if not scrolled, as they might have light backgrounds
   const isHome = pathname === "/";
   const finalTextClass = !isHome && !scrolled ? "text-gray-800" : textClass;
-  const finalLogoClass = !isHome && !scrolled ? "text-ieee-cs-orange" : logoClass;
   const finalNavClass =
     !isHome && !scrolled
       ? "fixed w-full z-50 bg-white border-b border-gray-100 py-4 transition-all duration-300"

@@ -16,8 +16,9 @@ export interface Committee {
 export interface Person {
   id: string;
   name: string;
-  membership: number;
-  imageUrl?: string;
+  slug: string;        // human-readable, URL-safe, unique e.g. "tejaswi-acharya"
+  membership?: number;
+  imageUrl: string;
   linkedin?: string;
   github?: string;
   instagram?: string;

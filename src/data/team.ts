@@ -60,7 +60,7 @@ export const TEAM_YEARS: TeamYear[] = [
         member("Tangsep-Chongbang", "Executive Member", 20),
         member("PUL082BCT064", "Executive Member", 30),
         member("Utsab-Raj-Bhattarai", "Executive Member", 40),
-        member("Janak-bhatta", "Video editing Executive Member", 50),
+        member("Janak-Bhatta", "Video editing Executive Member", 50),
       ]),
       committee("research-development", "R&D Committee", 60, [
         member("Snigdh-Karki", "Coordinator", 10),
@@ -98,7 +98,7 @@ export const TEAM_YEARS: TeamYear[] = [
         member("PUL081BEI044", "Executive Member", 80),
         member("Aditya-Shah", "Executive Member", 90),
         member("Prabesh-Bastola", "Executive Member", 100),
-        member("Janak-bhatta", "Executive Member", 110),
+        member("Janak-Bhatta", "Executive Member", 110),
         member("PUL080BCT092", "Executive Member", 120),
         member("Ishan-Gautam", "Executive Member", 130),
         member("Pratyush-Adhikary", "Executive Member", 140),
@@ -202,7 +202,12 @@ export const getPersonTeamRoles = (personId: string): PersonTeamRole[] =>
 
       return left.memberSort - right.memberSort;
     })
-    .map(({ committeeSort, memberSort, ...role }) => role);
+    .map(({ year, role, committeeId, committeeTitle }) => ({
+      year,
+      role,
+      committeeId,
+      committeeTitle,
+    }));
 
 export const getPersonPrimaryTeamRole = (
   personId: string

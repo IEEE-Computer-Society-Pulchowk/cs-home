@@ -1,8 +1,6 @@
 import React from "react";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { TeamMember } from "../types";
-import Image from "next/image";
-import { getPersonImageSource } from "@/data/people";
 import Link from "next/link";
 import SmartImage from "@/components/smart-image";
 
@@ -29,7 +27,7 @@ const getSocialIcon = (label: string) => {
 };
 
 const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
-  const fallbackImage = getPersonImageSource(member);
+  const fallbackImage = member.imageUrl ?? `/people/${member.id}.png`;
 
   const socialLinks = [
     member.linkedin ? { label: "LinkedIn", url: member.linkedin } : null,
@@ -40,16 +38,18 @@ const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
   return (
     <div className="group relative bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:border-ieee-cs-orange/30 transition-all duration-300 flex flex-col overflow-hidden h-full">
       {/* Image / Placeholder */}
-      <div className="relative w-full h-64 sm:h-72 bg-gray-50 overflow-hidden flex items-center justify-center">
-        <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-110">
-          <SmartImage
-            src={fallbackImage}
-            alt={member.name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            href={`/people/${encodeURIComponent(member.id)}`}
-            className="object-contain"
-          />
+      <div className="p-4 pb-0">
+        <div className="relative w-full h-64 sm:h-72 bg-orange-100 rounded-xl overflow-hidden flex items-center justify-center">
+          <div className="absolute inset-0">
+            <SmartImage
+              src={fallbackImage}
+              alt={member.name}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              href={`/people/${encodeURIComponent(member.id)}`}
+              className="object-cover"
+            />
+          </div>
         </div>
       </div>
 

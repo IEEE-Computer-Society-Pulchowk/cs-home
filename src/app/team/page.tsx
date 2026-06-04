@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { TEAM_PAGE_CONTENT } from "@/data/content";
 import { SORTED_TEAM_YEARS, resolveTeamYear } from "@/data/team";
 import MemberCard from "@/components/member-card";
@@ -28,9 +29,35 @@ const splitIntoBalancedRows = <T,>(items: T[], maxPerRow: number) => {
     return rows;
 };
 
-const Team: React.FC = () => {
+const TeamContent: React.FC = () => {
     const years = SORTED_TEAM_YEARS;
-    const [selectedYear, setSelectedYear] = useState(years[0]?.year ?? "");
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const queryYear = searchParams.get("year");
+    const initialYear = queryYear && years.some((y) => y.year === queryYear)
+        ? queryYear
+        : (years[0]?.year ?? "");
+
+    const [selectedYear, setSelectedYear] = useState(initialYear);
+
+    // Sync selectedYear state when URL parameter changes (e.g. browser back/forward buttons)
+    const [prevQueryYear, setPrevQueryYear] = useState(queryYear);
+    if (queryYear !== prevQueryYear) {
+        setPrevQueryYear(queryYear);
+        if (queryYear && years.some((y) => y.year === queryYear)) {
+            setSelectedYear(queryYear);
+        }
+    }
+
+    const handleYearChange = (year: string) => {
+        setSelectedYear(year);
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("year", year);
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    };
+
     const currentYear =
         years.find((entry) => entry.year === selectedYear) ?? years[0];
     const currentData = currentYear ? resolveTeamYear(currentYear) : null;
@@ -61,7 +88,7 @@ const Team: React.FC = () => {
                             {years.map((year) => (
                                 <button
                                     key={year.year}
-                                    onClick={() => setSelectedYear(year.year)}
+                                    onClick={() => handleYearChange(year.year)}
                                     className={`px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
                                         selectedYear === year.year
                                             ? "bg-ieee-cs-orange text-white shadow-md"
@@ -149,6 +176,20 @@ const Team: React.FC = () => {
                 </AnimatePresence>
             </div>
         </div>
+    );
+};
+
+const Team: React.FC = () => {
+    return (
+        <Suspense fallback={
+            <div className="pt-24 pb-20 min-h-screen bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <p className="text-gray-500">Loading team roster...</p>
+                </div>
+            </div>
+        }>
+            <TeamContent />
+        </Suspense>
     );
 };
 

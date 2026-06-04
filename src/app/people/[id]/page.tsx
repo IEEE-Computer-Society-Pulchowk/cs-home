@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
@@ -7,7 +6,6 @@ import {
   PEOPLE_LIST,
   getCanonicalPersonId,
   getPersonByLookupId,
-  getPersonImageSource,
 } from "@/data/people";
 import { getPersonTeamRoles } from "@/data/team";
 import SmartImage from "@/components/smart-image";
@@ -55,7 +53,7 @@ export default async function PersonProfilePage({
   }
 
   const roles = getPersonTeamRoles(person.id);
-  const imageSrc = getPersonImageSource(person);
+  const imageSrc = person.imageUrl;
 
   const socials = [
     person.linkedin
@@ -100,7 +98,7 @@ export default async function PersonProfilePage({
               </h1>
               <p className="text-sm text-gray-500 mb-4">ID: {person.id}</p>
 
-              {person.membership > 100 && (
+              {person.membership && person.membership > 100 && (
                 <p className="text-sm text-gray-600 mb-2">
                   Membership ID: {person.membership}
                 </p>

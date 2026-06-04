@@ -6,7 +6,7 @@ import {
 } from "@/data/people";
 
 export async function generateStaticParams() {
-  return PEOPLE_LIST.filter((person) => person.membership > 100).map((person) => ({
+  return PEOPLE_LIST.filter((person) => person.membership && person.membership > 100).map((person) => ({
     id: String(person.membership),
   }));
 }
