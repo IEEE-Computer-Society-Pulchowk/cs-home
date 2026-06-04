@@ -3,10 +3,14 @@ import type { EventCategory } from "@/types";
 export interface EventPhase {
   phase?: string | number;
   title: string;
-  date?: string;
+  startDate?: string;
+  endDate?: string;
+  startTime?: string;
+  endTime?: string;
   location?: string;
   duration?: string;
-  body: string;
+  body?: string;
+  bodyFile?: string;
   registrationUrl?: string;
   isUpcoming?: boolean;
   sort?: number;

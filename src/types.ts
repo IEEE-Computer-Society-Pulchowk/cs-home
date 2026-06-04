@@ -17,7 +17,7 @@ export interface Committee {
 export interface Person {
   id: string;
   name: string;
-  slug: string;        // human-readable, URL-safe, unique e.g. "tejaswi-acharya"
+  slug: string; // human-readable, URL-safe, unique e.g. "tejaswi-acharya"
   membership?: number;
   imageUrl: string;
   linkedin?: string;
@@ -54,11 +54,17 @@ export enum EventCategory {
 export interface EventPhase {
   phase?: string | number;
   title: string;
+  startDate?: string;
+  endDate?: string;
+  startTime?: string;
+  endTime?: string;
   date?: string;
   location?: string;
   duration?: string;
-  body: string;
+  body?: string;
+  bodyFile?: string;
   registrationUrl?: string;
+  isUpcoming?: boolean;
   sort?: number;
 }
 

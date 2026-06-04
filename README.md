@@ -136,15 +136,20 @@ export const MyNewEvent: EventRecord = {
         {
           phase: 1,
           title: "Introduction to Neural Networks",
-          date: "June 15, 2026",
+          startDate: "June 15, 2026",
+          endDate: "#", // Use "#" when the phase ends on the same date
+          startTime: "3:00 PM",
+          endTime: "5:00 PM",
           location: "Seminar Hall, Pulchowk Campus",
-          body: "Learn the fundamentals of deep neural nets.",
+          bodyFile: "./body.md", // Optional: keep long markdown outside the TS file
         }
       ]
     }
   }
 };
 ```
+
+If you prefer, you can still keep short phase content inline in `body`, but for longer content `bodyFile` is cleaner and easier to maintain.
 3. Register the event in [src/data/events/index.ts](file:///home/asp/Projects/cs-home/src/data/events/index.ts):
 ```typescript
 import { IEEEXtreme } from "./ieeextreme";

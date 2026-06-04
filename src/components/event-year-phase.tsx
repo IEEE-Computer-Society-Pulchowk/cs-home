@@ -3,14 +3,20 @@
 import React, { useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { transformPersonMentions } from "@/lib/mentions";
+import { FaCalendar, FaClock, FaMapMarker, FaRulerHorizontal } from "react-icons/fa";
 
 type Phase = {
   phase?: number | string;
   title?: string;
+  startDate?: string;
+  endDate?: string;
+  startTime?: string;
+  endTime?: string;
   date?: string;
   location?: string;
   duration?: string;
-  body: string;
+  body?: string;
+  bodyFile?: string;
   registrationUrl?: string;
   isUpcoming?: boolean;
 };
@@ -33,17 +39,55 @@ export default function EventYearPhase({
   const entries = useMemo(() => Object.entries(years || {}), [years]);
   const now = useMemo(() => new Date(), []);
 
+  const parseDate = (d?: string) => {
+    if (!d) return NaN;
+    if (d.trim().toUpperCase() === "TBD") return NaN;
+    const parsed = Date.parse(d);
+    return Number.isFinite(parsed) ? parsed : NaN;
+  };
 
+  const getPhaseStartDate = (phase?: Phase) => phase?.startDate;
+
+  const getPhaseDateRange = (phase?: Phase) => {
+    const startDate = phase?.startDate;
+    const endDate = phase?.endDate;
+
+    if (!startDate && !endDate) {
+      return `TBD`;
+    }
+
+    if (!startDate && endDate ) {
+      return endDate;
+    }
+
+    if (!endDate || endDate === startDate) {
+      return startDate;
+    }
+
+    return `${startDate} - ${endDate}`;
+  };
+
+  const getPhaseTimeRange = (phase?: Phase) => {
+    const startTime = phase?.startTime;
+    const endTime = phase?.endTime;
+
+    if (!startTime && !endTime) {
+      return undefined;
+    }
+
+    if (!startTime) {
+      return endTime;
+    }
+
+    if (!endTime || endTime === startTime) {
+      return startTime;
+    }
+
+    return `${startTime} - ${endTime}`;
+  };
 
   const initialSelection = useMemo(() => {
     if (entries.length === 0) return { year: null, phaseIndex: null };
-
-    const parseDate = (d?: string) => {
-      if (!d) return NaN;
-      if (d.trim().toUpperCase() === "TBD") return NaN;
-      const parsed = Date.parse(d);
-      return Number.isFinite(parsed) ? parsed : NaN;
-    };
 
     const nowTime = now.getTime();
 
@@ -53,16 +97,21 @@ export default function EventYearPhase({
           year,
           phase,
           phaseIndex,
-          timestamp: parseDate(phase?.date),
+          timestamp: parseDate(getPhaseStartDate(phase)),
         }))
-        .filter(({ timestamp }) => !Number.isNaN(timestamp) && timestamp <= nowTime)
+        .filter(
+          ({ timestamp }) => !Number.isNaN(timestamp) && timestamp <= nowTime,
+        ),
     );
 
     if (conductedPhases.length > 0) {
       const latestConducted = conductedPhases.reduce((latest, current) =>
-        current.timestamp > latest.timestamp ? current : latest
+        current.timestamp > latest.timestamp ? current : latest,
       );
-      return { year: latestConducted.year, phaseIndex: latestConducted.phaseIndex };
+      return {
+        year: latestConducted.year,
+        phaseIndex: latestConducted.phaseIndex,
+      };
     }
 
     const upcomingPhases = entries.flatMap(([year, details]) =>
@@ -71,16 +120,19 @@ export default function EventYearPhase({
           year,
           phase,
           phaseIndex,
-          timestamp: parseDate(phase?.date),
+          timestamp: parseDate(getPhaseStartDate(phase)),
         }))
-        .filter(({ timestamp }) => !Number.isNaN(timestamp))
+        .filter(({ timestamp }) => !Number.isNaN(timestamp)),
     );
 
     if (upcomingPhases.length > 0) {
       const earliestUpcoming = upcomingPhases.reduce((earliest, current) =>
-        current.timestamp < earliest.timestamp ? current : earliest
+        current.timestamp < earliest.timestamp ? current : earliest,
       );
-      return { year: earliestUpcoming.year, phaseIndex: earliestUpcoming.phaseIndex };
+      return {
+        year: earliestUpcoming.year,
+        phaseIndex: earliestUpcoming.phaseIndex,
+      };
     }
 
     const numericYears = entries
@@ -98,14 +150,24 @@ export default function EventYearPhase({
   }, [entries, years, now]);
 
   const [userSelectedYear, setSelectedYear] = useState<string | null>(null);
-  const [userSelectedPhaseIndex, setSelectedPhaseIndex] = useState<number | null>(null);
+  const [userSelectedPhaseIndex, setSelectedPhaseIndex] = useState<
+    number | null
+  >(null);
 
-  const selectedYear = userSelectedYear && years[userSelectedYear] ? userSelectedYear : initialSelection.year;
-  const selectedPhaseIndex = userSelectedYear && years[userSelectedYear] ? userSelectedPhaseIndex : initialSelection.phaseIndex;
+  const selectedYear =
+    userSelectedYear && years[userSelectedYear]
+      ? userSelectedYear
+      : initialSelection.year;
+  const selectedPhaseIndex =
+    userSelectedYear && years[userSelectedYear]
+      ? userSelectedPhaseIndex
+      : initialSelection.phaseIndex;
 
   if (entries.length === 0) return null;
 
-  const selectedDetails = selectedYear ? (years[selectedYear] as YearDetails) : null;
+  const selectedDetails = selectedYear
+    ? (years[selectedYear] as YearDetails)
+    : null;
   const phases = selectedDetails?.phases || [];
 
   const currentRegistration = () => {
@@ -134,8 +196,19 @@ export default function EventYearPhase({
           ))}
         </div>
       )}
-
       {selectedDetails && phases.length > 1 && (
+        <>
+        {selectedDetails.title && (
+          <h3 className="text-xl font-bold text-gray-900 mb-2">
+            {selectedDetails.title}
+          </h3>
+        )}
+
+        {selectedDetails.slogan && (
+          <p className="text-sm text-amber-700 font-medium mb-3">
+            {selectedDetails.slogan}
+          </p>
+        )}
         <div className="flex gap-3 flex-wrap mb-6">
           {phases.map((ph, idx) => (
             <button
@@ -146,7 +219,7 @@ export default function EventYearPhase({
               {ph.title ?? `Phase ${ph.phase ?? idx + 1}`}
             </button>
           ))}
-        </div>
+        </div></>
       )}
 
       <div className="rounded-xl border border-gray-100 bg-gray-50 p-6">
@@ -154,35 +227,58 @@ export default function EventYearPhase({
           <div className="flex-1">
             {selectedPhaseIndex != null && phases[selectedPhaseIndex] ? (
               <div>
-                <h4 className="text-lg font-bold text-gray-900 mb-2">{phases[selectedPhaseIndex].title}</h4>
-                {selectedDetails && selectedDetails.slogan && (
-                  <p className="text-sm text-amber-700 font-medium mb-3">{selectedDetails.slogan}</p>
-                )}
+                <h4 className="text-lg font-bold text-gray-900 mb-2">
+                  {phases[selectedPhaseIndex].title}
+                </h4>
                 <div className="flex flex-wrap gap-3 text-xs text-gray-500 mb-3">
-                  {phases[selectedPhaseIndex].date && <span>{phases[selectedPhaseIndex].date}</span>}
-                  {phases[selectedPhaseIndex].duration && <span>{phases[selectedPhaseIndex].duration}</span>}
-                  {phases[selectedPhaseIndex].location && <span>{phases[selectedPhaseIndex].location}</span>}
+                  {getPhaseDateRange(phases[selectedPhaseIndex]) && (
+                    <span><FaCalendar className="inline-block" /> {getPhaseDateRange(phases[selectedPhaseIndex])}</span>
+                  )}
+                  {getPhaseTimeRange(phases[selectedPhaseIndex]) && getPhaseDateRange(phases[selectedPhaseIndex])?.toLowerCase?.() === "tbd" && (
+                    <span><FaClock className="inline-block" /> {getPhaseTimeRange(phases[selectedPhaseIndex])}</span>
+                  )}
+                  {phases[selectedPhaseIndex].duration && (
+                    <span><FaRulerHorizontal className="inline-block" /> {phases[selectedPhaseIndex].duration}</span>
+                  )}
+                  {phases[selectedPhaseIndex].location && (
+                    <span><FaMapMarker className="inline-block" /> {phases[selectedPhaseIndex].location}</span>
+                  )}
                 </div>
                 <div className="prose prose-sm prose-amber max-w-none text-gray-700 leading-relaxed">
                   <ReactMarkdown>
-                    {transformPersonMentions(phases[selectedPhaseIndex].body)}
+                    {transformPersonMentions(
+                      phases[selectedPhaseIndex].body ?? "",
+                    )}
                   </ReactMarkdown>
                 </div>
               </div>
             ) : selectedDetails ? (
               <div>
-                <h4 className="text-lg font-bold text-gray-900 mb-2">{selectedDetails.title}</h4>
-                {selectedDetails.slogan && <p className="text-sm text-amber-700 font-medium mb-3">{selectedDetails.slogan}</p>}
-                <p className="text-sm text-gray-600">Select a phase to view its markdown body.</p>
+                <h4 className="text-lg font-bold text-gray-900 mb-2">
+                  {selectedDetails.title}
+                </h4>
+                {selectedDetails.slogan && (
+                  <p className="text-sm text-amber-700 font-medium mb-3">
+                    {selectedDetails.slogan}
+                  </p>
+                )}
+                <p className="text-sm text-gray-600">
+                  Select a phase to view its markdown body.
+                </p>
               </div>
             ) : (
               <div>
                 {topDescription ? (
                   <div className="prose prose-lg prose-amber max-w-none text-gray-700 leading-relaxed">
-                    <ReactMarkdown>{transformPersonMentions(topDescription)}</ReactMarkdown>
+                    <ReactMarkdown>
+                      {transformPersonMentions(topDescription)}
+                    </ReactMarkdown>
                   </div>
                 ) : (
-                  <p className="text-sm text-gray-600">All event years are available from the buttons above. Pick a year to inspect its phases.</p>
+                  <p className="text-sm text-gray-600">
+                    All event years are available from the buttons above. Pick a
+                    year to inspect its phases.
+                  </p>
                 )}
               </div>
             )}

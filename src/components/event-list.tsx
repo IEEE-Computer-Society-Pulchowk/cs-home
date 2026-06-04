@@ -120,10 +120,10 @@ const EventList: React.FC<EventListProps> = ({ events }) => {
                             <motion.div
                                 key={event.id}
                                 layout
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.95 }}
-                                transition={{ duration: 0.3 }}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.5 }}
                             >
                                 <EventCard event={event} />
                             </motion.div>
