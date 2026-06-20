@@ -137,7 +137,7 @@ export const MyNewEvent: EventRecord = {
           phase: 1,
           title: "Introduction to Neural Networks",
           startDate: "June 15, 2026",
-          endDate: "#", // Use "#" when the phase ends on the same date
+          endDate: undefined, // Use `undefined` when the phase ends on the same date
           startTime: "3:00 PM",
           endTime: "5:00 PM",
           location: "Seminar Hall, Pulchowk Campus",
