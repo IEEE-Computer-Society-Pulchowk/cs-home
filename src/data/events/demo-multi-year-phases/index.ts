@@ -1,9 +1,10 @@
+import { EventCategory } from "@/types";
 import type { EventRecord } from "../types";
 
 export const DemoMultiYearPhases: EventRecord = {
   slug: "demo-multi-year-phases",
   title: "Demo: Multi-Year Event with Phases",
-  category: "Demo",
+  category: EventCategory.SOCIAL,
   description:
     "A demonstration event showing multiple years and phases, with some phases completed, some upcoming, and some dates TBD.",
   thumbnail: "/events/demo.jpg",

@@ -23,7 +23,7 @@ export const WebScraping101: EventRecord = {
           endTime: "5:00 PM",
           location: "DOECE 302, Pulchowk Campus",
           duration: undefined,
-          bodyFile: "./2025p1.md",
+          bodyFile: "./2025/body.md",
           registrationUrl: "#",
         },
       ],

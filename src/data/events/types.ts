@@ -28,7 +28,7 @@ export interface EventYearDetail {
 export interface EventRecord {
   slug: string;
   title: string;
-  category: EventCategory | string;
+  category: EventCategory;
   description: string;
   thumbnail?: string;
   registrationUrl?: string;
