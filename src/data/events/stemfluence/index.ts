@@ -1,9 +1,10 @@
+import { EventCategory } from "@/types";
 import type { EventRecord } from "../types";
 
 export const Stemfluence: EventRecord = {
   slug: "stemfluence",
   title: "Stemfluence",
-  category: "Workshop",
+  category: EventCategory.WORKSHOP,
   description:
     "An interactive outreach workshop introducing young students to the basics of electronics and engineering through hands-on learning.",
   thumbnail: "/events/stemfluence-2.0.jpeg",

@@ -1,9 +1,10 @@
+import { EventCategory } from "@/types";
 import type { EventRecord } from "../types";
 
 export const IEEEXtreme: EventRecord = {
   slug: "ieeextreme",
   title: "IEEEXtreme",
-  category: "Competition",
+  category: EventCategory.COMPETITION,
   description:
     "24 hours of code, caffeine, and chaos. IEEEXtreme 19.0 was an unforgettable marathon of problem-solving and collective breakthroughs.",
   thumbnail: "/events/ieeextreme-19.0.jpg",
@@ -40,7 +41,8 @@ export const IEEEXtreme: EventRecord = {
     "2026": {
       title: "IEEEXtreme 20.0 Preview",
       slogan: "Prep sessions and mentoring are already in motion.",
-      phases:     [    {
+      phases: [
+        {
           phase: 1,
           title: "preXtreme",
           startDate: "TBD",
