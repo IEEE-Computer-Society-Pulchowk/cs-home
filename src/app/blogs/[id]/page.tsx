@@ -3,11 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FaArrowLeft, FaClock } from "react-icons/fa";
 import ShareButton from "@/components/share-button";
-import {
-    getPostBySlug,
-    getAllPosts,
-    type BlogLookupResult,
-} from "@/lib/blogs";
+import { getPostBySlug, getAllPosts } from "@/lib/blogs";
 import ReactMarkdown from "react-markdown";
 import { transformPersonMentions } from "@/lib/mentions";
 import SmartImage from "@/components/smart-image";
@@ -19,7 +15,7 @@ export async function generateMetadata({
     params: Promise<{ id: string }>;
 }): Promise<Metadata> {
     const { id } = await params;
-    const post = getPostBySlug(id, ["title", "excerpt", "thumbnail"]);
+    const post = getPostBySlug(id);
 
     return {
         title: post.title as string,
@@ -38,7 +34,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-    const posts = getAllPosts(["slug"]);
+    const posts = getAllPosts();
     return posts.map((post) => ({
         id: post.slug as string,
     }));
@@ -50,19 +46,7 @@ export default async function BlogPostPage({
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params;
-    const postData = getPostBySlug(id, [
-        "title",
-        "date",
-        "slug",
-        "author",
-        "authorId",
-        "authorRole",
-        "authorProfilePath",
-        "content",
-        "imageUrl",
-        "category",
-        "readTime",
-    ]) as BlogLookupResult;
+    const postData = getPostBySlug(id);
 
     if (!postData.slug) {
         return (
@@ -90,7 +74,7 @@ export default async function BlogPostPage({
         : getPersonPortraitPath("default"));
 
     // Fetch related posts for sidebar/bottom
-    const allPosts = getAllPosts(["slug", "title", "category", "excerpt"]);
+    const allPosts = getAllPosts();
     const relatedPosts = allPosts.filter((p) => p.slug !== id).slice(0, 2);
 
     return (

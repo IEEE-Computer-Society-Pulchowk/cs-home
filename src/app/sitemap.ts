@@ -7,8 +7,8 @@ export const dynamic = "force-static";
 const SITE_URL = "https://ieeecs.pcampus.edu.np";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const posts = getAllPosts(["slug"]);
-    const events = getAllEvents(["slug"]);
+    const posts = getAllPosts();
+    const events = getAllEvents();
 
     const blogUrls: MetadataRoute.Sitemap = posts.map((post) => ({
         url: `${SITE_URL}/blogs/${post.slug}`,

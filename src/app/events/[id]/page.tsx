@@ -15,7 +15,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const event = getEventBySlug(id, ["title", "description", "thumbnail"]);
+  const event = getEventBySlug(id);
 
   return {
     title: event.title as string,
@@ -32,7 +32,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const events = getAllEvents(["slug"]);
+  const events = getAllEvents();
   return events.map((event) => ({
     id: event.slug,
   }));
@@ -44,22 +44,7 @@ export default async function EventPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const eventData = getEventBySlug(id, [
-    "title",
-    "date",
-    "displayDate",
-    "sortDate",
-    "slug",
-    "location",
-    "category",
-    "isUpcoming",
-    "description",
-    "thumbnail",
-    "registrationUrl",
-    "content",
-    "recurrence",
-    "years",
-  ]);
+  const eventData = getEventBySlug(id);
 
   if (!eventData.slug) {
     return (
@@ -76,13 +61,7 @@ export default async function EventPage({
     );
   }
 
-  const allEvents = getAllEvents([
-    "slug",
-    "title",
-    "category",
-    "date",
-    "description",
-  ]);
+  const allEvents = getAllEvents();
   const relatedEvents = allEvents.filter((e) => e.slug !== id).slice(0, 2);
   const transformedDescription = eventData.description
     ? transformPersonMentions(eventData.description as string)

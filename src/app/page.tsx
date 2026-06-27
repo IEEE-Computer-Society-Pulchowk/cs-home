@@ -18,17 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-    const events = getAllEvents([
-        "slug",
-        "title",
-        "date",
-        "location",
-        "description",
-        "category",
-        "isUpcoming",
-        "thumbnail",
-        "registrationUrl",
-    ]);
+    const events = getAllEvents();
 
     const formattedEvents: IeeeEvent[] = events
         .map((event) => ({

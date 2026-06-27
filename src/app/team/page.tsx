@@ -3,7 +3,6 @@
 import React, { useState, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { TEAM_PAGE_CONTENT } from "@/data/content";
 import { SORTED_TEAM_YEARS, resolveTeamYear } from "@/data/team";
 import MemberCard from "@/components/member-card";
 
@@ -68,11 +67,12 @@ const TeamContent: React.FC = () => {
                 <div className="text-center mb-12">
                     <h1
                         className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                        {TEAM_PAGE_CONTENT.title}
+                        Our Team
                     </h1>
                     <p
                         className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-10">
-                        {TEAM_PAGE_CONTENT.description}
+                        The dedicated individuals working behind the scenes to drive
+                        innovation and foster a community of excellence.
                     </p>
 
                     {/* Year Selector */}
@@ -87,7 +87,7 @@ const TeamContent: React.FC = () => {
                                         : "text-gray-500 hover:text-ieee-cs-orange hover:bg-white"
                                         }`}
                                 >
-                                    {TEAM_PAGE_CONTENT.yearButtonPrefix} {year.year}
+                                    Committee {year.year}
                                 </button>
                             ))}
                         </div>

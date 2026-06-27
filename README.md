@@ -183,3 +183,59 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 ];
 ```
 * **Categories:** Use the `GalleryCategory` enum from [src/types.ts](file:///home/asp/Projects/cs-home/src/types.ts) — `MEETUP`, `EVENT`, `WORKSHOP`, `COMPETITION`, `TALK` (display labels: Meetup, Event, Workshop, Competition, Talk). Do not use raw strings; this keeps filters and types in sync.
+
+---
+
+## 🎓 Certificates
+
+Each certificate gets a permanent, verifiable URL (`/cert/<certId>`) and a QR code
+that points to it. `/verify` looks one up by ID. Certificate data is static and
+git-committed, like every other content type here.
+
+### Issue a batch
+
+1. Fill a CSV with these columns (order matters):
+
+   ```csv
+   name,email,event,eventSlug,issueYear,date,templateId
+   Sajiya Aryal,sajiya@example.com,Linux 101,linux-101,2026,2026-07-03,linux-101-2026
+   ```
+
+   | Column | Notes |
+   |---|---|
+   | `name` | Exactly as it should appear on the certificate |
+   | `email` | Internal only — never rendered; part of the ID hash |
+   | `event` | Human-readable name, rendered |
+   | `eventSlug` | Must match an existing `src/data/events/<slug>/` |
+   | `issueYear` | Used in the certificate ID |
+   | `date` | ISO `YYYY-MM-DD`, rendered |
+   | `templateId` | Must match a `src/data/certificates/templates/<id>.json` |
+
+   `certId` is computed as `<eventSlug>-<issueYear>-<6 hex>` where the hex is
+   `sha256(eventSlug + "|" + email)`. It is deterministic, so re-running the
+   generator never changes an already-issued ID — **do not** add a `certId` column.
+
+2. Generate the typed data file:
+
+   ```bash
+   bun run scripts/generate-certificates.mjs path/to/list.csv
+   # writes src/data/certificates/index.ts (commit it)
+   ```
+
+   The QR target domain defaults to `https://ieeecs.pcampus.edu.np`; override with
+   `SITE_URL=... bun run ...`.
+
+### Add a new template
+
+A template is a fixed-`viewBox` SVG: a flattened background image plus per-field
+text coordinates measured against that canvas.
+
+1. Export the background art (PNG) to
+   `public/certificates/templates/<id>/background.png`.
+2. Write `src/data/certificates/templates/<id>.json` (copy `linux-101-2026.json`,
+   set `background` to the PNG path and adjust field `x`/`y`).
+3. Register it: add one line to
+   `src/data/certificates/templates/index.ts`.
+
+Templates are **locked once issued** — a new design for a future event gets a new
+`templateId`, so old certificates never change.

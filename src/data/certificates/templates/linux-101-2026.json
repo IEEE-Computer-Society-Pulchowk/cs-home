@@ -1,0 +1,12 @@
+{
+  "templateId": "linux-101-2026",
+  "viewBox": { "width": 1600, "height": 1131 },
+  "background": null,
+  "fields": {
+    "name":   { "x": 800, "y": 520, "fontSize": 64, "fontFamily": "Georgia, serif", "fill": "#1a1a1a", "textAnchor": "middle" },
+    "event":  { "x": 800, "y": 610, "fontSize": 32, "fontFamily": "Inter, sans-serif", "fill": "#444444", "textAnchor": "middle" },
+    "date":   { "x": 800, "y": 940, "fontSize": 22, "fontFamily": "Inter, sans-serif", "fill": "#444444", "textAnchor": "middle" },
+    "certId": { "x": 800, "y": 1080, "fontSize": 14, "fontFamily": "Inter, sans-serif", "fill": "#999999", "textAnchor": "middle" },
+    "qr":     { "x": 1400, "y": 940, "size": 130 }
+  }
+}

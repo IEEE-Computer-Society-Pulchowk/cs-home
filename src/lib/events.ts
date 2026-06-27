@@ -136,15 +136,6 @@ const getPreferredEventDate = (event: EventRecord): string | undefined => {
   })[0];
 };
 
-const getDerivedDisplayDate = (event: EventRecord): string | undefined => {
-  const preferred = getPreferredEventDate(event);
-  if (preferred) {
-    return preferred;
-  }
-
-  return undefined;
-};
-
 const isEventUpcoming = (event: EventRecord): boolean => {
   const yearDetailsList = Object.values(event.years) as EventYearDetail[];
 
@@ -155,14 +146,7 @@ const isEventUpcoming = (event: EventRecord): boolean => {
   });
 };
 
-export function getEventSlugs() {
-  return EVENTS.map((event) => event.slug);
-}
-
-export function getEventBySlug(
-  slug: string,
-  fields: string[] = [],
-): EventLookupResult {
+export function getEventBySlug(slug: string): EventLookupResult {
   const realSlug = slug.replace(/\.md$/, "");
   const event = EVENTS.find((item) => item.slug === realSlug);
 
@@ -170,7 +154,7 @@ export function getEventBySlug(
     return { slug: realSlug };
   }
 
-  const preferredDate = getDerivedDisplayDate(event);
+  const preferredDate = getPreferredEventDate(event);
   const items: EventLookupResult = {
     slug: event.slug,
     title: event.title,
@@ -189,28 +173,13 @@ export function getEventBySlug(
     items.date = preferredDate;
   }
 
-  if (fields.length === 0) {
-    return items;
-  }
-
-  const selected: Record<string, unknown> & EventLookupResult = {
-    slug: event.slug,
-  };
-  fields.forEach((field) => {
-    if (field in items) {
-      selected[field] = items[field as keyof EventLookupResult] as unknown;
-    }
-  });
-
-  return selected;
+  return items;
 }
 
-export function getAllEvents(fields: string[] = []): EventLookupResult[] {
-  return getEventSlugs()
-    .map((slug) => getEventBySlug(slug, fields))
-    .sort((event1, event2) => {
-      const leftTime = parseDateValue(event1.sortDate ?? event1.date) ?? 0;
-      const rightTime = parseDateValue(event2.sortDate ?? event2.date) ?? 0;
-      return rightTime - leftTime;
-    });
+export function getAllEvents(): EventLookupResult[] {
+  return EVENTS.map((event) => getEventBySlug(event.slug)).sort((a, b) => {
+    const leftTime = parseDateValue(a.sortDate ?? a.date) ?? 0;
+    const rightTime = parseDateValue(b.sortDate ?? b.date) ?? 0;
+    return rightTime - leftTime;
+  });
 }

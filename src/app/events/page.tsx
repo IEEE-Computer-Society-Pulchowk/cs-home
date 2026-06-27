@@ -16,21 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default function EventsPage() {
-    const events = getAllEvents([
-        "slug",
-        "title",
-        "date",
-        "displayDate",
-        "sortDate",
-        "location",
-        "description",
-        "category",
-        "isUpcoming",
-        "thumbnail",
-        "registrationUrl",
-        "recurrence",
-        "years",
-    ]);
+    const events = getAllEvents();
 
     const formattedEvents: IeeeEvent[] = events.map((event) => ({
         id: event.slug as string,

@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import { getAllPosts, type BlogLookupResult } from "@/lib/blogs";
+import { getAllPosts } from "@/lib/blogs";
 import BlogList from "@/components/blog-list";
 import { BlogPost } from "@/types";
 
@@ -16,19 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default function BlogsPage() {
-    const posts = getAllPosts([
-        "slug",
-        "title",
-        "excerpt",
-        "date",
-        "category",
-        "thumbnail",
-        "readTime",
-        "author",
-        "authorId",
-        "authorRole",
-        "authorProfilePath",
-    ]) as BlogLookupResult[];
+    const posts = getAllPosts();
 
     const formattedPosts: BlogPost[] = posts.map((post) => ({
         id: post.slug ?? "",
