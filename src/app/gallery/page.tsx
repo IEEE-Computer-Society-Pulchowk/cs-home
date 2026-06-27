@@ -6,6 +6,7 @@ import { GALLERY_ITEMS } from "@/data/gallery";
 import { GalleryItem, GalleryCategory } from "@/types";
 import { FaSearchPlus, FaTimes } from "react-icons/fa";
 import SmartImage from "@/components/smart-image";
+import PageHeader from "@/components/page-header";
 
 const Gallery: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
@@ -24,14 +25,10 @@ const Gallery: React.FC = () => {
   return (
     <div className="pt-24 pb-20 min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Gallery</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            A visual journey through our events, workshops, and community
-            gatherings.
-          </p>
-        </div>
+        <PageHeader
+          title="Gallery"
+          subtitle="A visual journey through our events, workshops, and community gatherings."
+        />
 
         {/* Filter */}
         <div className="flex justify-center mb-12">

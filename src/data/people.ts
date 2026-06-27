@@ -257,12 +257,6 @@ export const getPersonById = (personId: string): Person | undefined => {
   return canonicalId ? PEOPLE[canonicalId] : undefined;
 };
 
-export const getPersonIdStaticParams = (): Array<{ id: string }> =>
-  PEOPLE_LIST.flatMap((person) => {
-    const ids = new Set([person.id, person.id.toLowerCase()]);
-    return Array.from(ids, (id) => ({ id }));
-  });
-
 export const getPersonBySlug = (slug: string): Person | undefined =>
   PEOPLE_LIST.find((p) => p.slug === slug);
 

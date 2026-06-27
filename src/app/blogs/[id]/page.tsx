@@ -1,13 +1,17 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FaArrowLeft, FaClock } from "react-icons/fa";
+import { FaClock } from "react-icons/fa";
 import ShareButton from "@/components/share-button";
 import { getPostBySlug, getAllPosts } from "@/lib/blogs";
 import ReactMarkdown from "react-markdown";
 import { transformPersonMentions } from "@/lib/mentions";
 import SmartImage from "@/components/smart-image";
 import { getPersonById, getPersonPortraitPath } from "@/data/people";
+import NotFound from "@/components/not-found";
+import Badge from "@/components/badge";
+import BackLink from "@/components/back-link";
+import RelatedGrid from "@/components/related-grid";
 
 export async function generateMetadata({
     params,
@@ -50,19 +54,11 @@ export default async function BlogPostPage({
 
     if (!postData.slug) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="text-center">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                        Article Not Found
-                    </h2>
-                    <Link
-                        href="/blogs"
-                        className="text-ieee-cs-orange hover:underline"
-                    >
-                        Return to Blogs
-                    </Link>
-                </div>
-            </div>
+            <NotFound
+                title="Article Not Found"
+                backHref="/blogs"
+                backLabel="Return to Blogs"
+            />
         );
     }
 
@@ -81,21 +77,10 @@ export default async function BlogPostPage({
         <article className="pt-24 pb-20 min-h-screen bg-white">
             {/* Hero / Header */}
             <div className="max-w-4xl mx-auto px-4 sm:px-6 mb-10">
-                <Link
-                    href="/blogs"
-                    className="inline-flex items-center text-gray-500 hover:text-ieee-cs-orange transition-colors mb-8 group"
-                >
-                    <FaArrowLeft
-                        size={16}
-                        className="mr-2 group-hover:-translate-x-1 transition-transform"
-                    />{" "}
-                    Back to Articles
-                </Link>
+                <BackLink href="/blogs" label="Back to Articles" />
 
                 <div className="flex items-center space-x-2 mb-6">
-                    <span className="bg-amber-50 text-ieee-cs-orange px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-                        {postData.category}
-                    </span>
+                    <Badge>{postData.category}</Badge>
                     <span className="text-gray-400 text-sm">•</span>
                     <span className="text-gray-500 text-sm flex items-center">
                         <FaClock size={14} className="mr-1" /> {postData.readTime}
@@ -163,31 +148,15 @@ export default async function BlogPostPage({
                     </ReactMarkdown>
                 </div>
 
-                {relatedPosts.length > 0 && (
-                    <div className="mt-16 pt-10 border-t border-gray-100">
-                        <h3 className="text-lg font-bold text-gray-900 mb-6">
-                            More Blogs:
-                        </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {relatedPosts.map((related) => (
-                            <Link
-                                key={related.slug}
-                                href={`/blogs/${related.slug}`}
-                                className="group block bg-gray-50 p-6 rounded-xl hover:bg-amber-50 transition-colors"
-                            >
-                                <span className="text-xs font-bold text-gray-400 uppercase mb-2 block">
-                                    {related.category}
-                                </span>
-                                <h4 className="font-bold text-gray-900 group-hover:text-ieee-cs-orange transition-colors mb-2">
-                                    {related.title}
-                                </h4>
-                                <p className="text-sm text-gray-500 line-clamp-2">
-                                    {related.excerpt}
-                                </p>
-                            </Link>
-                        ))}
-                    </div>
-                </div>)}
+                <RelatedGrid
+                    title="More Blogs:"
+                    items={relatedPosts.map((related) => ({
+                        href: `/blogs/${related.slug}`,
+                        eyebrow: related.category as string,
+                        title: related.title as string,
+                        body: related.excerpt as string,
+                    }))}
+                />
             </div>
         </article>
     );

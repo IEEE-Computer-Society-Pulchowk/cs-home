@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { SORTED_TEAM_YEARS, resolveTeamYear } from "@/data/team";
 import MemberCard from "@/components/member-card";
+import PageHeader from "@/components/page-header";
 
 const MAX_MEMBERS_PER_ROW = 4;
 
@@ -64,19 +65,12 @@ const TeamContent: React.FC = () => {
     return (
         <div className="pt-24 pb-20 min-h-screen bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-12">
-                    <h1
-                        className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                        Our Team
-                    </h1>
-                    <p
-                        className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-10">
-                        The dedicated individuals working behind the scenes to drive
-                        innovation and foster a community of excellence.
-                    </p>
-
+                <PageHeader
+                    title="Our Team"
+                    subtitle="The dedicated individuals working behind the scenes to drive innovation and foster a community of excellence."
+                >
                     {/* Year Selector */}
-                    <div className="relative inline-block text-left">
+                    <div className="relative inline-block text-left mt-6">
                         <div className="flex items-center justify-center gap-4 bg-gray-50 p-1.5 rounded-xl border border-gray-200">
                             {years.map((year) => (
                                 <button
@@ -92,7 +86,7 @@ const TeamContent: React.FC = () => {
                             ))}
                         </div>
                     </div>
-                </div>
+                </PageHeader>
 
                 <AnimatePresence mode="wait">
                     <motion.div

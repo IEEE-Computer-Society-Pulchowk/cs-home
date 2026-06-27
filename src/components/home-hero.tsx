@@ -4,12 +4,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaChevronRight } from "react-icons/fa";
 import Link from "next/link";
-import ThreeBackground from "@/components/three-background";
 
 const HomeHero: React.FC = () => {
     return (
         <section className="relative h-[100vh] flex items-center justify-center overflow-hidden bg-ieee-dark">
-            {/* <ThreeBackground className="opacity-40" /> */}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-ieee-dark/20 to-ieee-dark/90 pointer-events-none"></div>
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

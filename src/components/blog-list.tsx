@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaSearch, FaFilter } from "react-icons/fa";
 import BlogCard from "@/components/blog-card";
+import PageHeader from "@/components/page-header";
+import FilterButton from "@/components/filter-button";
+import EmptyState from "@/components/empty-state";
 import { BlogPost } from "@/types";
 
 interface BlogListProps {
@@ -36,16 +39,10 @@ const BlogList: React.FC<BlogListProps> = ({ posts }) => {
     return (
         <div className="pt-24 pb-20 min-h-screen bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Header */}
-                <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                        Insights & Updates
-                    </h1>
-                    <p className="text-gray-600 max-w-2xl mx-auto">
-                        Articles, research highlights, and stories from the IEEE
-                        Pulchowk community.
-                    </p>
-                </div>
+                <PageHeader
+                    title="Insights & Updates"
+                    subtitle="Articles, research highlights, and stories from the IEEE Pulchowk community."
+                />
 
                 {/* Search & Filter Bar */}
                 <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
@@ -69,17 +66,13 @@ const BlogList: React.FC<BlogListProps> = ({ posts }) => {
                             className="text-gray-400 flex-shrink-0 mr-1"
                         />
                         {categories.map((category) => (
-                            <button
+                            <FilterButton
                                 key={category}
+                                active={selectedCategory === category}
                                 onClick={() => setSelectedCategory(category)}
-                                className={`px-4 py-1.5 rounded-full text-xs font-medium border transition-all whitespace-nowrap ${
-                                    selectedCategory === category
-                                        ? "bg-ieee-dark text-white border-ieee-dark"
-                                        : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                                }`}
                             >
                                 {category}
-                            </button>
+                            </FilterButton>
                         ))}
                     </div>
                 </div>
@@ -117,20 +110,14 @@ const BlogList: React.FC<BlogListProps> = ({ posts }) => {
                 </div>
 
                 {filteredPosts.length === 0 && (
-                    <div className="text-center py-20 bg-white rounded-xl border border-dashed border-gray-200">
-                        <p className="text-gray-500 text-lg">
-                            No articles found matching your criteria.
-                        </p>
-                        <button
-                            onClick={() => {
-                                setSearchQuery("");
-                                setSelectedCategory("All");
-                            }}
-                            className="mt-4 text-ieee-cs-orange font-medium hover:underline"
-                        >
-                            Clear filters
-                        </button>
-                    </div>
+                    <EmptyState
+                        message="No articles found matching your criteria."
+                        actionLabel="Clear filters"
+                        onAction={() => {
+                            setSearchQuery("");
+                            setSelectedCategory("All");
+                        }}
+                    />
                 )}
             </div>
         </div>

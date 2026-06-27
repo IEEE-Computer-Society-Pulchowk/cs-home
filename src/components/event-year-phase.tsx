@@ -4,30 +4,7 @@ import React, { useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { transformPersonMentions } from "@/lib/mentions";
 import { FaCalendar, FaClock, FaMapMarker, FaRulerHorizontal } from "react-icons/fa";
-
-type Phase = {
-  phase?: number | string;
-  title?: string;
-  startDate?: string;
-  endDate?: string;
-  startTime?: string;
-  endTime?: string;
-  date?: string;
-  location?: string;
-  duration?: string;
-  body?: string;
-  bodyFile?: string;
-  registrationUrl?: string;
-  isUpcoming?: boolean;
-};
-
-type YearDetails = {
-  title: string;
-  slogan?: string;
-  isUpcoming?: boolean;
-  registrationUrl?: string;
-  phases?: Phase[];
-};
+import type { EventPhase as Phase, EventYearDetail as YearDetails } from "@/types";
 
 export default function EventYearPhase({
   years = {},

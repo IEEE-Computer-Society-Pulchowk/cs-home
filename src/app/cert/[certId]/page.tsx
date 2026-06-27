@@ -4,6 +4,7 @@ import CertificateSvg from "@/components/CertificateSvg";
 import { getCertificateById, getCertIdStaticParams } from "@/data/certificates";
 import { getTemplate } from "@/data/certificates/templates";
 import DownloadButton from "./DownloadButton";
+import NotFound from "@/components/not-found";
 
 // Only pre-built certificates resolve; unknown IDs 404.
 export const dynamicParams = false;
@@ -37,19 +38,12 @@ export default async function CertPage({
 
   if (!cert || !template) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-        <div className="text-center">
-          <h1 className="mb-2 text-2xl font-bold text-gray-900">
-            Certificate Not Found
-          </h1>
-          <p className="mb-4 text-gray-500">
-            No certificate matches this ID.
-          </p>
-          <Link href="/verify" className="text-ieee-cs-orange hover:underline">
-            Verify a certificate
-          </Link>
-        </div>
-      </main>
+      <NotFound
+        title="Certificate Not Found"
+        message="No certificate matches this ID."
+        backHref="/verify"
+        backLabel="Verify a certificate"
+      />
     );
   }
 

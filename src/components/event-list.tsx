@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { IeeeEvent, EventCategory } from "@/types";
 import EventCard from "@/components/event-card";
+import PageHeader from "@/components/page-header";
+import FilterButton from "@/components/filter-button";
+import EmptyState from "@/components/empty-state";
 import { FaFilter } from "react-icons/fa";
 
 interface EventListProps {
@@ -43,17 +46,10 @@ const EventList: React.FC<EventListProps> = ({ events }) => {
     return (
         <div className="pt-24 pb-20 min-h-screen bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Header */}
-                <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                        Events & Activities
-                    </h1>
-                    <p className="text-gray-600 max-w-2xl mx-auto">
-                        Discover workshops, seminars, and networking sessions
-                        designed to boost your technical skills and professional
-                        growth.
-                    </p>
-                </div>
+                <PageHeader
+                    title="Events & Activities"
+                    subtitle="Discover workshops, seminars, and networking sessions designed to boost your technical skills and professional growth."
+                />
 
                 {/* Controls */}
                 <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
@@ -98,17 +94,13 @@ const EventList: React.FC<EventListProps> = ({ events }) => {
                             className="text-gray-400 mr-2 flex-shrink-0"
                         />
                         {categories.map((cat) => (
-                            <button
+                            <FilterButton
                                 key={cat}
+                                active={filter === cat}
                                 onClick={() => setFilter(cat as EventCategory | "All")}
-                                className={`px-4 py-1.5 rounded-full text-xs font-medium border transition-all whitespace-nowrap ${
-                                    filter === cat
-                                        ? "bg-ieee-dark text-white border-ieee-dark"
-                                        : "bg-white text-gray-600 border-gray-200 hover:border-gray-300"
-                                }`}
                             >
                                 {cat}
-                            </button>
+                            </FilterButton>
                         ))}
                     </div>
                 </div>
@@ -129,17 +121,12 @@ const EventList: React.FC<EventListProps> = ({ events }) => {
                             </motion.div>
                         ))
                     ) : (
-                        <div className="col-span-full text-center py-20 bg-white rounded-2xl border border-dashed border-gray-200">
-                            <p className="text-gray-500 text-lg">
-                                No events found in this category.
-                            </p>
-                            <button
-                                onClick={() => setFilter("All")}
-                                className="mt-4 text-ieee-cs-orange font-medium hover:underline"
-                            >
-                                Clear filters
-                            </button>
-                        </div>
+                        <EmptyState
+                            className="col-span-full"
+                            message="No events found in this category."
+                            actionLabel="Clear filters"
+                            onAction={() => setFilter("All")}
+                        />
                     )}
                 </div>
             </div>

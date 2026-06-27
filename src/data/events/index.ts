@@ -3,9 +3,6 @@ import { Stemfluence } from "./stemfluence";
 import { WebScraping101 } from "./web-scraping-101";
 import { Linux101 } from "./linux-101";
 
-// import { DemoMultiYearPhases } from "./demo-multi-year-phases";
-
 export const EVENTS = [IEEEXtreme, Stemfluence, WebScraping101, Linux101];
-// export const EVENTS = [IEEEXtreme, Stemfluence, DemoMultiYearPhases];
 
 export type { EventRecord } from "./types";
