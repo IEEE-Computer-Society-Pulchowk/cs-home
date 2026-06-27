@@ -1,6 +1,6 @@
 **Registration Fee:** Rs. 100  
 **Registration Deadline:** 12 Asadh (26th June), 11:59 PM  
-**Available Seats:** 50  
+**Available Seats:** 55  
  
 **Contact:**
 - Shubha Sandesh Sharma Neupane: 9741663389
