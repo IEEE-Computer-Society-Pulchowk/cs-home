@@ -9,12 +9,12 @@ const toSlug = (name: string) =>
 export const getPersonPortraitPath = (slug: string, ext = "png") =>
   `/people/${slug}.${ext}`;
 
-function buildPeople<
-  T extends Record<
-    string,
-    Omit<Person, "id" | "slug" | "imageUrl"> & { slug?: string; imageUrl?: string }
-  >
->(data: T): Record<keyof T, Person> & Record<string, Person> {
+type PersonInput = Omit<Person, "id" | "slug" | "imageUrl"> & {
+  slug?: string;
+  imageUrl?: string;
+};
+
+function buildPeople(data: Record<string, PersonInput>): Record<string, Person> {
   return Object.fromEntries(
     Object.entries(data).map(([id, { slug, imageUrl, ...rest }]) => {
       const personSlug = slug ?? toSlug(rest.name);
@@ -26,10 +26,10 @@ function buildPeople<
           slug: personSlug,
           imageUrl: imageUrl ?? getPersonPortraitPath(personSlug),
           ...rest,
-        } as Person,
+        },
       ];
     })
-  ) as Record<keyof T, Person> & Record<string, Person>;
+  );
 }
 
 export const PEOPLE = buildPeople({

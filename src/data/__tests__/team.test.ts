@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { TEAM_YEARS } from "@/data/team";
 import { getPersonById } from "@/data/people";
 

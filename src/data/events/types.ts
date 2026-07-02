@@ -1,29 +1,4 @@
-import type { EventCategory } from "@/types";
-
-export interface EventPhase {
-  phase?: string | number;
-  title: string;
-  startDate?: string;
-  endDate?: string;
-  startTime?: string;
-  endTime?: string;
-  location?: string;
-  duration?: string;
-  body?: string;
-  bodyFile?: string;
-  registrationUrl?: string;
-  isUpcoming?: boolean;
-  sort?: number;
-}
-
-export interface EventYearDetail {
-  title: string;
-  slogan?: string;
-  isUpcoming?: boolean;
-  registrationUrl?: string;
-  sort?: number;
-  phases?: EventPhase[];
-}
+import type { EventCategory, EventYearDetail } from "@/types";
 
 export interface EventRecord {
   slug: string;

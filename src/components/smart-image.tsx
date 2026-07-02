@@ -1,8 +1,12 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import Link from "next/link";
+
+// Images are served unoptimized (next.config: output export), so a plain <img>
+// is all next/image would give us anyway. Behavior: show the real image; until
+// it loads (fill mode) or if it fails, the IEEE-CS logo shows in its place.
+const FALLBACK = "/logo-orange.svg";
 
 interface SmartImageProps {
   src?: string | null;
@@ -10,228 +14,66 @@ interface SmartImageProps {
   href?: string;
   className?: string;
   fill?: boolean;
-  width?: number;
-  height?: number;
-  sizes?: string;
+  sizes?: string; // accepted for call-site compat; unused with unoptimized images
   onClick?: (e: React.MouseEvent) => void;
   loading?: "lazy" | "eager";
   style?: React.CSSProperties;
 }
 
-const DEFAULT_FALLBACK = "/logo-orange.svg";
-
-type SmartImgProps = {
-  src: string;
-  alt: string;
-  className?: string;
-  style?: React.CSSProperties;
-  fill?: boolean;
-  sizes?: string;
-  width?: number;
-  height?: number;
-  loading?: "lazy" | "eager";
-  onLoad?: () => void;
-  onError?: () => void;
-  "aria-hidden"?: boolean;
-};
-
-const SmartImg = React.forwardRef<HTMLImageElement, SmartImgProps>(function SmartImg(
-  {
-    src,
-    alt,
-    className,
-    style,
-    fill,
-    sizes,
-    width,
-    height,
-    loading,
-    onLoad,
-    onError,
-    "aria-hidden": ariaHidden,
-  },
-  ref
-) {
-  const useNextImage = fill || (width !== undefined && height !== undefined);
-
-  if (useNextImage) {
-    return (
-      <Image
-        ref={ref}
-        src={src}
-        alt={alt}
-        fill={fill}
-        width={fill ? undefined : width}
-        height={fill ? undefined : height}
-        sizes={sizes}
-        className={className}
-        style={style}
-        loading={loading}
-        onLoad={onLoad}
-        onError={onError}
-        aria-hidden={ariaHidden}
-      />
-    );
-  }
-
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      ref={ref}
-      src={src}
-      alt={alt}
-      className={className}
-      style={style}
-      loading={loading}
-      onLoad={onLoad}
-      onError={onError}
-      aria-hidden={ariaHidden}
-    />
-  );
-});
-
 export default function SmartImage({
   src,
-  alt,
+  alt = "",
   href,
   className,
   fill = false,
-  width,
-  height,
-  sizes,
   onClick,
   loading = "lazy",
   style,
 }: SmartImageProps) {
-  const isLogo =
-    typeof src === "string" &&
-    (src === "/logo-orange.svg" || src === "/logo-white.svg" || src.endsWith(".svg"));
+  const [failed, setFailed] = useState(false);
+  const showReal = !!src && !failed;
 
-  const [ready, setReady] = React.useState(isLogo);
-  const [failed, setFailed] = React.useState(false);
-
-  const imgRef = React.useRef<HTMLImageElement>(null);
-
-  React.useEffect(() => {
-    const nextIsLogo =
-      typeof src === "string" &&
-      (src === "/logo-orange.svg" || src === "/logo-white.svg" || src.endsWith(".svg"));
-
-    if (nextIsLogo) {
-      setReady(true);
-      setFailed(false);
-    } else if (imgRef.current?.complete) {
-      setReady(true);
-      setFailed(false);
-    } else {
-      setReady(false);
-      setFailed(false);
-    }
-  }, [src]);
-
-  const imageElement = fill ? (
-    <div style={{ position: "absolute", inset: 0 }}>
-      {src && !failed && (
-        <SmartImg
-          ref={imgRef}
-          src={src}
-          alt={alt || ""}
-          fill
-          sizes={sizes}
-          className={className}
-          style={ready ? (style ?? {}) : { ...style, opacity: 0, pointerEvents: "none" }}
-          onLoad={() => setReady(true)}
-          onError={() => setFailed(true)}
-        />
-      )}
-
-      {!ready && (
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "transparent",
-          }}
-        >
-          <SmartImg
-            src={DEFAULT_FALLBACK}
-            alt={alt || ""}
-            style={{
-              width: "6rem",
-              height: "6rem",
-              objectFit: "contain",
-              opacity: 0.6,
-            }}
-            aria-hidden
-          />
-        </div>
-      )}
-    </div>
-  ) : (
-    <>
-      <div style={{ position: "relative", display: "contents" }}>
-        {src && !failed && (
-          <SmartImg
-            ref={imgRef}
-            src={src}
-            alt={alt || ""}
-            width={width}
-            height={height}
-            className={className}
-            style={
-              ready
-                ? (style ?? {})
-                : { ...style, position: "absolute", opacity: 0, pointerEvents: "none", width: 0, height: 0 }
-            }
-            onLoad={() => setReady(true)}
-            onError={() => setFailed(true)}
-            loading={loading}
-          />
-        )}
-
-        {!ready && (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-              height: "100%",
-              minHeight: "inherit",
-              backgroundColor: "transparent",
-            }}
-          >
-            <SmartImg
-              src={DEFAULT_FALLBACK}
-              alt={alt || ""}
-              style={{
-                width: "6rem",
-                height: "6rem",
-                objectFit: "contain",
-                opacity: 0.6,
-              }}
-              aria-hidden
-            />
-          </div>
-        )}
-      </div>
-    </>
+  /* eslint-disable @next/next/no-img-element */
+  const logo = (
+    <img src={FALLBACK} alt="" aria-hidden className="h-2/5 w-2/5 object-contain opacity-60" />
   );
 
-  if (!href) return imageElement;
+  const real = (
+    <img
+      src={src ?? ""}
+      alt={alt}
+      loading={loading}
+      onError={() => setFailed(true)}
+      className={fill ? `absolute inset-0 h-full w-full ${className ?? ""}` : className}
+      style={style}
+    />
+  );
 
-  const isInternal = href.startsWith("/");
+  // fill: logo sits centered behind, real image overlays it (transparent until
+  // loaded, removed on error) so the logo is the placeholder/fallback.
+  // non-fill: the element is sized by its own className, so we can't stack —
+  // swap to the logo only when there's no usable image.
+  const content = fill ? (
+    <span className="absolute inset-0 flex items-center justify-center">
+      {logo}
+      {showReal && real}
+    </span>
+  ) : showReal ? (
+    real
+  ) : (
+    <img src={FALLBACK} alt={alt} className={className} style={style} />
+  );
+  /* eslint-enable @next/next/no-img-element */
 
-  return isInternal ? (
+  if (!href) return content;
+
+  return href.startsWith("/") ? (
     <Link href={href} onClick={onClick}>
-      {imageElement}
+      {content}
     </Link>
   ) : (
     <a href={href} target="_blank" rel="noreferrer" onClick={onClick}>
-      {imageElement}
+      {content}
     </a>
   );
 }

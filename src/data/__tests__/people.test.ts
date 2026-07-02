@@ -1,4 +1,4 @@
-import { expect, test } from "vitest";
+import { expect, test } from "bun:test";
 import { PEOPLE } from "@/data/people";
 
 const entries = Object.entries(PEOPLE);
