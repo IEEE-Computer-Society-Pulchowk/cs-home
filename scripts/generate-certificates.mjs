@@ -3,45 +3,21 @@
 //
 //   bun run scripts/generate-certificates.mjs <input.csv> [<input2.csv> ...]
 //
-// IDs are a pure function of (eventSlug, templateId, email) -> re-running is
+// IDs are a pure function of (eventSlug, issueYear, templateId, email) -> re-running is
 // idempotent and never reassigns an already-issued ID. Same person may hold
 // multiple certs per event (e.g. participation + achievement) via different
 // templateIds. No write-back to the CSV.
-import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import QRCode from "qrcode";
+import { formatCertId, parseCsv } from "./certificate-csv.mjs";
 
 const SITE_URL = (process.env.SITE_URL || "https://ieeecs.pcampus.edu.np").replace(/\/$/, "");
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const OUT = `${ROOT}/src/data/certificates/index.ts`;
-const COLUMNS = ["name", "email", "event", "eventSlug", "issueYear", "date", "templateId"];
-
-// ponytail: naive split — fine for a flat participant list with no embedded
-// commas/quotes. Swap in `csv-parse` only if a real CSV breaks this.
-function parseCsv(text) {
-  const lines = text.replace(/\r\n/g, "\n").trim().split("\n").filter((l) => l.trim());
-  const header = lines.shift().split(",").map((h) => h.trim());
-  for (const col of COLUMNS) {
-    if (!header.includes(col)) throw new Error(`CSV missing required column: ${col}`);
-  }
-  return lines.map((line) => {
-    const cells = line.split(",").map((c) => c.trim());
-    return Object.fromEntries(header.map((h, i) => [h, cells[i] ?? ""]));
-  });
-}
-
-function certId(eventSlug, issueYear, templateId, email) {
-  const hash = createHash("sha256")
-    .update(`${eventSlug}|${templateId}|${email}`)
-    .digest("hex")
-    .slice(0, 6);
-  return `${eventSlug}-${issueYear}-${hash}`;
-}
-
 async function rowToCert(row) {
-  const id = certId(row.eventSlug, row.issueYear, row.templateId, row.email);
+  const id = formatCertId(row.eventSlug, row.issueYear, row.templateId, row.email);
   const qr = await QRCode.toDataURL(`${SITE_URL}/cert/${id}`, { margin: 1, scale: 4 });
   return {
     // email is intentionally NOT emitted — it's only used above to derive the
@@ -94,13 +70,13 @@ export type { Certificate } from "./types";
 
 // ponytail: self-check — same input row must yield the same ID across runs.
 function selfCheck() {
-  const a = certId("linux-101", "2026", "linux-101-2026", "sajiya@example.com");
-  const b = certId("linux-101", "2026", "linux-101-2026", "sajiya@example.com");
+  const a = formatCertId("linux-101", "2026", "linux-101-2026", "sajiya@example.com");
+  const b = formatCertId("linux-101", "2026", "linux-101-2026", "sajiya@example.com");
   if (a !== b) throw new Error("certId not deterministic");
-  if (certId("linux-101", "2026", "linux-101-2026", "other@example.com") === a) {
+  if (formatCertId("linux-101", "2026", "linux-101-2026", "other@example.com") === a) {
     throw new Error("certId collision");
   }
-  if (certId("linux-101", "2026", "linux-101-achievement-2026", "sajiya@example.com") === a) {
+  if (formatCertId("linux-101", "2026", "linux-101-achievement-2026", "sajiya@example.com") === a) {
     throw new Error("same person+event with different templateId must differ");
   }
   if (!/^linux-101-2026-[0-9a-f]{6}$/.test(a)) throw new Error(`unexpected id shape: ${a}`);

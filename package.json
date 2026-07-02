@@ -8,7 +8,10 @@
     "dev": "next dev",
     "build": "bun test && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "cert:generate": "bun run scripts/generate-certificates.mjs",
+    "cert:ids": "bun run scripts/export-cert-ids.mjs",
+    "cert:links": "bun run scripts/export-certificate-links.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

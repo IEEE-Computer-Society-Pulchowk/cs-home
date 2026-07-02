@@ -21,13 +21,13 @@ export interface TextField {
 export interface Template {
   templateId: string;
   viewBox: { width: number; height: number };
-  background: string | null; // /public path to flattened art, or null for a drawn fallback
+  background: string | null; // /public path to flattened art (full design); null = blank canvas
   fields: {
-    name: TextField;
-    event: TextField;
-    date: TextField;
-    certId: TextField;
-    qr: { x: number; y: number; size: number };
+    name?: TextField;
+    event?: TextField;
+    date?: TextField;
+    certId?: TextField;
+    qr?: { x: number; y: number; size: number };
   };
 }
 

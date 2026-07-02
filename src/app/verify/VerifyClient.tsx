@@ -21,7 +21,7 @@ export default function VerifyClient() {
   const template = cert ? getTemplate(cert.templateId) : undefined;
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-16">
+    <main className="min-h-screen bg-gray-50 px-4 pt-24 pb-16">
       <div className="mx-auto max-w-3xl">
         <h1 className="mb-2 text-center text-3xl font-bold text-gray-900">
           Verify a Certificate
@@ -42,7 +42,7 @@ export default function VerifyClient() {
             name="id"
             defaultValue={id ?? ""}
             placeholder="e.g. linux-101-2026-9f3a2c"
-            className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 focus:border-ieee-cs-orange focus:outline-none"
+            className="text-black flex-1 rounded-lg border border-gray-300 px-4 py-2.5 focus:border-ieee-cs-orange focus:outline-none"
           />
           <button
             type="submit"
@@ -66,7 +66,7 @@ export default function VerifyClient() {
           <div className="mt-10">
             <div className="mx-auto mb-6 max-w-xl rounded-lg border border-amber-200 bg-amber-50 p-6 text-center">
               <p className="font-semibold text-ieee-cs-orange">
-                ✓ Genuine certificate
+                Genuine certificate
               </p>
               <p className="mt-2 text-gray-700">
                 <span className="font-semibold">{cert.name}</span> —{" "}

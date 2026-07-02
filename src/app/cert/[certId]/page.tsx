@@ -48,7 +48,7 @@ export default async function CertPage({
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-gray-50 px-4 py-10">
+    <main className="flex min-h-screen flex-col items-center bg-gray-50 px-4 pt-24 pb-10">
       <div className="w-full max-w-3xl rounded-xl bg-white p-4 shadow-lg sm:p-6">
         <CertificateSvg svgId="cert-svg" template={template} data={cert} />
       </div>
@@ -56,9 +56,9 @@ export default async function CertPage({
         <DownloadButton svgId="cert-svg" filename={cert.certId} />
         <Link
           href={`/verify?id=${cert.certId}`}
-          className="mt-3 text-sm text-gray-500 hover:text-ieee-cs-orange hover:underline"
+          className="mt-3 text-sm text-gray-500 hover:text-ieee-cs-orange hover:underline border-amber-400"
         >
-          Verify ↗
+          Verify
         </Link>
       </div>
     </main>

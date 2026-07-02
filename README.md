@@ -228,6 +228,24 @@ git-committed, like every other content type here.
    The QR target domain defaults to `https://ieeecs.pcampus.edu.np`; override with
    `SITE_URL=... bun run ...`.
 
+3. Export only the certificate IDs as CSV:
+
+   ```bash
+   bun run scripts/export-cert-ids.mjs path/to/list.csv > cert-ids.csv
+   ```
+
+   The output is a one-column CSV with `certId` values in the same order as the
+   input rows.
+
+4. Export certificate URLs and image paths:
+
+   ```bash
+   bun run scripts/export-certificate-links.mjs path/to/list.csv > certificate-links.csv
+   ```
+
+   The script also writes PNGs to `certificate-exports/<templateId>/<certId>.png`
+   by default. Use `--out <dir>` to change the output folder.
+
 ### Add a new template
 
 A template is a fixed-`viewBox` SVG: a flattened background image plus per-field
