@@ -212,8 +212,11 @@ git-committed, like every other content type here.
    | `templateId` | Must match a `src/data/certificates/templates/<id>.json` |
 
    `certId` is computed as `<eventSlug>-<issueYear>-<6 hex>` where the hex is
-   `sha256(eventSlug + "|" + email)`. It is deterministic, so re-running the
-   generator never changes an already-issued ID — **do not** add a `certId` column.
+   `sha256(eventSlug + "|" + templateId + "|" + email)`. It is deterministic, so
+   re-running the generator never changes an already-issued ID — **do not** add a
+   `certId` column. The same person may appear on multiple rows for one event with
+   different `templateId` values (e.g. participation and achievement); each row gets
+   its own ID and URL.
 
 2. Generate the typed data file:
 

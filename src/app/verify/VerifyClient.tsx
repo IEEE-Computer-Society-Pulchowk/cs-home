@@ -27,11 +27,16 @@ export default function VerifyClient() {
           Verify a Certificate
         </h1>
         <p className="mb-8 text-center text-gray-500">
-          Enter a certificate ID to confirm it was issued by IEEE CS Pulchowk SBC.
+          Enter a certificate ID to confirm it was issued by IEEE CS Pulchowk
+          SBC.
         </p>
 
         {/* Native GET form — reloads with ?id=, which the effect above reads. */}
-        <form action="/verify" method="get" className="mx-auto flex max-w-xl gap-2">
+        <form
+          action="/verify"
+          method="get"
+          className="mx-auto flex max-w-xl gap-2"
+        >
           <input
             type="text"
             name="id"
@@ -51,18 +56,21 @@ export default function VerifyClient() {
           <div className="mx-auto mt-10 max-w-xl rounded-lg border border-red-200 bg-red-50 p-6 text-center">
             <p className="font-semibold text-red-700">No match found</p>
             <p className="mt-1 text-sm text-red-600">
-              No certificate has the ID <span className="font-mono">{id}</span>. Check
-              for typos.
+              No certificate has the ID <span className="font-mono">{id}</span>.
+              Check for typos.
             </p>
           </div>
         )}
 
         {cert && template && (
           <div className="mt-10">
-            <div className="mx-auto mb-6 max-w-xl rounded-lg border border-green-200 bg-green-50 p-6 text-center">
-              <p className="font-semibold text-green-700">✓ Genuine certificate</p>
+            <div className="mx-auto mb-6 max-w-xl rounded-lg border border-amber-200 bg-amber-50 p-6 text-center">
+              <p className="font-semibold text-ieee-cs-orange">
+                ✓ Genuine certificate
+              </p>
               <p className="mt-2 text-gray-700">
-                <span className="font-semibold">{cert.name}</span> — {cert.event}
+                <span className="font-semibold">{cert.name}</span> —{" "}
+                {cert.event}
               </p>
               <p className="text-sm text-gray-500">Issued {cert.date}</p>
             </div>

@@ -3,8 +3,10 @@
 //
 //   bun run scripts/generate-certificates.mjs <input.csv> [<input2.csv> ...]
 //
-// IDs are a pure function of (eventSlug, email) -> re-running is idempotent and
-// never reassigns an already-issued ID. No write-back to the CSV.
+// IDs are a pure function of (eventSlug, templateId, email) -> re-running is
+// idempotent and never reassigns an already-issued ID. Same person may hold
+// multiple certs per event (e.g. participation + achievement) via different
+// templateIds. No write-back to the CSV.
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
@@ -30,13 +32,16 @@ function parseCsv(text) {
   });
 }
 
-function certId(eventSlug, issueYear, email) {
-  const hash = createHash("sha256").update(`${eventSlug}|${email}`).digest("hex").slice(0, 6);
+function certId(eventSlug, issueYear, templateId, email) {
+  const hash = createHash("sha256")
+    .update(`${eventSlug}|${templateId}|${email}`)
+    .digest("hex")
+    .slice(0, 6);
   return `${eventSlug}-${issueYear}-${hash}`;
 }
 
 async function rowToCert(row) {
-  const id = certId(row.eventSlug, row.issueYear, row.email);
+  const id = certId(row.eventSlug, row.issueYear, row.templateId, row.email);
   const qr = await QRCode.toDataURL(`${SITE_URL}/cert/${id}`, { margin: 1, scale: 4 });
   return {
     // email is intentionally NOT emitted — it's only used above to derive the
@@ -62,7 +67,7 @@ async function main() {
   const rows = inputs.flatMap((f) => parseCsv(readFileSync(f, "utf8")));
   const certs = await Promise.all(rows.map(rowToCert));
 
-  // Last write wins on duplicate IDs (same person re-listed) — dedupe by certId.
+  // Last write wins on duplicate rows (same person+template re-listed) — dedupe by certId.
   const byId = new Map(certs.map((c) => [c.certId, c]));
   const unique = [...byId.values()];
 
@@ -89,10 +94,15 @@ export type { Certificate } from "./types";
 
 // ponytail: self-check — same input row must yield the same ID across runs.
 function selfCheck() {
-  const a = certId("linux-101", "2026", "sajiya@example.com");
-  const b = certId("linux-101", "2026", "sajiya@example.com");
+  const a = certId("linux-101", "2026", "linux-101-2026", "sajiya@example.com");
+  const b = certId("linux-101", "2026", "linux-101-2026", "sajiya@example.com");
   if (a !== b) throw new Error("certId not deterministic");
-  if (certId("linux-101", "2026", "other@example.com") === a) throw new Error("certId collision");
+  if (certId("linux-101", "2026", "linux-101-2026", "other@example.com") === a) {
+    throw new Error("certId collision");
+  }
+  if (certId("linux-101", "2026", "linux-101-achievement-2026", "sajiya@example.com") === a) {
+    throw new Error("same person+event with different templateId must differ");
+  }
   if (!/^linux-101-2026-[0-9a-f]{6}$/.test(a)) throw new Error(`unexpected id shape: ${a}`);
 }
 
