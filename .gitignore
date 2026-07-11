@@ -13,6 +13,7 @@
 .venv
 __pycache__
 
+.codegraph
 
 # testing
 /coverage
@@ -23,6 +24,7 @@ __pycache__
 
 # production
 /build
+cert-exports/
 
 # misc
 .DS_Store

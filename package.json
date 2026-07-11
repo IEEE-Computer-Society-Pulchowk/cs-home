@@ -11,13 +11,14 @@
     "lint": "eslint",
     "cert:generate": "bun run scripts/generate-certificates.mjs",
     "cert:mass-mail": "bun run scripts/export-for-mass-mail.mjs",
+    "cert:export-images": "bun run scripts/export-certificate-images.mjs",
     "cert:bbox": "test -d .venv || bun run py:setup; .venv/bin/python scripts/bbox_tool.py",
-    "cert:template-editor": "test -d .venv || bun run py:setup; .venv/bin/python scripts/cert-template-editor.py",
     "py:setup": "python -m venv .venv && .venv/bin/pip install -r requirements.txt"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
+    "dev": "^0.1.5",
     "framer-motion": "^12.39.0",
     "gray-matter": "^4.0.3",
     "next": "^16.2.6",
@@ -28,6 +29,8 @@
     "react-markdown": "^10.1.0"
   },
   "devDependencies": {
+    "@napi-rs/canvas": "^0.1.65",
+    "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/postcss": "^4.3.0",
     "@tailwindcss/typography": "^0.5.19",
     "@types/bun": "^1.3.14",
