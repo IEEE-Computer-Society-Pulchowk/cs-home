@@ -10,7 +10,10 @@
     "start": "next start",
     "lint": "eslint",
     "cert:generate": "bun run scripts/generate-certificates.mjs",
-    "cert:mass-mail": "bun run scripts/export-for-mass-mail.mjs"
+    "cert:mass-mail": "bun run scripts/export-for-mass-mail.mjs",
+    "cert:bbox": "test -d .venv || bun run py:setup; .venv/bin/python scripts/bbox_tool.py",
+    "cert:template-editor": "test -d .venv || bun run py:setup; .venv/bin/python scripts/cert-template-editor.py",
+    "py:setup": "python -m venv .venv && .venv/bin/pip install -r requirements.txt"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
