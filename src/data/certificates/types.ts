@@ -1,33 +1,39 @@
 export interface Certificate {
-  certId: string;
+  email: string;
   name: string;
-  event: string; // human-readable event name, rendered
-  eventSlug: string; // must match an existing src/data/events/<slug>/
+  event: string;
+  eventSlug: string;
   issueYear: number;
-  date: string; // ISO (YYYY-MM-DD), rendered
-  templateId: string; // must match src/data/certificates/templates/<id>.json
-  qr: string; // QR data URL encoding the cert URL; baked at generate time
+  date: string;
+  templateId: string;
 }
+
+export const RENDERABLE_CERT_FIELDS = ["name", "event", "date"] as const;
+export type RenderableCertField = (typeof RENDERABLE_CERT_FIELDS)[number];
+
+export const TEXT_ANCHORS = ["start", "middle", "end"] as const;
+export type TextAnchor = (typeof TEXT_ANCHORS)[number];
+
+export const OVERFLOW_MODES = ["shrink", "wrap"] as const;
+export type OverflowMode = (typeof OVERFLOW_MODES)[number];
 
 export interface TextField {
   x: number;
   y: number;
+  width: number;
+  height: number;
   fontSize: number;
   fontFamily: string;
   fill: string;
-  textAnchor: "start" | "middle" | "end";
+  textAnchor: TextAnchor;
+  overflow?: OverflowMode;
+  minFontSize?: number;
 }
 
 export interface Template {
   templateId: string;
+  displayName: string;
   viewBox: { width: number; height: number };
-  background: string | null; // /public path to flattened art (full design); null = blank canvas
-  fields: {
-    name?: TextField;
-    event?: TextField;
-    date?: TextField;
-    certId?: TextField;
-    qr?: { x: number; y: number; size: number };
-  };
+  background: string | null;
+  fields: Partial<Record<RenderableCertField, TextField>>;
 }
-

@@ -1,0 +1,32 @@
+{
+  "templateId": "demo",
+  "displayName": "Demo",
+  "viewBox": { "width": 1600, "height": 1131 },
+  "background": "/certificates/templates/demo.svg",
+  "fields": {
+    "name": {
+      "x": 200,
+      "y": 480,
+      "width": 120,
+      "height": 80,
+      "fontSize": 64,
+      "minFontSize": 32,
+      "fontFamily": "Georgia, serif",
+      "fill": "#1a1a1a",
+      "textAnchor": "middle",
+      "overflow": "shrink"
+    },
+    "date": {
+      "x": 200,
+      "y": 925,
+      "width": 1200,
+      "height": 40,
+      "fontSize": 22,
+      "minFontSize": 14,
+      "fontFamily": "Inter, sans-serif",
+      "fill": "#444444",
+      "textAnchor": "middle",
+      "overflow": "shrink"
+    }
+  }
+}

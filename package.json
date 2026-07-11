@@ -10,8 +10,7 @@
     "start": "next start",
     "lint": "eslint",
     "cert:generate": "bun run scripts/generate-certificates.mjs",
-    "cert:ids": "bun run scripts/export-cert-ids.mjs",
-    "cert:links": "bun run scripts/export-certificate-links.mjs"
+    "cert:mass-mail": "bun run scripts/export-for-mass-mail.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

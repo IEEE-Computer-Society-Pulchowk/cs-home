@@ -188,8 +188,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 
 ## 🎓 Certificates
 
-Each certificate gets a permanent, verifiable URL (`/cert/<certId>`) and a QR code
-that points to it. `/verify` looks one up by ID. Certificate data is static and
+Each certificate gets a permanent, verifiable URL (`/cert/<templateId>/<email>`).
+`/verify` looks them up by email. Certificate data is static and
 git-committed, like every other content type here.
 
 ### Issue a batch
@@ -204,57 +204,43 @@ git-committed, like every other content type here.
    | Column | Notes |
    |---|---|
    | `name` | Exactly as it should appear on the certificate |
-   | `email` | Internal only — never rendered; part of the ID hash |
+   | `email` | Certificate identity key (normalized lowercase), used in URL lookup |
    | `event` | Human-readable name, rendered |
    | `eventSlug` | Must match an existing `src/data/events/<slug>/` |
-   | `issueYear` | Used in the certificate ID |
+   | `issueYear` | Rendered/event metadata only |
    | `date` | ISO `YYYY-MM-DD`, rendered |
    | `templateId` | Must match a `src/data/certificates/templates/<id>.json` |
 
-   `certId` is computed as `<eventSlug>-<issueYear>-<6 hex>` where the hex is
-   `sha256(eventSlug + "|" + templateId + "|" + email)`. It is deterministic, so
-   re-running the generator never changes an already-issued ID — **do not** add a
-   `certId` column. The same person may appear on multiple rows for one event with
-   different `templateId` values (e.g. participation and achievement); each row gets
-   its own ID and URL.
+   Certificate identity is `(templateId + normalized email)`. Re-running keeps the
+   same URL for the same template/email pair. The same person may appear on multiple
+   rows with different `templateId` values (e.g. participation and achievement).
 
-2. Generate the typed data file:
+2. Append new certificates to the typed data file:
 
    ```bash
    bun run scripts/generate-certificates.mjs path/to/list.csv
-   # writes src/data/certificates/index.ts (commit it)
+   # appends to src/data/certificates/index.ts (commit it)
    ```
 
-   The QR target domain defaults to `https://ieeecs.pcampus.edu.np`; override with
-   `SITE_URL=... bun run ...`.
+   Existing template/email pairs are left unchanged; only new pairs are added.
 
-3. Export only the certificate IDs as CSV:
+3. Export a mass-mail CSV (input columns + certificate URL):
 
    ```bash
-   bun run scripts/export-cert-ids.mjs path/to/list.csv > cert-ids.csv
+   bun run scripts/export-for-mass-mail.mjs path/to/list.csv > mass-mail.csv
    ```
 
-   The output is a one-column CSV with `certId` values in the same order as the
-   input rows.
-
-4. Export certificate URLs and image paths:
-
-   ```bash
-   bun run scripts/export-certificate-links.mjs path/to/list.csv > certificate-links.csv
-   ```
-
-   The script also writes PNGs to `certificate-exports/<templateId>/<certId>.png`
-   by default. Use `--out <dir>` to change the output folder.
+   Adds a `certurl` column with `https://ieeecs.pcampus.edu.np/cert?...` links.
 
 ### Add a new template
 
 A template is a fixed-`viewBox` SVG: a flattened background image plus per-field
-text coordinates measured against that canvas.
+bounding boxes (`x`, `y`, `width`, `height`) measured against that canvas.
 
-1. Export the background art (PNG) to
-   `public/certificates/templates/<id>/background.png`.
+1. Export the background art (SVG or PNG) to
+   `public/certificates/templates/<year>-<event>-<cert-type>.(svg|png)`.
 2. Write `src/data/certificates/templates/<id>.json` (copy `linux-101-2026.json`,
-   set `background` to the PNG path and adjust field `x`/`y`).
+   set `displayName`, set `background` to `/certificates/templates/<file>.(svg|png)`, and adjust field bounding boxes).
 3. Register it: add one line to
    `src/data/certificates/templates/index.ts`.
 
