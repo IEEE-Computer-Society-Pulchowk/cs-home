@@ -19,7 +19,7 @@ export default function CertClient() {
     const params = new URLSearchParams(window.location.search);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTemplateId(params.get("templateId"));
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     setEmail(params.get("email"));
   }, []);
 

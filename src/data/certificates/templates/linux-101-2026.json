@@ -26,15 +26,6 @@
       "fontFamily": "Inter, sans-serif",
       "fill": "#444444",
       "textAnchor": "middle"
-    },
-    "certId": {
-      "x": 800,
-      "y": 1080,
-      "fontSize": 14,
-      "fontFamily": "Inter, sans-serif",
-      "fill": "#999999",
-      "textAnchor": "middle"
-    },
-    "qr": { "x": 1400, "y": 940, "size": 130 }
+    }
   }
 }

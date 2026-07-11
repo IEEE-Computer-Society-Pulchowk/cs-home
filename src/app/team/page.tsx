@@ -114,7 +114,7 @@ const TeamContent: React.FC = () => {
                                             key={`${committee.id}-row-${rowIndex}`}
                                             className="flex flex-wrap justify-center gap-6"
                                         >
-                                            {row.map((member, index) => (
+                                            {row.map((member) => (
                                                 <div
                                                     key={member.id}
                                                     className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)] xl:w-[calc(20%-20px)] max-w-[320px]"
