@@ -42,3 +42,14 @@ test("registered templates pass validation", () => {
   }
   expect(failures).toEqual([]);
 });
+
+test("demo.json fields include full bounding boxes", () => {
+  for (const key of RENDERABLE_CERT_FIELDS) {
+    const field = demo.fields[key as keyof typeof demo.fields];
+    expect(field, `demo.fields.${key}`).toBeDefined();
+    expect(field!.width).toBeGreaterThan(0);
+    expect(field!.height).toBeGreaterThan(0);
+    expect(field!.overflow).toBeOneOf([...OVERFLOW_MODES]);
+    expect(field!.minFontSize).toBeGreaterThan(0);
+  }
+});
