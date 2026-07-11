@@ -1,13 +1,17 @@
 import type { Template } from "../types";
+import demo from "./demo.json";
 import linux1012026 from "./linux-101-2026.json";
+import { validateTemplate } from "../validate";
 
-// Registry of certificate templates. Add one line per new template — importing
-// the JSON here gets it bundled (no runtime fs, works on serverless + client).
-// ponytail: explicit registry over fs-glob; one line per template is cheaper
-// than debugging Next's file tracing for a runtime-constructed path.
 const TEMPLATES: Record<string, Template> = {
+  demo: demo as Template,
   "linux-101-2026": linux1012026 as Template,
 };
+
+for (const [templateId, template] of Object.entries(TEMPLATES)) {
+  const errors = validateTemplate(template, templateId);
+  if (errors.length) throw new Error(errors.join("\n"));
+}
 
 export const getTemplate = (templateId: string): Template | undefined =>
   TEMPLATES[templateId];

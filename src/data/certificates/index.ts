@@ -3,33 +3,61 @@ import type { Certificate } from "./types";
 
 export const CERTIFICATES: Certificate[] = [
   {
-    "certId": "linux-101-2026-15ebd8",
+    "email": "sajiya@example.com",
     "name": "Sajiya Aryal",
     "event": "Linux 101",
     "eventSlug": "linux-101",
     "issueYear": 2026,
     "date": "2026-07-03",
-    "templateId": "linux-101-2026",
-    "qr": "data:image/png;base64,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"
+    "templateId": "demo"
   },
   {
-    "certId": "linux-101-2026-96644b",
+    "email": "aakrisht@example.com",
     "name": "Aakrisht Sharma Paudel",
     "event": "Linux 101",
     "eventSlug": "linux-101",
     "issueYear": 2026,
     "date": "2026-07-03",
-    "templateId": "linux-101-2026",
-    "qr": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACMCAYAAACuwEE+AAAAAklEQVR4AewaftIAAAWfSURBVO3BQY4cuBEAwUyi///l9B4LOlAmelaWgYqwf7DWf+mw1oPDWg8Oaz348AuVP6liUvlGxZ+kclMxqdxU3Kj8SRXTYa0Hh7UeHNZ68OE3Kn6SyjcqJpVJZaqYVKaKG5WpYqr4SSpTxU3FT1K5Oaz14LDWg8NaDz48UnlR8aLiGxWTyguVqeJG5SdVfEPlRcWLw1oPDms9OKz14MNfRmWqmFSmikllqrhRmSpuVKaKG5Wbiv8nh7UeHNZ6cFjrwYe/TMULlRuVqWKqmFR+UsWk8v/ssNaDw1oPDms9+PCo4n+pYlKZKm5UvlExqUwVk8qfVPFvOqz14LDWg8NaDz78hsqfpDJVTCpTxaQyVdxUTCpTxaQyVUwqU8WkcqMyVdyo/EmHtR4c1npwWOvBh19U/D9ReVExqdyovKh4oTJV3FT8Lx3WenBY68FhrQcffqEyVUwqNxWTyouKm4pJ5YXKTcWkMlVMKt+oeKEyVdyoTBWTyk3FdFjrwWGtB4e1Hnz4RcWk8pMqXqjcVEwqk8pUcaMyVUwqLypuVKaKFypTxY3KNw5rPTis9eCw1oMPX6p4oTJVTCo3FTcVk8qLihcVk8qNyo3KN1RuKiaVF4e1HhzWenBY68GH36h4oTJV3KhMFZPKpHJTMVXcqEwVNxWTylTxomJSmSpuVKaKSeUnHdZ6cFjrwWGtBx8eqdxU3Ki8qJhUpopJZaqYVKaKSeVFxY3KVPFCZaqYKiaVFxUvDms9OKz14LDWgw+/ofKTKm5Upoqp4t9U8Q2VFypTxaRyozJVvFCZKm4Oaz04rPXgsNaDD1+quFG5qZgqblRuKn6Syk3FVDGp3FTcVEwqU8U3Kl4c1npwWOvBYa0HH36hMlVMKpPKi4oblW+ovFCZKqaKSeVG5YXKVDGpvFCZKiaVqeLFYa0Hh7UeHNZ68OFRxQuVSeUbFZPKVDGp3FT8pIpJZVL5k1R+0mGtB4e1HhzWevDhFxXfUJkq/iYVk8pUcVNxozJV3KhMKv+mihuVqWI6rPXgsNaDw1oPPvxCZaqYVF6o3FRMKi8qJpWp4iepTBU3KlPFVPFCZVK5qZhUbipuDms9OKz14LDWA/sHFypTxaQyVXxD5aZiUpkqblS+UfENlRcVk8pUMalMFTcqNxXTYa0Hh7UeHNZ6YP9gUHlRMam8qLhRuamYVG4qJpWbip+kMlVMKjcVL1RuKl4c1npwWOvBYa0HH35YxaQyVUwqNxWTyk3FpDKpfENlqphUXqjcVEwqU8WLihuVqWI6rPXgsNaDw1oPPvyi4oXKVHGjclNxUzGp3FTcqEwVk8o3Km5UXlRMKlPFVDGpfOOw1oPDWg8Oaz348BsqP6liUplUpopJZaqYVG5UXlRMKt9Q+UkVNypTxaQyVdwc1npwWOvBYa0HH36hMlVMKlPFpDJVTCpTxZ9U8UJlqrip+Ekq36i4qZhUporpsNaDw1oPDms9sH/wF1H5SRU3KlPFC5Wp4oXKTcULlZuKbxzWenBY68FhrQcffqHyJ1XcVNyoTBWTylQxVdyovFD5N6lMFTcVP+mw1oPDWg8Oaz348BsVP0nlhcpNxU3FpPKTKm5UflLFC5VvVEyHtR4c1npwWOvBh0cqLypeVNyoTCpTxYuKSeVvovKNikllqphUbg5rPTis9eCw1oMPfxmVqeKmYlL5SRXfqLhRmSpeqEwVk8qNyovDWg8Oaz04rPXgw19O5UXFjcqk8pNUpooXKlPFpPKiYlKZKl4c1npwWOvBYa0HHx5V/JsqJpWpYlK5qZgqXqhMFZPKC5WpYlL5hspUMVXcqEwV02GtB4e1HhzWevDhN1T+JJWp4qbihcpU8ULlpmJSmSomlaliUpkqblRuVKaKqeLmsNaDw1oPDms9sH+w1n/psNaDw1oPDms9+A9TcPpLKv8dQAAAAABJRU5ErkJggg=="
+    "templateId": "demo"
+  },
+  {
+    "email": "suubha@example.com",
+    "name": "Subha Sandesh Sharma Neupane",
+    "event": "Linux 101",
+    "eventSlug": "linux-101",
+    "issueYear": 2026,
+    "date": "2026-07-03",
+    "templateId": "demo"
+  },
+  {
+    "email": "subha@example.com",
+    "name": "Subha Sandesh Sharma Neupane",
+    "event": "Linux 101",
+    "eventSlug": "linux-101",
+    "issueYear": 2026,
+    "date": "2026-07-03",
+    "templateId": "demo"
   }
 ];
 
-const BY_ID = new Map(CERTIFICATES.map((c) => [c.certId, c]));
+const normalizeEmail = (email: string): string => email.trim().toLowerCase();
+const keyOf = (templateId: string, email: string): string => `${templateId}|${normalizeEmail(email)}`;
 
-export const getCertificateById = (id: string): Certificate | undefined =>
-  BY_ID.get(id.trim());
+const BY_KEY = new Map(CERTIFICATES.map((c) => [keyOf(c.templateId, c.email), c]));
 
-export const getCertIdStaticParams = (): { certId: string }[] =>
-  CERTIFICATES.map((c) => ({ certId: c.certId }));
+const BY_EMAIL = new Map<string, Certificate[]>();
+for (const cert of CERTIFICATES) {
+  const email = normalizeEmail(cert.email);
+  BY_EMAIL.set(email, [...(BY_EMAIL.get(email) ?? []), cert]);
+}
+
+export const getCertificateByTemplateAndEmail = (templateId: string, email: string): Certificate | undefined =>
+  BY_KEY.get(keyOf(templateId, email));
+
+export const getCertificatesByEmail = (email: string): Certificate[] =>
+  BY_EMAIL.get(normalizeEmail(email)) ?? [];
+
+export const getCertificatePath = (templateId: string, email: string): string =>
+  `/cert?templateId=${templateId}&email=${normalizeEmail(email)}`;
 
 export type { Certificate } from "./types";

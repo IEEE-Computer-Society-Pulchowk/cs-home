@@ -1,10 +1,34 @@
 "use client";
 
 // Convenience client-side PNG export of the rendered certificate SVG.
-// The live page is the canonical artifact; this is just a "save a copy" helper.
-// ponytail: rasterizes vector + inline-data-URL QR, which is taint-free. If a
-// template later uses a raster <image> background and canvas export taints,
-// add the server-side PNG route (deferred in the plan) instead of fighting this.
+// ponytail: inline external <image> hrefs before serialize — blob URLs can't resolve /public paths.
+
+async function svgWithInlinedImages(svg: SVGSVGElement): Promise<SVGSVGElement> {
+  const clone = svg.cloneNode(true) as SVGSVGElement;
+  const images = clone.querySelectorAll("image");
+
+  await Promise.all(
+    [...images].map(async (img) => {
+      const href =
+        img.getAttribute("href") ??
+        img.getAttributeNS("http://www.w3.org/1999/xlink", "href");
+      if (!href || href.startsWith("data:")) return;
+
+      const blob = await fetch(href).then((r) => r.blob());
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(blob);
+      });
+      img.setAttribute("href", dataUrl);
+      img.removeAttributeNS("http://www.w3.org/1999/xlink", "href");
+    }),
+  );
+
+  return clone;
+}
+
 export default function DownloadButton({
   svgId,
   filename,
@@ -16,7 +40,8 @@ export default function DownloadButton({
     const svg = document.getElementById(svgId) as unknown as SVGSVGElement | null;
     if (!svg) return;
 
-    const xml = new XMLSerializer().serializeToString(svg);
+    const inlined = await svgWithInlinedImages(svg);
+    const xml = new XMLSerializer().serializeToString(inlined);
     const url = URL.createObjectURL(new Blob([xml], { type: "image/svg+xml" }));
     try {
       const img = new Image();

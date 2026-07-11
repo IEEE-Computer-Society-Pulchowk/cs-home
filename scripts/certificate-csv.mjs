@@ -1,5 +1,3 @@
-import { createHash } from "node:crypto";
-
 export const CERTIFICATE_COLUMNS = ["name", "email", "event", "eventSlug", "issueYear", "date", "templateId"];
 
 // ponytail: naive split — fine for a flat participant list with no embedded
@@ -21,15 +19,12 @@ export function parseCsv(text) {
   });
 }
 
-export function certHash(eventSlug, templateId, email) {
-  return createHash("sha256")
-    .update(`${eventSlug}|${templateId}|${email}`)
-    .digest("hex")
-    .slice(0, 6);
+export function normalizeEmail(email) {
+  return String(email ?? "").trim().toLowerCase();
 }
 
-export function formatCertId(eventSlug, issueYear, templateId, email) {
-  return `${eventSlug}-${issueYear}-${certHash(eventSlug, templateId, email)}`;
+export function certificatePath(templateId, email) {
+  return `/cert?templateId=${templateId}&email=${normalizeEmail(email)}`;
 }
 
 function csvEscape(value) {
