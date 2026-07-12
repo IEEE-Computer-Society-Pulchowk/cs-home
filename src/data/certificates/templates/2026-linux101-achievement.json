@@ -1,0 +1,20 @@
+{
+  "templateId": "2026-linux101-achievement",
+  "displayName": "2026 Linux 101 Achievement",
+  "viewBox": { "width": 1600, "height": 1131 },
+  "background": "/certificates/templates/2026-linux101-achievement.svg",
+  "fields": {
+    "name": {
+      "x": 400,
+      "y": 485,
+      "width": 1130,
+      "height": 130,
+      "fontSize": 64,
+      "minFontSize": 32,
+      "fontFamily": "Handjet",
+      "fill": "#ffb600",
+      "textAnchor": "start",
+      "overflow": "shrink"
+    }
+  }
+}

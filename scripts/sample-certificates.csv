@@ -1,4 +1,4 @@
 name,email,event,eventSlug,issueYear,date,templateId
-Sajiya Aryal,sajiya@example.com,Linux 101,linux-101,2026,2026-07-03,demo
-Aakrisht Sharma Paudel,aakrisht@example.com,Linux 101,linux-101,2026,2026-07-03,demo
-Subha Sandesh Sharma Neupane,subha@example.com,Linux 101,linux-101,2026,2026-07-03,demo
+Test1,test@example.com,Linux 101,2026-linux101,2026,2026-07-03,2026-linux101-participation
+Test2,test2@example.com,Linux 101,2026-linux101,2026,2026-07-03,2026-linux101-mentor
+Test3,test3@example.com,Linux 101,2026-linux101,2026,2026-07-03,2026-linux101-achievement
