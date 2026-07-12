@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import { getAllEvents } from "../../lib/events";
+import { getAllEvents } from "@/lib/events.server";
 import EventList from "@/components/event-list";
 import { IeeeEvent, EventCategory } from "@/types";
 

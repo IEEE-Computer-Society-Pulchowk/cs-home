@@ -12,17 +12,47 @@
 //
 // Requires certificates to already exist in src/data/certificates/index.ts
 // (run `bun run cert:generate` first).
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
-import { createCanvas, loadImage } from "@napi-rs/canvas";
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { extname, join } from "node:path";
+import { createCanvas, GlobalFonts, loadImage } from "@napi-rs/canvas";
 import { Resvg } from "@resvg/resvg-js";
-import { CERTIFICATE_COLUMNS, certificatePath, normalizeEmail, parseCsv, toCsv } from "./certificate-csv.mjs";
+import {
+  CERTIFICATE_COLUMNS,
+  certificatePath,
+  normalizeEmail,
+  parseCsv,
+  toCsv,
+} from "./certificate-csv.mjs";
 import { getCertificateByTemplateAndEmail } from "../src/data/certificates/index.ts";
 import { getTemplate } from "../src/data/certificates/templates/index.ts";
 import { layoutText } from "../src/data/certificates/render.ts";
 
 const SITE_URL = "https://ieeecs.pcampus.edu.np";
 const ROOT = new URL("..", import.meta.url).pathname;
+const FONTS_DIR = join(ROOT, "public", "fonts");
+
+// ponytail: every .ttf in public/fonts/ is auto-registered under a family name
+// equal to its filename (no extension) — e.g. public/fonts/Handjet.ttf ->
+// fontFamily: "Handjet" in a template JSON. Keep the same name in the
+// matching @font-face in src/app/globals.css so the browser and this script
+// render identically. TTF only for now — see README "Add a custom font".
+//
+// This loop is the same as manually writing, per font:
+//   GlobalFonts.registerFromPath(join(FONTS_DIR, "Handjet.ttf"), "Handjet");
+// — nothing to add here when a new .ttf shows up in public/fonts/.
+function registerFonts() {
+  let files;
+  try {
+    files = readdirSync(FONTS_DIR);
+  } catch {
+    return; // no public/fonts/ yet — nothing to register
+  }
+  for (const file of files) {
+    if (extname(file).toLowerCase() !== ".ttf") continue;
+    const family = file.slice(0, -extname(file).length);
+    GlobalFonts.registerFromPath(join(FONTS_DIR, file), family);
+  }
+}
 
 function parseArgs(argv) {
   const inputs = [];
@@ -44,10 +74,15 @@ function filenamePart(email) {
 const backgroundCache = new Map();
 async function loadBackground(template) {
   if (!template.background) return null;
-  if (backgroundCache.has(template.templateId)) return backgroundCache.get(template.templateId);
+  if (backgroundCache.has(template.templateId))
+    return backgroundCache.get(template.templateId);
 
   const svg = readFileSync(join(ROOT, "public", template.background));
-  const png = new Resvg(svg, { fitTo: { mode: "width", value: template.viewBox.width } }).render().asPng();
+  const png = new Resvg(svg, {
+    fitTo: { mode: "width", value: template.viewBox.width },
+  })
+    .render()
+    .asPng();
   const image = await loadImage(png);
   backgroundCache.set(template.templateId, image);
   return image;
@@ -56,7 +91,10 @@ async function loadBackground(template) {
 async function renderCertificatePng(templateId, email) {
   const cert = getCertificateByTemplateAndEmail(templateId, email);
   const template = cert && getTemplate(templateId);
-  if (!cert || !template) throw new Error("certificate not found — run `bun run cert:generate` first");
+  if (!cert || !template)
+    throw new Error(
+      "certificate not found — run `bun run cert:generate` first",
+    );
 
   const { width, height } = template.viewBox;
   const canvas = createCanvas(width, height);
@@ -73,13 +111,21 @@ async function renderCertificatePng(templateId, email) {
     const value = cert[key];
     if (!field || value == null || value === "") continue;
 
-    const { fontSize, lines, x, startY, singleLineY, lineHeight } = layoutText(String(value), field, ctx);
+    const { fontSize, lines, x, startY, singleLineY, lineHeight } = layoutText(
+      String(value),
+      field,
+      ctx,
+    );
     ctx.fillStyle = field.fill;
     ctx.textAlign = field.textAnchor === "middle" ? "center" : field.textAnchor;
     ctx.textBaseline = lines.length === 1 ? "middle" : "alphabetic";
     lines.forEach((line, i) => {
       ctx.font = `${fontSize}px ${field.fontFamily}`;
-      ctx.fillText(line, x, lines.length === 1 ? singleLineY : startY + i * lineHeight);
+      ctx.fillText(
+        line,
+        x,
+        lines.length === 1 ? singleLineY : startY + i * lineHeight,
+      );
     });
   }
 
@@ -89,9 +135,13 @@ async function renderCertificatePng(templateId, email) {
 async function main() {
   const { inputs, outDir } = parseArgs(process.argv.slice(2));
   if (!inputs.length) {
-    console.error("usage: bun run scripts/export-certificate-images.mjs <input.csv> [...] [--out-dir=path]");
+    console.error(
+      "usage: bun run scripts/export-certificate-images.mjs <input.csv> [...] [--out-dir=path]",
+    );
     process.exit(1);
   }
+
+  registerFonts();
 
   const rows = inputs.flatMap((f) => parseCsv(readFileSync(f, "utf8")));
   mkdirSync(outDir, { recursive: true });
@@ -103,15 +153,26 @@ async function main() {
     const filepath = join(outDir, filename);
 
     try {
-      writeFileSync(filepath, await renderCertificatePng(row.templateId, email));
-      output.push({ ...row, certurl: `${SITE_URL}${certificatePath(row.templateId, email)}`, imagepath: filepath });
+      writeFileSync(
+        filepath,
+        await renderCertificatePng(row.templateId, email),
+      );
+      output.push({
+        ...row,
+        certurl: `${SITE_URL}${certificatePath(row.templateId, email)}`,
+        imagepath: filepath,
+      });
     } catch (err) {
       console.error(`skipped ${row.templateId}|${email}: ${err.message}`);
     }
   }
 
-  process.stdout.write(toCsv(output, [...CERTIFICATE_COLUMNS, "certurl", "imagepath"]));
-  console.error(`Rendered ${output.length}/${rows.length} certificate(s) -> ${outDir}`);
+  process.stdout.write(
+    toCsv(output, [...CERTIFICATE_COLUMNS, "certurl", "imagepath"]),
+  );
+  console.error(
+    `Rendered ${output.length}/${rows.length} certificate(s) -> ${outDir}`,
+  );
 }
 
 main();

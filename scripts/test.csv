@@ -1,0 +1,4 @@
+name,email,eventSlug,templateId
+Test1,test@example.com,2026-linux101,2026-linux101-participation
+Test2,test2@example.com,2026-linux101,2026-linux101-mentor
+Test3,test3@example.com,2026-linux101,2026-linux101-achievement

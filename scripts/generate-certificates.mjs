@@ -22,10 +22,7 @@ function rowToCert(row) {
   return {
     email,
     name: row.name,
-    event: row.event,
     eventSlug: row.eventSlug,
-    issueYear: Number(row.issueYear),
-    date: row.date,
     templateId: row.templateId,
   };
 }
@@ -39,7 +36,9 @@ async function loadExisting() {
 async function main() {
   const inputs = process.argv.slice(2);
   if (!inputs.length) {
-    console.error("usage: bun run scripts/generate-certificates.mjs <input.csv> [...]");
+    console.error(
+      "usage: bun run scripts/generate-certificates.mjs <input.csv> [...]",
+    );
     process.exit(1);
   }
 
@@ -86,7 +85,9 @@ export type { Certificate } from "./types";
 
   mkdirSync(dirname(OUT), { recursive: true });
   writeFileSync(OUT, body);
-  console.log(`Wrote ${unique.length} certificate(s) (${added} added) -> ${OUT}`);
+  console.log(
+    `Wrote ${unique.length} certificate(s) (${added} added) -> ${OUT}`,
+  );
 }
 
 main();

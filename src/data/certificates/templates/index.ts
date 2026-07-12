@@ -1,11 +1,16 @@
 import type { Template } from "../types";
-import demo from "./demo.json";
-import linux1012026 from "./linux-101-2026.json";
 import { validateTemplate } from "../validate";
+
+import demo from "./demo.json";
+import y2026linux101achievement from "./2026-linux101-achievement.json";
+import y2026linux101mentor from "./2026-linux101-mentor.json";
+import y2026linux101participation from "./2026-linux101-participation.json";
 
 const TEMPLATES: Record<string, Template> = {
   demo: demo as Template,
-  "linux-101-2026": linux1012026 as Template,
+  "2026-linux101-achievement": y2026linux101achievement as Template,
+  "2026-linux101-mentor": y2026linux101mentor as Template,
+  "2026-linux101-participation": y2026linux101participation as Template,
 };
 
 for (const [templateId, template] of Object.entries(TEMPLATES)) {

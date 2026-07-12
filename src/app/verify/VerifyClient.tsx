@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getCertificatePath, getCertificatesByEmail } from "@/data/certificates";
+import { getEventMetaBySlug } from "@/lib/events";
 import { getTemplate } from "@/data/certificates/templates";
 
 export default function VerifyClient() {
@@ -69,6 +70,7 @@ export default function VerifyClient() {
               {certificates.map((cert) => {
                 const template = getTemplate(cert.templateId);
                 const certPath = getCertificatePath(cert.templateId, cert.email);
+                const event = getEventMetaBySlug(cert.eventSlug);
                 return (
                   <div
                     key={`${cert.templateId}-${cert.email}`}
@@ -77,7 +79,7 @@ export default function VerifyClient() {
                     <div>
                       <p className="font-semibold text-gray-800">{template?.displayName ?? cert.templateId}</p>
                       <p className="text-sm text-gray-600">
-                        {cert.event} · Issued {cert.date}
+                        {event?.title}
                       </p>
                     </div>
                     <Link href={certPath} className="text-sm font-medium text-ieee-cs-orange hover:underline">

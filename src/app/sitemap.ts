@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blogs";
-import { getAllEvents } from "@/lib/events";
+import { getAllEvents } from "@/lib/events.server";
 
 export const dynamic = "force-static";
 

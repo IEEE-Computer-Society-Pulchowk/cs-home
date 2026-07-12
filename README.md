@@ -246,3 +246,60 @@ bounding boxes (`x`, `y`, `width`, `height`) measured against that canvas.
 
 Templates are **locked once issued** — a new design for a future event gets a new
 `templateId`, so old certificates never change.
+
+### Add a custom font
+
+**TTF files only for now.** A certificate field's `fontFamily` (in a template's
+JSON) is rendered by two completely separate renderers that don't share any
+font-loading code, so a custom font has to be wired into both:
+
+1. **Browser** — `CertificateSvg.tsx` (on-page view) and `DownloadButton.tsx`
+   (the "Download as image" button, which rasterizes that same SVG client-side)
+   both need the font loaded as a normal web font via CSS.
+2. **`scripts/export-certificate-images.mjs`** — the Node/Bun batch script used
+   for mass-mail PNG exports. It draws text with `@napi-rs/canvas`, which has
+   no concept of CSS — it only knows fonts explicitly registered with
+   `GlobalFonts.registerFromPath()`.
+
+Steps:
+
+1. Drop the `.ttf` file in `public/fonts/`, e.g.:
+
+   ```
+   public/fonts/GreatVibes.ttf
+   ```
+
+   The **filename (without extension) is the font family name** everywhere —
+   keep it consistent, no spaces if you can help it.
+
+2. Add a matching `@font-face` block in `src/app/globals.css` (there's a
+   template comment there showing the exact shape to copy):
+
+   ```css
+   @font-face {
+     font-family: "GreatVibes";
+     src: url("/fonts/GreatVibes.ttf") format("truetype");
+     font-display: swap;
+   }
+   ```
+
+   This covers both the on-page render and the browser-side PNG download.
+
+3. Nothing else to do for the Node script — `export-certificate-images.mjs`
+   auto-registers every `.ttf` in `public/fonts/` (via `GlobalFonts.registerFromPath`)
+   under a family name equal to its filename, so it picks up new fonts with no
+   code changes.
+
+4. Reference it in a template JSON:
+
+   ```json
+   "fontFamily": "GreatVibes"
+   ```
+
+   Use just the bare family name — don't rely on CSS-style fallback lists
+   (`"GreatVibes, cursive"`) here, since the Node script's canvas font parser
+   isn't guaranteed to honor a fallback chain the same way a browser does.
+
+Non-TTF sources (Google Fonts, OTF/WOFF2 from elsewhere) aren't supported by
+this pipeline yet — download a `.ttf` of the desired font and follow the steps
+above.

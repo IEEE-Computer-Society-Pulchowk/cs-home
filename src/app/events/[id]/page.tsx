@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import { getEventBySlug, getAllEvents } from "../../../lib/events";
+import { getEventBySlug, getAllEvents } from "@/lib/events.server";
 import EventYearPhase from "@/components/event-year-phase";
 import ReactMarkdown from "react-markdown";
 import { transformPersonMentions } from "@/lib/mentions";
