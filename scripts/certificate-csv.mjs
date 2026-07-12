@@ -1,4 +1,4 @@
-export const CERTIFICATE_COLUMNS = ["name", "email", "event", "eventSlug", "issueYear", "date", "templateId"];
+export const CERTIFICATE_COLUMNS = ["name", "email", "eventSlug", "templateId"];
 
 // ponytail: naive split — fine for a flat participant list with no embedded
 // commas/quotes. Swap in `csv-parse` only if a real CSV breaks this.
@@ -9,9 +9,13 @@ export function parseCsv(text) {
     .trim()
     .split("\n")
     .filter((l) => l.trim());
-  const header = lines.shift().split(",").map((h) => h.trim());
+  const header = lines
+    .shift()
+    .split(",")
+    .map((h) => h.trim());
   for (const col of CERTIFICATE_COLUMNS) {
-    if (!header.includes(col)) throw new Error(`CSV missing required column: ${col}`);
+    if (!header.includes(col))
+      throw new Error(`CSV missing required column: ${col}`);
   }
   return lines.map((line) => {
     const cells = line.split(",").map((c) => c.trim());
@@ -20,7 +24,9 @@ export function parseCsv(text) {
 }
 
 export function normalizeEmail(email) {
-  return String(email ?? "").trim().toLowerCase();
+  return String(email ?? "")
+    .trim()
+    .toLowerCase();
 }
 
 export function certificatePath(templateId, email) {
@@ -33,5 +39,10 @@ function csvEscape(value) {
 }
 
 export function toCsv(rows, headers) {
-  return [headers.map(csvEscape).join(","), ...rows.map((row) => headers.map((h) => csvEscape(row[h])).join(","))].join("\n") + "\n";
+  return (
+    [
+      headers.map(csvEscape).join(","),
+      ...rows.map((row) => headers.map((h) => csvEscape(row[h])).join(",")),
+    ].join("\n") + "\n"
+  );
 }
