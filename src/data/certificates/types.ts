@@ -3,12 +3,13 @@ export interface Certificate {
   name: string;
   eventSlug: string;
   templateId: string;
+  date?: string;
 }
 
 export const OVERFLOW_MODES = ["shrink", "wrap"] as const;
 export const TEXT_ANCHORS = ["start", "middle", "end"] as const;
-export const RENDERABLE_CERT_FIELDS = ["name", "event", "date"] as const;
 
+export const RENDERABLE_CERT_FIELDS = ["name", "date"] as const satisfies readonly (keyof Certificate)[];
 export type OverflowMode = (typeof OVERFLOW_MODES)[number];
 export type TextAnchor = (typeof TEXT_ANCHORS)[number];
 export type RenderableCertField = (typeof RENDERABLE_CERT_FIELDS)[number];

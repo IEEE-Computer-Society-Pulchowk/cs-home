@@ -16,8 +16,8 @@
 }
 
 @font-face {
-  font-family: "Handjet";
-  src: url("/fonts/Handjet.ttf") format("truetype");
+  font-family: "HandjetBold";
+  src: url("/fonts/HandjetBold.ttf") format("truetype");
   font-display: swap;
 }
 

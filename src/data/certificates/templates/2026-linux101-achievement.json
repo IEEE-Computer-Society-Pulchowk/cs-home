@@ -6,12 +6,12 @@
   "fields": {
     "name": {
       "x": 400,
-      "y": 485,
-      "width": 1130,
-      "height": 130,
-      "fontSize": 64,
+      "y": 500,
+      "width": 800,
+      "height": 200,
+      "fontSize": 100,
       "minFontSize": 32,
-      "fontFamily": "Handjet",
+      "fontFamily": "HandjetBold",
       "fill": "#ffb600",
       "textAnchor": "start",
       "overflow": "shrink"

@@ -3,22 +3,364 @@ import type { Certificate } from "./types";
 
 export const CERTIFICATES: Certificate[] = [
   {
-    "email": "test@example.com",
-    "name": "Test1",
-    "eventSlug": "2026-linux101",
+    "email": "080bct001.aabartan@pcampus.edu.np",
+    "name": "AABARTAN MAN KARMACHARYA",
+    "eventSlug": "linux-101",
     "templateId": "2026-linux101-participation"
   },
   {
-    "email": "test2@example.com",
-    "name": "Test2",
-    "eventSlug": "2026-linux101",
+    "email": "aaditya98331@gmail.com",
+    "name": "AADITYA RAJ BAIDYA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct004.aavash@pcampus.edu.np",
+    "name": "AAVASH UPRETY",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct013.abishek@pcampus.edu.np",
+    "name": "ABISHEK PARAJULI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct014.aditya@pcampus.edu.np",
+    "name": "ADITYA PARIHAT THARU",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct008.aliz@pcampus.edu.np",
+    "name": "ALIZ BHATTARAI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct010.amulya@pcampus.edu.np",
+    "name": "AMULYA SHRESTHA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct011.anish@pcampus.edu.np",
+    "name": "ANISH KHADKA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct012.anmol@pcampus.edu.np",
+    "name": "ANMOL SHRESTHA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct022.arya@pcampus.edu.np",
+    "name": "ARYA JHA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bei014.bijan@pcampus.edu.np",
+    "name": "BIJAN",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bei015.bikrant@pcampus.edu.np",
+    "name": "BIKRANT LEKHAK",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct025.binam@pcampus.edu.np",
+    "name": "BINAM ARYAL",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct026.binay@pcampus.edu.np",
+    "name": "BINAY KUMAR MANDAL",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct019.binayak@pcampus.edu.np",
+    "name": "BINAYAK ROKA CHHETRI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct028.bipin@pcampus.edu.np",
+    "name": "BIPIN KUMAR THAKUR",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct029.bishal@pcampus.edu.np",
+    "name": "BISHAL SAPKOTA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct025.bishesh@pcampus.edu.np",
+    "name": "BISHESH KHATRI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct027.brishkamal@pcampus.edu.np",
+    "name": "BRISHKAMAL KARKI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct032.dipendra@pcampus.edu.np",
+    "name": "DIPENDRA PARAJULI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "ishabudhathoki9@gmail.com",
+    "name": "ISHA BUDHATHOKI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bce149.sandhya@pcampus.edu.np",
+    "name": "KOMAL KUSHWAHA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct035.kumud@pcampus.edu.np",
+    "name": "KUMUD TIMALSINA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct037.mahendra@pcampus.edu.np",
+    "name": "MAHENDRA SHARMA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct045.nirjal@pcampus.edu.np",
+    "name": "NIRJAL PAUDEL",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "sthanischhal207@gmail.com",
+    "name": "NISCHHAL SHRESTHA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct048.nugaw@pcampus.edu.np",
+    "name": "NUGAW RATNA SHAKYA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "080bct053.prabesh@pcampus.edu.np",
+    "name": "PRABESH BASTOLA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "ermudprashant@gmail.com",
+    "name": "PRASHANT DUMRE",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct052.pratik@pcampus.edu.np",
+    "name": "PRATIK POUDEL",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct061.prayusha@pcampus.edu.np",
+    "name": "PRAYUSHA POKHREL",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct054.prazen@pcampus.edu.np",
+    "name": "PRAZEN MAHARJAN",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct067.ritika@pcampus.edu.np",
+    "name": "RITIKA KC",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct062.sagar@pcampus.edu.np",
+    "name": "SAGAR PANDEY",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct072.samrachana@pcampus.edu.np",
+    "name": "SAMRACHANA SHARMA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "081bct075.sanskriti@pcampus.edu.np",
+    "name": "SANSKRITI ADHIKARI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "shikhargc23@gmail.com",
+    "name": "SHIKHAR GC",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "tejaswiacharya21@gmail.com",
+    "name": "TEJASWI ACHARYA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct094.tushar@pcampus.edu.np",
+    "name": "TUSHAR AIDI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct095.utsab@pcampus.edu.np",
+    "name": "UTSAB RAJ BHATTARAI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
+  },
+  {
+    "email": "082bct008.aliz@pcampus.edu.np",
+    "name": "ALIZ BHATTARAI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "080bct001.aabartan@pcampus.edu.np",
+    "name": "AABARTAN MAN KARMACHARYA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "082bct037.mahendra@pcampus.edu.np",
+    "name": "MAHENDRA SHARMA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "082bct004.aavash@pcampus.edu.np",
+    "name": "AAVASH UPRETY",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "082bct094.tushar@pcampus.edu.np",
+    "name": "TUSHAR AIDI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "sthanischhal207@gmail.com",
+    "name": "NISCHAL SHRESTHA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "082bct035.kumud@pcampus.edu.np",
+    "name": "KUMUD TIMALSINA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "081bct061.prayusha@pcampus.edu.np",
+    "name": "PRAYUSHA POKHREL",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "aaditya98331@gmail.com",
+    "name": "AADITYA RAJ BAIDYA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "082bei014.bijan@pcampus.edu.np",
+    "name": "BIJAN",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "ermudprashant@gmail.com",
+    "name": "PRASHANT DUMRE",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "080bct053.prabesh@pcampus.edu.np",
+    "name": "PRABESH BASTOLA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "082bct062.sagar@pcampus.edu.np",
+    "name": "SAGAR PANDEY",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "081bct022.arya@pcampus.edu.np",
+    "name": "ARYA JHA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "081bct025.binam@pcampus.edu.np",
+    "name": "BINAM ARYAL",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "082bct019.binayak@pcampus.edu.np",
+    "name": "BINAYAK ROKA CHHETRI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-achievement"
+  },
+  {
+    "email": "081bct080.shubham@pcampus.edu.np",
+    "name": "SHUBHAM BHATTRAI",
+    "eventSlug": "linux-101",
     "templateId": "2026-linux101-mentor"
   },
   {
-    "email": "test3@example.com",
-    "name": "Test3",
-    "eventSlug": "2026-linux101",
-    "templateId": "2026-linux101-achievement"
+    "email": "081bct079.shubha@pcampus.edu.np",
+    "name": "SHUBHA SANDESH SHARMA NEUPANE",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-mentor"
+  },
+  {
+    "email": "081bct082.subhesh@pcampus.edu.np",
+    "name": "SUBHESH BHATTA",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-mentor"
+  },
+  {
+    "email": "081bct041.nabaraj@pcampus.edu.np",
+    "name": "NABARAJ BHANDARI",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-mentor"
   }
 ];
 
