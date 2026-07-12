@@ -3,40 +3,22 @@ import type { Certificate } from "./types";
 
 export const CERTIFICATES: Certificate[] = [
   {
-    "email": "sajiya@example.com",
-    "name": "Sajiya Aryal",
-    "event": "Linux 101",
-    "eventSlug": "linux-101",
-    "issueYear": 2026,
-    "date": "2026-07-03",
-    "templateId": "demo"
+    "email": "test@example.com",
+    "name": "Test1",
+    "eventSlug": "2026-linux101",
+    "templateId": "2026-linux101-participation"
   },
   {
-    "email": "aakrisht@example.com",
-    "name": "Aakrisht Sharma Paudel",
-    "event": "Linux 101",
-    "eventSlug": "linux-101",
-    "issueYear": 2026,
-    "date": "2026-07-03",
-    "templateId": "demo"
+    "email": "test2@example.com",
+    "name": "Test2",
+    "eventSlug": "2026-linux101",
+    "templateId": "2026-linux101-mentor"
   },
   {
-    "email": "suubha@example.com",
-    "name": "Subha Sandesh Sharma Neupane",
-    "event": "Linux 101",
-    "eventSlug": "linux-101",
-    "issueYear": 2026,
-    "date": "2026-07-03",
-    "templateId": "demo"
-  },
-  {
-    "email": "subha@example.com",
-    "name": "Subha Sandesh Sharma Neupane",
-    "event": "Linux 101",
-    "eventSlug": "linux-101",
-    "issueYear": 2026,
-    "date": "2026-07-03",
-    "templateId": "demo"
+    "email": "test3@example.com",
+    "name": "Test3",
+    "eventSlug": "2026-linux101",
+    "templateId": "2026-linux101-achievement"
   }
 ];
 

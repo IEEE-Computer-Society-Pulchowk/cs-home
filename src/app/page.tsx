@@ -3,7 +3,7 @@ import HomeHero from "@/components/home-hero";
 import HomeAbout from "@/components/home-about";
 import HomeEvents from "@/components/home-events";
 import HomeCTA from "@/components/home-cta";
-import { getAllEvents } from "@/lib/events";
+import { getAllEvents } from "@/lib/events.server";
 import { IeeeEvent, EventCategory } from "@/types";
 
 export const metadata: Metadata = {

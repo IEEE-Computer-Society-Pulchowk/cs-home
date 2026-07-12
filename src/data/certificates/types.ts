@@ -1,10 +1,7 @@
 export interface Certificate {
   email: string;
   name: string;
-  event: string;
   eventSlug: string;
-  issueYear: number;
-  date: string;
   templateId: string;
 }
 
