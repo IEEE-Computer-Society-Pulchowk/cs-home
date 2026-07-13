@@ -17,11 +17,11 @@ import { extname, join } from "node:path";
 import { createCanvas, GlobalFonts, loadImage } from "@napi-rs/canvas";
 import { Resvg } from "@resvg/resvg-js";
 import {
-  CERTIFICATE_COLUMNS,
   certificatePath,
   normalizeEmail,
   parseCsv,
   toCsv,
+  withColumns,
 } from "./certificate-csv.mjs";
 import { getCertificateByTemplateAndEmail } from "../src/data/certificates/index.ts";
 import { getTemplate } from "../src/data/certificates/templates/index.ts";
@@ -111,8 +111,11 @@ async function renderCertificatePng(templateId, email) {
     const value = cert[key];
     if (!field || value == null || value === "") continue;
 
-    const { fontSize, lines, x, startY, singleLineY, lineHeight, baseline } =
-      layoutText(String(value), field, ctx);
+    const { fontSize, lines, x, startY, singleLineY, lineHeight, baseline } = layoutText(
+      String(value),
+      field,
+      ctx,
+    );
     ctx.fillStyle = field.fill;
     ctx.textAlign = field.textAnchor === "middle" ? "center" : field.textAnchor;
     ctx.textBaseline = baseline;
@@ -165,7 +168,7 @@ async function main() {
   }
 
   process.stdout.write(
-    toCsv(output, [...CERTIFICATE_COLUMNS, "certurl", "imagepath"]),
+    toCsv(output, withColumns(rows, "certurl", "imagepath")),
   );
   console.error(
     `Rendered ${output.length}/${rows.length} certificate(s) -> ${outDir}`,
