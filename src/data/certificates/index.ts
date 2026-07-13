@@ -367,6 +367,12 @@ export const CERTIFICATES: Certificate[] = [
     "name": "AAKRISHT SHARMA PAUDEL",
     "eventSlug": "linux-101",
     "templateId": "2026-linux101-mentor"
+  },
+  {
+    "email": "prakritip900@gmail.com",
+    "name": "PRAKRITI POUDEL",
+    "eventSlug": "linux-101",
+    "templateId": "2026-linux101-participation"
   }
 ];
 
