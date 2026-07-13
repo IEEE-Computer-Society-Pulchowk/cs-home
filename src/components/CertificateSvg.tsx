@@ -23,7 +23,7 @@ function FittedText({ field, text }: { field: TextField; text: string }) {
       fontFamily={field.fontFamily}
       fill={field.fill}
       textAnchor={field.textAnchor}
-      dominantBaseline={layout.lines.length === 1 ? "middle" : "auto"}
+      dominantBaseline={layout.baseline === "middle" ? "middle" : "auto"}
     >
       {layout.lines.map((line, i) => (
         <tspan key={i} x={layout.x} dy={i === 0 ? 0 : layout.lineHeight}>

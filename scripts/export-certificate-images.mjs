@@ -111,14 +111,11 @@ async function renderCertificatePng(templateId, email) {
     const value = cert[key];
     if (!field || value == null || value === "") continue;
 
-    const { fontSize, lines, x, startY, singleLineY, lineHeight } = layoutText(
-      String(value),
-      field,
-      ctx,
-    );
+    const { fontSize, lines, x, startY, singleLineY, lineHeight, baseline } =
+      layoutText(String(value), field, ctx);
     ctx.fillStyle = field.fill;
     ctx.textAlign = field.textAnchor === "middle" ? "center" : field.textAnchor;
-    ctx.textBaseline = lines.length === 1 ? "middle" : "alphabetic";
+    ctx.textBaseline = baseline;
     lines.forEach((line, i) => {
       ctx.font = `${fontSize}px ${field.fontFamily}`;
       ctx.fillText(

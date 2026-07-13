@@ -6,7 +6,7 @@
   "fields": {
     "name": {
       "x": 400,
-      "y": 500,
+      "y": 450,
       "width": 800,
       "height": 200,
       "fontSize": 100,
@@ -14,7 +14,7 @@
       "fontFamily": "HandjetBold",
       "fill": "#ffb600",
       "textAnchor": "start",
-      "overflow": "shrink"
+      "overflow": "fill"
     }
   }
 }

@@ -6,7 +6,7 @@ export interface Certificate {
   date?: string;
 }
 
-export const OVERFLOW_MODES = ["shrink", "wrap"] as const;
+export const OVERFLOW_MODES = ["shrink", "wrap", "fill"] as const;
 export const TEXT_ANCHORS = ["start", "middle", "end"] as const;
 
 export const RENDERABLE_CERT_FIELDS = ["name", "date"] as const satisfies readonly (keyof Certificate)[];
@@ -23,7 +23,10 @@ export interface TextField {
   fontFamily: string;
   fill: string;
   textAnchor: TextAnchor;
-  // shrink: one line, reduce font size. wrap: word-wrap to multiple lines, shrink if needed.
+  // shrink: one line, reduce font size if it overflows width. wrap: word-wrap
+  // to multiple lines, shrink if needed. fill: one line, scale font size up
+  // or down so it exactly spans width (height is ignored); anchored to the
+  // field's bottom edge instead of vertically centered.
   overflow?: OverflowMode;
   minFontSize?: number;
 }

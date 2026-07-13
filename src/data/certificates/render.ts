@@ -8,7 +8,7 @@ export const LINE_HEIGHT = 1.2;
 
 export interface Measurable {
   font: string;
-  measureText(text: string): { width: number };
+  measureText(text: string): { width: number; fontBoundingBoxDescent?: number };
 }
 
 export function anchorX(field: TextField) {
@@ -47,6 +47,19 @@ export function fitText(text: string, field: TextField, ctx: Measurable) {
   const mode = field.overflow ?? "shrink";
   const minSize = field.minFontSize ?? Math.max(8, Math.round(field.fontSize * 0.5));
 
+  if (mode === "fill") {
+    // ponytail: text width is ~linear in font size for a fixed string+font, so
+    // one measurement at field.fontSize gives the exact scale factor to shrink
+    // to width — no shrink-loop needed. Capped at field.fontSize: short text
+    // stays at nominal size rather than growing to fill the box. Height is
+    // intentionally not a constraint here (see layoutText's bottom-anchored y
+    // for this mode).
+    const refWidth = measureWidth(text, field.fontSize, field.fontFamily, ctx);
+    const scaled = refWidth > 0 ? (field.fontSize * field.width) / refWidth : field.fontSize;
+    const fontSize = Math.max(minSize, Math.min(field.fontSize, scaled));
+    return { fontSize, lines: [text] };
+  }
+
   if (mode === "wrap") {
     for (let size = field.fontSize; size >= minSize; size -= 1) {
       const lines = wrapLines(text, field.width, size, field.fontFamily, ctx);
@@ -70,8 +83,16 @@ export function fitText(text: string, field: TextField, ctx: Measurable) {
 export function layoutText(text: string, field: TextField, ctx: Measurable) {
   const { fontSize, lines } = fitText(text, field, ctx);
   const x = anchorX(field);
+
+  if ((field.overflow ?? "shrink") === "fill") {
+    ctx.font = `${fontSize}px ${field.fontFamily}`;
+    const descent = ctx.measureText(text).fontBoundingBoxDescent ?? 0;
+    const y = field.y + field.height - descent; // bottom edge, not center
+    return { fontSize, lines, x, startY: y, singleLineY: y, lineHeight: fontSize * LINE_HEIGHT, baseline: "alphabetic" as const };
+  }
+
   const blockHeight = lines.length * fontSize * LINE_HEIGHT;
   const startY = field.y + (field.height - blockHeight) / 2 + fontSize * 0.85;
   const singleLineY = field.y + field.height / 2;
-  return { fontSize, lines, x, startY, singleLineY, lineHeight: fontSize * LINE_HEIGHT };
+  return { fontSize, lines, x, startY, singleLineY, lineHeight: fontSize * LINE_HEIGHT, baseline: "middle" as const };
 }
