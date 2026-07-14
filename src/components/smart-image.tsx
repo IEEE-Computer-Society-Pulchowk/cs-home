@@ -35,7 +35,12 @@ export default function SmartImage({
 
   /* eslint-disable @next/next/no-img-element */
   const logo = (
-    <img src={FALLBACK} alt="" aria-hidden className="h-2/5 w-2/5 object-contain opacity-60" />
+    <img
+      src={FALLBACK}
+      alt=""
+      aria-hidden
+      className="h-2/5 w-2/5 object-contain opacity-60"
+    />
   );
 
   const real = (
@@ -44,7 +49,11 @@ export default function SmartImage({
       alt={alt}
       loading={loading}
       onError={() => setFailed(true)}
-      className={fill ? `absolute inset-0 h-full w-full ${className ?? ""}` : className}
+      className={
+        fill
+          ? `absolute inset-0 w-full h-full object-contain ${className ?? ""}`
+          : `max-h-full max-w-full object-contain ${className ?? ""}`
+      }
       style={style}
     />
   );
@@ -54,14 +63,22 @@ export default function SmartImage({
   // non-fill: the element is sized by its own className, so we can't stack —
   // swap to the logo only when there's no usable image.
   const content = fill ? (
-    <span className="absolute inset-0 flex items-center justify-center">
+    <span className="absolute inset-0 h-full w-full flex items-center justify-center">
       {logo}
       {showReal && real}
     </span>
-  ) : showReal ? (
-    real
   ) : (
-    <img src={FALLBACK} alt={alt} className={className} style={style} />
+    <span className="flex h-full w-full items-center justify-center">
+      {showReal
+        ? real
+        : // <img
+          //   src={FALLBACK}
+          //   alt={alt}
+          //   className={`object-contain ${className ?? ""}`}
+          //   style={style}
+          // />
+          logo}
+    </span>
   );
   /* eslint-enable @next/next/no-img-element */
 

@@ -13,16 +13,18 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
   if (featured) {
     return (
       <div className="group relative grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-8 bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
-        <div className="h-64 md:h-full bg-gray-100 relative overflow-hidden">
+        <div className="h-64 md:h-full bg-gray-100 relative overflow-hidden flex items-center justify-center">
           {post.imageUrl ? (
             <SmartImage
               src={post.imageUrl}
               alt={post.title}
               href={`/blogs/${post.id}`}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              fill={true}
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className=""
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-ieee-cs-orange to-ieee-dark flex items-center justify-center">
+            <div className="w-full h-full bg-linear-to-br from-ieee-cs-orange to-ieee-dark flex items-center justify-center">
               <span className="text-white/20 text-6xl font-bold">Blog</span>
             </div>
           )}
@@ -84,17 +86,18 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
             src={post.imageUrl}
             alt={post.title}
             href={`/blogs/${post.id}`}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            // fill={true}
+            className="max-w-full max-h-full"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200" />
+          <div className="w-full h-full bg-linear-to-br from-gray-100 to-gray-200" />
         )}
         <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-[10px] font-bold text-ieee-cs-orange uppercase tracking-wide">
           {post.category}
         </div>
       </div>
 
-      <div className="p-6 flex flex-col flex-grow">
+      <div className="p-6 flex flex-col grow">
         <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
           <span>{post.date}</span>
           <span>{post.readTime}</span>
@@ -104,7 +107,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
           <Link href={`/blogs/${post.id}`}>{post.title}</Link>
         </h3>
 
-        <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
+        <p className="text-gray-600 text-sm mb-4 grow line-clamp-3">
           {post.excerpt}
         </p>
 
