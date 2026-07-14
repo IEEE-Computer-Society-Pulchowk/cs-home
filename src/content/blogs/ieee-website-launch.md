@@ -2,7 +2,7 @@
 title: "Launch of IEEE Computer Society Student Branch Chapter Pulchowk Website"
 excerpt: "We are happy to share the launch of the new IEEE Computer Society Student Branch Chapter Pulchowk website."
 date: "May 20, 2026"
-author: "PUL080BCT003"
+author: "aakrisht-sharma-paudel"
 category: "Technology"
 readTime: "5 min read"
 thumbnail: "/blogs/website-launch-logo.jpg"
