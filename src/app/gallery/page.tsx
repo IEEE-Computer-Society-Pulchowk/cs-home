@@ -8,6 +8,8 @@ import { FaSearchPlus, FaTimes } from "react-icons/fa";
 import SmartImage from "@/components/smart-image";
 import PageHeader from "@/components/page-header";
 
+const newLocal =
+  "absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6";
 const Gallery: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
   const [filter, setFilter] = useState<GalleryCategory | "All">("All");
@@ -74,7 +76,7 @@ const Gallery: React.FC = () => {
               />
 
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+              <div className={newLocal}>
                 <span className="text-amber-300 text-xs font-bold uppercase tracking-wider mb-1">
                   {item.category} • {item.date}
                 </span>
@@ -95,7 +97,7 @@ const Gallery: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
+            className="fixed inset-0 z-60 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
             <button
