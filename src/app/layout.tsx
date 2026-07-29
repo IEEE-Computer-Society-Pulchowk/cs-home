@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     images: ["/logo-orange.svg"],
   },
   verification: {
-    google: "X6ShvZOcfqfxpeVL5m_hwtHIsuh3U6r_SuXCKcJdlHc",
+    google: "nAe06vQjRy6OTOt61juUQUdkLiPtcL6XYr-ina679j4",
   },
   icons: {
     icon: [
