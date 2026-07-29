@@ -8,7 +8,7 @@ import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const SITE_URL = "https://ieee.pcampus.edu.np";
+const SITE_URL = "https://ieeecs.pcampus.edu.np";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
