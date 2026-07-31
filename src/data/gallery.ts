@@ -22,4 +22,11 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     category: GalleryCategory.COMPETITION,
     imageUrl: "/events/2025/concept-catalyst/concept-catalyst.jpg",
   },
+    {
+    id: "g4",
+    title: "Web Scraping 101",
+    date: "2025",
+    category: GalleryCategory.WORKSHOP,
+    imageUrl: "/events/2025/web-scraping-101.png",
+  },
 ];
