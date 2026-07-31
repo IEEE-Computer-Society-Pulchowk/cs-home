@@ -15,4 +15,11 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     category: GalleryCategory.COMPETITION,
     imageUrl: "/gallery/ieeextreme-19.0.jpg",
   },
+  {
+    id: "g3",
+    title: "Concept Catalyst",
+    date: "2025",
+    category: GalleryCategory.EVENT,
+    imageUrl: "/events/concept-catalyst.jpg",
+  }
 ];
