@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import { FaChevronRight } from "react-icons/fa";
 import Link from "next/link";
 
@@ -11,11 +10,7 @@ const HomeHero: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-ieee-dark/20 to-ieee-dark/90 pointer-events-none"></div>
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                >
+                <div>
                     <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-amber-400/30 bg-amber-900/30 backdrop-blur-md">
                         <span className="text-amber-200 text-xs font-medium tracking-widest uppercase">
                             IEEE Computer Society Pulchowk SBC
@@ -53,7 +48,7 @@ const HomeHero: React.FC = () => {
                             />
                         </Link>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </section>
     );

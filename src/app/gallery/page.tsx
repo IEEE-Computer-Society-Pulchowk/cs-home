@@ -90,12 +90,8 @@ const GalleryContent: React.FC = () => {
         {/* Gallery Grid */}
         <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
           {filteredImages.map((item) => (
-            <motion.div
+            <div
               key={item.id}
-              layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
               className="break-inside-avoid relative group rounded-xl overflow-hidden cursor-pointer bg-gray-100"
               onClick={() => setSelectedImage(item)}
             >
@@ -121,7 +117,7 @@ const GalleryContent: React.FC = () => {
                   <FaSearchPlus className="text-white" size={18} />
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
