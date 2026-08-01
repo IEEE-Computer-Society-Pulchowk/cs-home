@@ -42,9 +42,11 @@ const EventListContent: React.FC<EventListProps> = ({ events }) => {
     if (prevParams !== prevSearch) {
         setPrevSearch(prevParams);
         const v = searchParams.get("view");
-        if (v && VIEWS.includes(v as View)) setView(v as View);
+        setView(v && VIEWS.includes(v as View) ? (v as View) : "upcoming");
         const c = searchParams.get("cat");
-        if (categories.includes(c ?? "")) setFilter(c as EventCategory | "All");
+        setFilter(
+            c && categories.includes(c) ? (c as EventCategory | "All") : "All",
+        );
     }
 
     const updateParam = (key: string, value: string, defaultValue: string) => {

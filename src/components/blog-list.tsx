@@ -37,13 +37,13 @@ const BlogListContent: React.FC<BlogListProps> = ({ posts }) => {
   // Sync state when the URL changes (back/forward buttons, manual edits).
   const prevParams = searchParams.toString();
   const [prevSearch, setPrevSearch] = useState(prevParams);
-  if (prevParams !== prevSearch) {
-    setPrevSearch(prevParams);
-    const q = searchParams.get("q");
-    if (q !== null) setSearchQuery(q);
-    const c = searchParams.get("cat");
-    if (categories.includes(c ?? "")) setSelectedCategory(c as string);
-  }
+    if (prevParams !== prevSearch) {
+        setPrevSearch(prevParams);
+        const q = searchParams.get("q");
+        setSearchQuery(q ?? "");
+        const c = searchParams.get("cat");
+        setSelectedCategory(c && categories.includes(c) ? c : "All");
+    }
 
   const updateParam = (key: string, value: string, defaultValue: string) => {
     const params = new URLSearchParams(searchParams.toString());

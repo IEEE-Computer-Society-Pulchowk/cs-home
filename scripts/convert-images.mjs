@@ -65,8 +65,9 @@ for (const file of walk(PUBLIC)) {
 
   const image = await loadImage(file);
   let { width, height } = image;
-  if (width > rule.maxDim) {
-    const scale = rule.maxDim / width;
+  const longestEdge = Math.max(width, height);
+  if (longestEdge > rule.maxDim) {
+    const scale = rule.maxDim / longestEdge;
     width = Math.round(width * scale);
     height = Math.round(height * scale);
   }

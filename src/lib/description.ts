@@ -5,7 +5,7 @@ export function plainDescription(markdown: string, max = 160): string {
     .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
     .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/[`#>*_~]/g, "")
-    .replace(/^\s*[-*+]\s+|\d+\.\s+/gm, "")
+    .replace(/^\s*(?:[-*+]|\d+\.)\s+/gm, "")
     .replace(/\s+/g, " ")
     .trim();
 
