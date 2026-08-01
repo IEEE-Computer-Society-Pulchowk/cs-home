@@ -1,7 +1,7 @@
 import "server-only";
 import fs from "fs";
 import path from "path";
-import { EVENTS, type EventRecord } from "@/data/events/index";
+import { EVENTS, eventThumbnail, type EventRecord } from "@/data/events/index";
 import type { EventPhase, EventYearDetail } from "@/types";
 
 const eventsDirectory = path.join(process.cwd(), "src/data/events");
@@ -161,7 +161,7 @@ export function getEventBySlug(slug: string): EventLookupResult {
     title: event.title,
     category: event.category,
     description: event.description,
-    thumbnail: event.thumbnail,
+    thumbnail: eventThumbnail(event),
     registrationUrl: event.registrationUrl,
     recurrence: event.recurrence,
     years: resolveEventYears(event),

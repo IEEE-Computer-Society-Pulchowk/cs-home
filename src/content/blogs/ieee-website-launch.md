@@ -5,7 +5,7 @@ date: "May 20, 2026"
 author: "aakrisht-sharma-paudel"
 category: "Technology"
 readTime: "5 min read"
-thumbnail: "/blogs/website-launch-logo.jpg"
+thumbnail: "/blogs/website-launch-logo.webp"
 ---
 
 We are happy to announce a major milestone for our community: the launch of the **IEEE Computer Society Student Branch Chapter Pulchowk website**.

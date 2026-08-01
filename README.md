@@ -40,12 +40,12 @@ All user-facing content (people, teams, blogs, events, gallery items) is statica
 Individual profile records are stored centrally and shared between blogs, team committees, and lookup paths.
 
 * **File to edit:** [src/data/people.ts](file:///home/asp/Projects/cs-home/src/data/people.ts)
-* **Image Assets:** Drop portrait photos in `public/people/` (named `<person-slug>.png` or `<person-slug>.jpg`, lowercase slug).
+* **Image Assets:** Drop portrait photos in `public/people/` (named `<person-slug>.webp`, lowercase slug).
 
 To add a person, append an entry to the `PEOPLE` object:
 ```typescript
 "PUL081BCT013": person("PUL081BCT013", "Abishek Parajuli", 101478591, {
-  imageUrl: "/people/abishek-parajuli.png", // Optional: Custom image path. If omitted, falls back to /people/<slug>.png
+  imageUrl: "/people/abishek-parajuli.webp", // Optional: Custom image path. If omitted, falls back to /people/<slug>.webp
   linkedin: "https://www.linkedin.com/in/abishek-parajuli-866b89370", // Optional
   github: "https://github.com/abishekparajuli-np",                     // Optional
   instagram: "https://www.instagram.com/abishekparajuli_17",           // Optional
@@ -112,7 +112,7 @@ You can mention team members inside the text using `@{personId}` (e.g., `@{PUL08
 Events can be single occurrences or span multiple years/phases.
 
 * **Directory:** [src/data/events/](file:///home/asp/Projects/cs-home/src/data/events)
-* **Image Assets:** Drop thumbnails and banner graphics in `public/events/`.
+* **Image Assets:** Event thumbnails live at `public/events/<slug>/<slug>-<year>.webp` (e.g. `public/events/linux-101/linux-101-2026.webp`). The thumbnail defaults to the **latest year** the event ran; set an explicit `thumbnail` field in the event data to override it.
 
 To add a new event:
 1. Create a folder named after your event slug (e.g., `src/data/events/my-new-event`).
@@ -125,7 +125,7 @@ export const MyNewEvent: EventRecord = {
   title: "Artificial Intelligence Workshop",
   category: "Workshop", // Workshop, Seminar, Competition, Social
   description: "A short preview text for the event list cards.",
-  thumbnail: "/events/ai-workshop.jpg",
+  thumbnail: "/events/my-new-event/my-new-event-2026.webp", // Optional — defaults to /events/<slug>/<slug>-<latest year>.webp
   registrationUrl: "https://example.com/register", // Optional
   recurrence: "one-time", // one-time, annual
   years: {
@@ -183,6 +183,50 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 ];
 ```
 * **Categories:** Use the `GalleryCategory` enum from [src/types.ts](file:///home/asp/Projects/cs-home/src/types.ts) — `MEETUP`, `EVENT`, `WORKSHOP`, `COMPETITION`, `TALK` (display labels: Meetup, Event, Workshop, Competition, Talk). Do not use raw strings; this keeps filters and types in sync.
+
+---
+
+## 🖼️ Images
+
+All raster images served from `public/` are **WebP** — smaller files than
+PNG/JPEG, supported by every modern browser. A test in `bun test` fails if a
+non-webp image slips in; the fix message tells you to run
+`bun run images:convert`.
+
+### Convert / resize
+
+`bun run images:convert` walks `public/` and converts every `png`/`jpg`/`jpeg`
+to a `.webp` sibling, then deletes the original. A path-based controller picks
+the max dimension and quality factor per image type:
+
+| Path prefix | Max dimension | WebP quality |
+|---|---|---|
+| `people/` | 600px | 85 |
+| `events/`, `gallery/` | 1600px | 75 |
+| `blogs/` | 1200px | 80 |
+| anything else | 1920px | 75 |
+
+Never touched: `favicon/`, `*.svg`, `og-image.png`, and any `cert*` image
+(certificates stay high-res PNG for print/download).
+
+Re-tune after changing the rules: delete the `.webp`s, `git checkout` the
+originals, re-run.
+
+### Social preview
+
+`public/og-image.png` is a static, committed asset used as the site's
+`og:image`/`twitter:image`. It has no generator — replace the file directly if it
+changes. Event and blog detail pages override it with their own thumbnail.
+
+### Placeholder thumbnails
+
+`bun run images:thumbnails` scans every event and blog post, reads its
+`thumbnail` path from the metadata, and — if that file is missing from
+`public/` — generates a branded title-card placeholder there (card text is the
+item's title). Missing image → placeholder appears; drop in real artwork and
+re-run, and it stops generating for that item. The font is **JetBrains Mono**
+(`public/fonts/JetBrainsMono.ttf`, committed, so the script runs anywhere — no
+system-font dependency).
 
 ---
 
