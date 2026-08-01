@@ -214,9 +214,10 @@ originals, re-run.
 
 ### Social preview
 
-`public/og-image.png` is a static, committed asset used as the site's
-`og:image`/`twitter:image`. It has no generator — replace the file directly if it
-changes. Event and blog detail pages override it with their own thumbnail.
+`public/og-image.png` is a committed asset used as the site's
+`og:image`/`twitter:image`, regenerated from `logo-orange.svg` with
+`bun run images:og`. Event and blog detail pages override it with their own
+thumbnail.
 
 ### Placeholder thumbnails
 

@@ -33,13 +33,15 @@ const GalleryContent: React.FC = () => {
   // Sync state when the URL changes (back/forward buttons, manual edits).
   const prevParams = searchParams.toString();
   const [prevSearch, setPrevSearch] = useState(prevParams);
-  if (prevParams !== prevSearch) {
-    setPrevSearch(prevParams);
-    const c = searchParams.get("cat");
-    if (categories.includes(c as GalleryCategory | "All")) {
-      setFilter(c as GalleryCategory | "All");
+    if (prevParams !== prevSearch) {
+        setPrevSearch(prevParams);
+        const c = searchParams.get("cat");
+        setFilter(
+            c && categories.includes(c as GalleryCategory | "All")
+                ? (c as GalleryCategory | "All")
+                : "All",
+        );
     }
-  }
 
   const handleFilter = (cat: GalleryCategory | "All") => {
     setFilter(cat);
