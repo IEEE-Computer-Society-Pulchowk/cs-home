@@ -7,7 +7,7 @@ export const ConceptCatalyst: EventRecord = {
   category: EventCategory.COMPETITION,
   description:
     "An ideathon event organized by IEEE Computer Society Pulchowk SBC to foster creativity and innovation among ambassadors during the chapter inauguration ceremony.",
-  thumbnail: "/events/concept-catalyst.jpg",
+  thumbnail: "/events/2025/concept-catalyst.jpg",
   registrationUrl: "#",
   recurrence: "one-time",
   years: {
