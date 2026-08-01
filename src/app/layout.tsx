@@ -59,9 +59,9 @@ export const metadata: Metadata = {
       "Workshops, seminars, competitions, and a community advancing excellence in computing and technology at IOE Pulchowk Campus.",
     images: [
       {
-        url: "/logo-orange.svg",
-        width: 512,
-        height: 512,
+        url: "/og-image.png",
+        width: 100,
+        height: 100,
         alt: "IEEE Computer Society Pulchowk SBC Logo",
       },
     ],
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     title: "IEEE Computer Society Pulchowk SBC",
     description:
       "Workshops, seminars, competitions, and a community advancing excellence in computing and technology at IOE Pulchowk Campus.",
-    images: ["/logo-orange.svg"],
+    images: ["/og-image.png"],
   },
   verification: {
     google: "nAe06vQjRy6OTOt61juUQUdkLiPtcL6XYr-ina679j4",

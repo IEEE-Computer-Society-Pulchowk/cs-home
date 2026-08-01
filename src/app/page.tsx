@@ -10,11 +10,6 @@ export const metadata: Metadata = {
     title: "IEEE Computer Society Pulchowk SBC | Advancing Excellence in Computing and Technology",
     description:
         "Official website of IEEE Computer Society Pulchowk SBC at IOE Pulchowk Campus. Join workshops, seminars, hackathons, and connect with a community of tech enthusiasts in Nepal.",
-    openGraph: {
-        title: "IEEE Computer Society Pulchowk SBC | Advancing Excellence in Computing and Technology",
-        description:
-            "Join workshops, seminars, hackathons, and connect with a community of tech enthusiasts at IOE Pulchowk Campus, Nepal.",
-    },
 };
 
 export default function Home() {

@@ -8,7 +8,6 @@ export const Linux101: EventRecord = {
   description: `
   A hands-on Linux workshop that takes you from "never touched a terminal" to confidently navigating, managing, and administering a Linux system. Through daily sessions, you'll build practical skills in terminal usage, file management, permissions, networking, process handling, and basic system administration — everything you need to stop fearing the command line and start using it.
   `,
-  thumbnail: "/events/2026/linux-101/linux-101.jpg",
   registrationUrl: "https://forms.gle/4WAWPffeE7Uf7URL8",
   recurrence: "annual",
   years: {

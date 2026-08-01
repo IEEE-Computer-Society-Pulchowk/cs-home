@@ -1,4 +1,4 @@
-import { EVENTS, type EventRecord } from "@/data/events/index";
+import { EVENTS, eventThumbnail, type EventRecord } from "@/data/events/index";
 import type { EventPhase } from "@/types";
 
 // ponytail: metadata-only lookup, no fs — safe to import from client
@@ -73,7 +73,6 @@ export function getEventMetaBySlug(slug: string): EventMeta | undefined {
     title,
     category,
     description,
-    thumbnail,
     registrationUrl,
     recurrence,
   } = event;
@@ -83,7 +82,7 @@ export function getEventMetaBySlug(slug: string): EventMeta | undefined {
     title,
     category,
     description,
-    thumbnail,
+    thumbnail: eventThumbnail(event),
     registrationUrl,
     recurrence,
     isUpcoming: isEventUpcoming(event),

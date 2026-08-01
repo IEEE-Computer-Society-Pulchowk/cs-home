@@ -6,7 +6,6 @@ export const WebScraping101: EventRecord = {
   title: "Web Scraping 101",
   category: EventCategory.WORKSHOP,
   description: "Learn the fundamentals of web scraping with Puppeteer.",
-  thumbnail: "/events/2025/web-scraping-101.png",
   registrationUrl: "#",
   recurrence: "annual",
   years: {

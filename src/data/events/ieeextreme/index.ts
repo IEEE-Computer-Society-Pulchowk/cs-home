@@ -7,7 +7,6 @@ export const IEEEXtreme: EventRecord = {
   category: EventCategory.COMPETITION,
   description:
     "24 hours of code, caffeine, and chaos. IEEEXtreme 19.0 was an unforgettable marathon of problem-solving and collective breakthroughs.",
-  thumbnail: "/events/ieeextreme-19.0.jpg",
   registrationUrl: "#",
   recurrence: "annual",
   years: {
