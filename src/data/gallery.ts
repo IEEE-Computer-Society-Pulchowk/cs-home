@@ -29,4 +29,11 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     category: GalleryCategory.WORKSHOP,
     imageUrl: "/events/2025/web-scraping-101.png",
   },
+  {
+    id: "g5",
+    title: "IEEE Cubing Nepal 2025",
+    date: "2025",
+    category: GalleryCategory.COMPETITION,
+    imageUrl: "/events/2025/ieee-cubing-nepal-2025.jpg",
+  },
 ];
