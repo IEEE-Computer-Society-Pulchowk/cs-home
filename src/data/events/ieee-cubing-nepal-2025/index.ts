@@ -7,7 +7,6 @@ export const IEEECubingNepal2025: EventRecord = {
   category: EventCategory.COMPETITION,
   description:
     "IEEE Cubing Nepal 2025, organized by IEEE Computer Society Pulchowk SBC, is a speedcubing competition featuring cubers and official cubing partners.",
-  thumbnail: "/events/2025/ieee-cubing-nepal-2025.jpg",
   registrationUrl: "https://bit.ly/IEEECubing2025",
   recurrence: "annual",
   years: {
