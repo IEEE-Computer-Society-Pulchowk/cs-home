@@ -1,6 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import { getEventBySlug, getAllEvents } from "@/lib/events.server";
+import { plainDescription } from "@/lib/description";
 import EventYearPhase from "@/components/event-year-phase";
 import ReactMarkdown from "react-markdown";
 import { transformPersonMentions } from "@/lib/mentions";
@@ -18,16 +19,24 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const event = getEventBySlug(id);
+  const description = plainDescription(event.description as string);
 
   return {
     title: event.title as string,
-    description: event.description as string,
+    description,
     openGraph: {
       title: event.title as string,
-      description: event.description as string,
+      description,
       type: "article",
       ...(event.thumbnail && {
         images: [{ url: event.thumbnail as string }],
+      }),
+    },
+    twitter: {
+      title: event.title as string,
+      description,
+      ...(event.thumbnail && {
+        images: [event.thumbnail as string],
       }),
     },
   };

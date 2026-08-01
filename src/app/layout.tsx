@@ -60,8 +60,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/og-image.png",
-        width: 100,
-        height: 100,
+        width: 1200,
+        height: 630,
         alt: "IEEE Computer Society Pulchowk SBC Logo",
       },
     ],
