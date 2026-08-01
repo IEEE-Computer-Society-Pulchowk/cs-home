@@ -2,7 +2,6 @@
 
 import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { motion } from "framer-motion";
 import { IeeeEvent, EventCategory } from "@/types";
 import EventCard from "@/components/event-card";
 import PageHeader from "@/components/page-header";
@@ -142,16 +141,7 @@ const EventListContent: React.FC<EventListProps> = ({ events }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {sortedEvents.length > 0 ? (
                         sortedEvents.map((event) => (
-                            <motion.div
-                                key={event.id}
-                                layout
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                <EventCard event={event} />
-                            </motion.div>
+                            <EventCard key={event.id} event={event} />
                         ))
                     ) : (
                         <EmptyState

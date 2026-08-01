@@ -2,7 +2,6 @@
 
 import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { motion } from "framer-motion";
 import { FaSearch, FaFilter } from "react-icons/fa";
 import BlogCard from "@/components/blog-card";
 import PageHeader from "@/components/page-header";
@@ -122,17 +121,13 @@ const BlogListContent: React.FC<BlogListProps> = ({ posts }) => {
 
         {/* Featured Post */}
         {featuredPost && selectedCategory === "All" && !searchQuery && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-12"
-          >
+          <div className="mb-12">
             <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
               <span className="w-2 h-8 bg-ieee-cs-orange rounded-full mr-3"></span>
               Featured Story
             </h2>
             <BlogCard post={featuredPost} featured={true} />
-          </motion.div>
+          </div>
         )}
 
         {/* Posts Grid */}
@@ -140,15 +135,8 @@ const BlogListContent: React.FC<BlogListProps> = ({ posts }) => {
           {(selectedCategory === "All" && !searchQuery
             ? otherPosts
             : filteredPosts
-          ).map((post, idx) => (
-            <motion.div
-              key={post.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-            >
-              <BlogCard post={post} />
-            </motion.div>
+          ).map((post) => (
+            <BlogCard key={post.id} post={post} />
           ))}
         </div>
 
