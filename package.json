@@ -13,6 +13,7 @@
     "cert:export-images": "bun run scripts/export-certificate-images.mjs",
     "cert:bbox": "test -d .venv || bun run py:setup; .venv/bin/python scripts/bbox_tool.py",
     "images:convert": "bun run scripts/convert-images.mjs",
+    "images:og": "bun run scripts/generate-og-image.mjs",
     "images:thumbnails": "bun run scripts/generate-thumbnails.mjs",
     "py:setup": "python -m venv .venv && .venv/bin/pip install -r requirements.txt"
   },

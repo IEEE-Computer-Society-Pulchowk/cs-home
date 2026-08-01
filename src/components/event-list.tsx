@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { IeeeEvent, EventCategory } from "@/types";
 import EventCard from "@/components/event-card";
@@ -13,11 +14,62 @@ interface EventListProps {
     events: IeeeEvent[];
 }
 
-const EventList: React.FC<EventListProps> = ({ events }) => {
-    const [filter, setFilter] = useState<EventCategory | "All">("All");
-    const [view, setView] = useState<"all" | "upcoming" | "past">(
-        "upcoming"
-    );
+const VIEWS = ["all", "upcoming", "past"] as const;
+type View = (typeof VIEWS)[number];
+
+const EventListContent: React.FC<EventListProps> = ({ events }) => {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const categories = ["All", ...Object.values(EventCategory)];
+
+    const queryView = searchParams.get("view");
+    const initialView: View = VIEWS.includes(queryView as View)
+        ? (queryView as View)
+        : "upcoming";
+
+    const queryCat = searchParams.get("cat");
+    const initialCat = categories.includes(queryCat ?? "")
+        ? (queryCat as EventCategory | "All")
+        : "All";
+
+    const [filter, setFilter] = useState<EventCategory | "All">(initialCat);
+    const [view, setView] = useState<View>(initialView);
+
+    // Sync state when the URL changes (back/forward buttons, manual edits).
+    const prevParams = searchParams.toString();
+    const [prevSearch, setPrevSearch] = useState(prevParams);
+    if (prevParams !== prevSearch) {
+        setPrevSearch(prevParams);
+        const v = searchParams.get("view");
+        if (v && VIEWS.includes(v as View)) setView(v as View);
+        const c = searchParams.get("cat");
+        if (categories.includes(c ?? "")) setFilter(c as EventCategory | "All");
+    }
+
+    const updateParam = (key: string, value: string, defaultValue: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+        if (value === defaultValue) {
+            params.delete(key);
+        } else {
+            params.set(key, value);
+        }
+        router.replace(
+            params.size ? `${pathname}?${params.toString()}` : pathname,
+            { scroll: false },
+        );
+    };
+
+    const handleView = (next: View) => {
+        setView(next);
+        updateParam("view", next, "upcoming");
+    };
+
+    const handleCategory = (next: EventCategory | "All") => {
+        setFilter(next);
+        updateParam("cat", next, "All");
+    };
 
     const filteredEvents = events.filter((event) => {
         const matchesCategory = filter === "All" || event.category === filter;
@@ -41,8 +93,6 @@ const EventList: React.FC<EventListProps> = ({ events }) => {
         return view === "upcoming" ? leftTime - rightTime : rightTime - leftTime;
     });
 
-    const categories = ["All", ...Object.values(EventCategory)];
-
     return (
         <div className="pt-24 pb-20 min-h-screen bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,36 +105,19 @@ const EventList: React.FC<EventListProps> = ({ events }) => {
                 <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
                     {/* View Toggle */}
                     <div className="bg-white p-1 rounded-lg border border-gray-200 shadow-sm inline-flex">
-                        <button
-                            onClick={() => setView("all")}
-                            className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${
-                                view === "all"
-                                    ? "bg-ieee-cs-orange text-white shadow-sm"
-                                    : "text-gray-600 hover:bg-gray-50"
-                            }`}
-                        >
-                            All
-                        </button>
-                        <button
-                            onClick={() => setView("upcoming")}
-                            className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${
-                                view === "upcoming"
-                                    ? "bg-ieee-cs-orange text-white shadow-sm"
-                                    : "text-gray-600 hover:bg-gray-50"
-                            }`}
-                        >
-                            Upcoming
-                        </button>
-                        <button
-                            onClick={() => setView("past")}
-                            className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${
-                                view === "past"
-                                    ? "bg-ieee-cs-orange text-white shadow-sm"
-                                    : "text-gray-600 hover:bg-gray-50"
-                            }`}
-                        >
-                            Past Events
-                        </button>
+                        {VIEWS.map((v) => (
+                            <button
+                                key={v}
+                                onClick={() => handleView(v)}
+                                className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${
+                                    view === v
+                                        ? "bg-ieee-cs-orange text-white shadow-sm"
+                                        : "text-gray-600 hover:bg-gray-50"
+                                }`}
+                            >
+                                {v === "all" ? "All" : v === "upcoming" ? "Upcoming" : "Past Events"}
+                            </button>
+                        ))}
                     </div>
 
                     {/* Category Filter */}
@@ -97,7 +130,7 @@ const EventList: React.FC<EventListProps> = ({ events }) => {
                             <FilterButton
                                 key={cat}
                                 active={filter === cat}
-                                onClick={() => setFilter(cat as EventCategory | "All")}
+                                onClick={() => handleCategory(cat as EventCategory | "All")}
                             >
                                 {cat}
                             </FilterButton>
@@ -125,7 +158,7 @@ const EventList: React.FC<EventListProps> = ({ events }) => {
                             className="col-span-full"
                             message="No events found in this category."
                             actionLabel="Clear filters"
-                            onAction={() => setFilter("All")}
+                            onAction={() => handleCategory("All")}
                         />
                     )}
                 </div>
@@ -133,5 +166,11 @@ const EventList: React.FC<EventListProps> = ({ events }) => {
         </div>
     );
 };
+
+const EventList: React.FC<EventListProps> = ({ events }) => (
+    <Suspense fallback={null}>
+        <EventListContent events={events} />
+    </Suspense>
+);
 
 export default EventList;

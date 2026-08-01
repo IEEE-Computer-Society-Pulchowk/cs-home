@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { GALLERY_ITEMS } from "@/data/gallery";
 import { GalleryItem, GalleryCategory } from "@/types";
@@ -10,14 +11,49 @@ import PageHeader from "@/components/page-header";
 
 const newLocal =
   "absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6";
-const Gallery: React.FC = () => {
-  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
-  const [filter, setFilter] = useState<GalleryCategory | "All">("All");
+
+const GalleryContent: React.FC = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const categories: Array<GalleryCategory | "All"> = [
     "All",
     ...Array.from(new Set(GALLERY_ITEMS.map((item) => item.category))),
   ];
+
+  const queryCat = searchParams.get("cat");
+  const initialCat = categories.includes(queryCat as GalleryCategory | "All")
+    ? (queryCat as GalleryCategory | "All")
+    : "All";
+
+  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const [filter, setFilter] = useState<GalleryCategory | "All">(initialCat);
+
+  // Sync state when the URL changes (back/forward buttons, manual edits).
+  const prevParams = searchParams.toString();
+  const [prevSearch, setPrevSearch] = useState(prevParams);
+  if (prevParams !== prevSearch) {
+    setPrevSearch(prevParams);
+    const c = searchParams.get("cat");
+    if (categories.includes(c as GalleryCategory | "All")) {
+      setFilter(c as GalleryCategory | "All");
+    }
+  }
+
+  const handleFilter = (cat: GalleryCategory | "All") => {
+    setFilter(cat);
+    const params = new URLSearchParams(searchParams.toString());
+    if (cat === "All") {
+      params.delete("cat");
+    } else {
+      params.set("cat", cat);
+    }
+    router.replace(
+      params.size ? `${pathname}?${params.toString()}` : pathname,
+      { scroll: false },
+    );
+  };
 
   const filteredImages =
     filter === "All"
@@ -38,7 +74,7 @@ const Gallery: React.FC = () => {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setFilter(cat)}
+                onClick={() => handleFilter(cat)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   filter === cat
                     ? "bg-ieee-cs-orange text-white shadow-md"
@@ -132,5 +168,17 @@ const Gallery: React.FC = () => {
     </div>
   );
 };
+
+const Gallery: React.FC = () => (
+  <Suspense
+    fallback={
+      <div className="pt-24 pb-20 min-h-screen bg-white text-center text-gray-500">
+        Loading gallery...
+      </div>
+    }
+  >
+    <GalleryContent />
+  </Suspense>
+);
 
 export default Gallery;

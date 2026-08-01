@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blogs";
 import { getAllEvents } from "@/lib/events.server";
+import { PEOPLE_LIST } from "@/data/people";
 
 export const dynamic = "force-static";
 
@@ -20,6 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: `${SITE_URL}/events/${event.slug}`,
         changeFrequency: "monthly",
         priority: 0.7,
+    }));
+
+    const peopleUrls: MetadataRoute.Sitemap = PEOPLE_LIST.map((person) => ({
+        url: `${SITE_URL}/people/${person.slug}`,
+        changeFrequency: "monthly",
+        priority: 0.4,
     }));
 
     return [
@@ -48,7 +55,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: "monthly",
             priority: 0.6,
         },
+        {
+            url: `${SITE_URL}/verify`,
+            changeFrequency: "monthly",
+            priority: 0.3,
+        },
         ...eventUrls,
         ...blogUrls,
+        ...peopleUrls,
     ];
 }
