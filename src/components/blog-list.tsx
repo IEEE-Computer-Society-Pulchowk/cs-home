@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { FaSearch, FaFilter } from "react-icons/fa";
 import BlogCard from "@/components/blog-card";
@@ -13,15 +14,60 @@ interface BlogListProps {
   posts: BlogPost[];
 }
 
-const BlogList: React.FC<BlogListProps> = ({ posts }) => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+const BlogListContent: React.FC<BlogListProps> = ({ posts }) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  // Extract unique categories
   const categories = [
     "All",
     ...Array.from(new Set(posts.map((post) => post.category))),
   ];
+
+  const queryQ = searchParams.get("q");
+  const initialQ = queryQ ?? "";
+
+  const queryCat = searchParams.get("cat");
+  const initialCat = categories.includes(queryCat ?? "")
+    ? (queryCat as string)
+    : "All";
+
+  const [searchQuery, setSearchQuery] = useState(initialQ);
+  const [selectedCategory, setSelectedCategory] = useState(initialCat);
+
+  // Sync state when the URL changes (back/forward buttons, manual edits).
+  const prevParams = searchParams.toString();
+  const [prevSearch, setPrevSearch] = useState(prevParams);
+  if (prevParams !== prevSearch) {
+    setPrevSearch(prevParams);
+    const q = searchParams.get("q");
+    if (q !== null) setSearchQuery(q);
+    const c = searchParams.get("cat");
+    if (categories.includes(c ?? "")) setSelectedCategory(c as string);
+  }
+
+  const updateParam = (key: string, value: string, defaultValue: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value === defaultValue) {
+      params.delete(key);
+    } else {
+      params.set(key, value);
+    }
+    router.replace(
+      params.size ? `${pathname}?${params.toString()}` : pathname,
+      { scroll: false },
+    );
+  };
+
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
+    updateParam("q", value, "");
+  };
+
+  const handleCategory = (category: string) => {
+    setSelectedCategory(category);
+    updateParam("cat", category, "All");
+  };
 
   // Filter posts
   const filteredPosts = posts.filter((post) => {
@@ -55,7 +101,7 @@ const BlogList: React.FC<BlogListProps> = ({ posts }) => {
               type="text"
               placeholder="Search articles..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value)}
               className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-ieee-cs-orange/20 focus:border-ieee-cs-orange transition-all"
             />
           </div>
@@ -66,7 +112,7 @@ const BlogList: React.FC<BlogListProps> = ({ posts }) => {
               <FilterButton
                 key={category}
                 active={selectedCategory === category}
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => handleCategory(category)}
               >
                 {category}
               </FilterButton>
@@ -111,8 +157,8 @@ const BlogList: React.FC<BlogListProps> = ({ posts }) => {
             message="No articles found matching your criteria."
             actionLabel="Clear filters"
             onAction={() => {
-              setSearchQuery("");
-              setSelectedCategory("All");
+              handleSearch("");
+              handleCategory("All");
             }}
           />
         )}
@@ -120,5 +166,11 @@ const BlogList: React.FC<BlogListProps> = ({ posts }) => {
     </div>
   );
 };
+
+const BlogList: React.FC<BlogListProps> = ({ posts }) => (
+  <Suspense fallback={null}>
+    <BlogListContent posts={posts} />
+  </Suspense>
+);
 
 export default BlogList;

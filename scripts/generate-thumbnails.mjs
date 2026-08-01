@@ -38,7 +38,7 @@ if (!missing.length) {
   process.exit(0);
 }
 
-const logo = await loadImage(join(ROOT, "public", "og-image.png"));
+const logo = await loadImage(join(ROOT, "public", "logo-white.svg"));
 
 for (const { title, out } of missing) {
   const canvas = createCanvas(W, H);
@@ -52,8 +52,10 @@ for (const { title, out } of missing) {
   ctx.fillStyle = "#faa41a";
   ctx.fillRect(0, 0, W, 10);
 
-  // ponytail: 200px, not 96 — og-image has text and is unreadable small.
-  ctx.drawImage(logo, 60, 60, 200, 200);
+  // ponytail: landscape lockup (374x114), drawn at natural ratio — og-image is
+  // now the 1200x630 card, so the svg is the logo source.
+  const scale = 280 / logo.width;
+  ctx.drawImage(logo, 60, 60, 280, logo.height * scale);
 
   ctx.fillStyle = "#ffffff";
   ctx.font = '56px "JetBrainsMono"';
