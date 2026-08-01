@@ -20,6 +20,6 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Concept Catalyst",
     date: "2025",
     category: GalleryCategory.COMPETITION,
-    imageUrl: "/events/concept-catalyst.jpg",
-  }
+    imageUrl: "/events/2025/concept-catalyst/concept-catalyst.jpg",
+  },
 ];
