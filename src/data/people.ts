@@ -6,7 +6,7 @@ const toSlug = (name: string) =>
     .replace(/\s+/g, "-")
     .replace(/[^a-z0-9-]/g, "");
 
-export const getPersonPortraitPath = (slug: string, ext = "png") =>
+export const getPersonPortraitPath = (slug: string, ext = "webp") =>
   `/people/${slug}.${ext}`;
 
 type PersonInput = Omit<Person, "id" | "slug" | "imageUrl"> & {
