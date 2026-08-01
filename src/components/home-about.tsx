@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import { FaArrowRight, FaUsers, FaBolt, FaAward } from "react-icons/fa";
 import Link from "next/link";
 
@@ -10,12 +9,7 @@ const HomeAbout: React.FC = () => {
     <section className="py-24 bg-white relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <div>
             <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">
               Who We Are
             </h2>
@@ -37,7 +31,7 @@ const HomeAbout: React.FC = () => {
             >
               Meet the Team <FaArrowRight size={16} className="ml-2" />
             </Link>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {[
@@ -46,12 +40,8 @@ const HomeAbout: React.FC = () => {
               { icon: FaAward, label: "Awards Won", value: "5+" },
               { icon: FaUsers, label: "Committees", value: "8" },
             ].map((stat, idx) => (
-              <motion.div
+              <div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
                 className="bg-gray-50 p-6 rounded-2xl border border-gray-100 text-center hover:border-ieee-cs-orange/20 transition-colors"
               >
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-amber-100 text-ieee-cs-orange mb-4">
@@ -63,7 +53,7 @@ const HomeAbout: React.FC = () => {
                 <div className="text-sm text-gray-500 font-medium uppercase tracking-wide">
                   {stat.label}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

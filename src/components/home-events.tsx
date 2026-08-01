@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
 import EventCard from "@/components/event-card";
@@ -34,17 +33,10 @@ const HomeEvents: React.FC<HomeEventsProps> = ({ events }) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {events.length > 0 ? (
-                        events.map((event, idx) => (
-                            <motion.div
-                                key={event.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                                className="h-full"
-                            >
+                        events.map((event) => (
+                            <div key={event.id} className="h-full">
                                 <EventCard event={event} />
-                            </motion.div>
+                            </div>
                         ))
                     ) : (
                         <p className="col-span-3 text-center text-gray-500 py-10">
