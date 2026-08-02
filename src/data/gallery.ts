@@ -36,4 +36,11 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     category: GalleryCategory.COMPETITION,
     imageUrl: "/events/ieee-cubing-nepal-2025/ieee-cubing-nepal-2025-2025.webp",
   },
+  {
+    id: "g6",
+    title: "Scholars in the Making",
+    date: "2025",
+    category: GalleryCategory.COMPETITION,
+    imageUrl: "/events/scholars-in-the-making/scholars-in-the-making-2025.webp",
+  },
 ];
