@@ -17,6 +17,7 @@ export interface BlogLookupResult {
   authorRole?: string;
   authorProfilePath?: string;
   category?: string;
+  event?: string;
   thumbnail?: string;
   imageUrl?: string;
   readTime?: string;

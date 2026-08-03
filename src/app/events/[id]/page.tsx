@@ -1,6 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import { getEventBySlug, getAllEvents } from "@/lib/events.server";
+import { getAllPosts } from "@/lib/blogs";
 import { plainDescription } from "@/lib/description";
 import EventYearPhase from "@/components/event-year-phase";
 import ReactMarkdown from "react-markdown";
@@ -10,7 +11,10 @@ import NotFound from "@/components/not-found";
 import Badge from "@/components/badge";
 import BackLink from "@/components/back-link";
 import RelatedGrid from "@/components/related-grid";
-import type { EventPhase, EventYearDetail } from "@/types";
+import BlogCard from "@/components/blog-card";
+import { GALLERY_ITEMS } from "@/data/gallery";
+import type { BlogPost, EventPhase, EventYearDetail } from "@/types";
+import Link from "next/link";
 
 export async function generateMetadata({
   params,
@@ -69,6 +73,24 @@ export default async function EventPage({
 
   const allEvents = getAllEvents();
   const relatedEvents = allEvents.filter((e) => e.slug !== id).slice(0, 2);
+  const relatedBlogs: BlogPost[] = getAllPosts()
+    .filter((p) => p.event === id)
+    .map((post) => ({
+      id: post.slug ?? "",
+      title: post.title ?? "Untitled",
+      excerpt: post.excerpt ?? "",
+      date: post.date ?? "",
+      category: post.category ?? "General",
+      event: post.event,
+      imageUrl: post.thumbnail,
+      readTime: post.readTime ?? "",
+      author: post.author ?? "Contributor",
+      authorId: post.authorId,
+      authorRole: post.authorRole,
+      authorProfilePath: post.authorProfilePath,
+      content: "",
+    }));
+  const relatedGallery = GALLERY_ITEMS.filter((g) => g.event === id);
   const transformedDescription = eventData.description
     ? transformPersonMentions(eventData.description as string)
     : undefined;
@@ -143,6 +165,49 @@ export default async function EventPage({
           }))}
         />
       </div>
+
+      {(relatedBlogs.length > 0 || relatedGallery.length > 0) && (
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          {relatedBlogs.length > 0 && (
+            <section className="mt-20">
+              <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+                <span className="w-2 h-8 bg-ieee-cs-orange rounded-full mr-3"></span>
+                Related Blog Posts
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {relatedBlogs.map((post) => (
+                  <BlogCard key={post.id} post={post} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {relatedGallery.length > 0 && (
+            <section className="mt-20 mb-4">
+              <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+                <span className="w-2 h-8 bg-ieee-cs-orange rounded-full mr-3"></span>
+                Event Gallery
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {relatedGallery.map((item) => (
+                  <Link
+                    key={item.id}
+                    href={`/gallery?event=${id}`}
+                    className="group relative rounded-xl overflow-hidden bg-gray-100"
+                  >
+                    <SmartImage
+                      src={item.imageUrl}
+                      alt={item.title}
+                      className="w-full h-auto object-cover transform transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+      )}
     </article>
   );
 }

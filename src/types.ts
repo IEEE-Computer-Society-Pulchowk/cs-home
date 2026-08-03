@@ -119,6 +119,7 @@ export interface BlogPost {
   authorProfilePath?: string;
   date: string;
   category: string;
+  event?: string;
   imageUrl?: string;
   readTime: string;
 }
@@ -136,5 +137,6 @@ export interface GalleryItem {
   title: string;
   date: string;
   category: GalleryCategory;
+  event?: string;
   imageUrl: string;
 }
