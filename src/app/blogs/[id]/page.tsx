@@ -4,8 +4,12 @@ import Link from "next/link";
 import { FaClock } from "react-icons/fa";
 import ShareButton from "@/components/share-button";
 import { getPostBySlug, getAllPosts } from "@/lib/blogs";
+import { getEventBySlug } from "@/lib/events.server";
 import ReactMarkdown from "react-markdown";
 import { transformPersonMentions } from "@/lib/mentions";
+import { plainDescription } from "@/lib/description";
+import type { BlogPost } from "@/types";
+import BlogCard from "@/components/blog-card";
 import SmartImage from "@/components/smart-image";
 import { getPersonById, getPersonPortraitPath } from "@/data/people";
 import NotFound from "@/components/not-found";
@@ -74,6 +78,28 @@ export default async function BlogPostPage({
   // Fetch related posts for sidebar/bottom
   const allPosts = getAllPosts();
   const relatedPosts = allPosts.filter((p) => p.slug !== id).slice(0, 2);
+
+  const relatedEvent = postData.event
+    ? getEventBySlug(postData.event)
+    : undefined;
+  const sameEventPosts = allPosts.filter(
+    (p) => p.event !== undefined && p.event === postData.event && p.slug !== id,
+  );
+  const relatedBlogs: BlogPost[] = sameEventPosts.map((post) => ({
+    id: post.slug ?? "",
+    title: post.title ?? "Untitled",
+    excerpt: post.excerpt ?? "",
+    date: post.date ?? "",
+    category: post.category ?? "General",
+    event: post.event,
+    imageUrl: post.thumbnail,
+    readTime: post.readTime ?? "",
+    author: post.author ?? "Contributor",
+    authorId: post.authorId,
+    authorRole: post.authorRole,
+    authorProfilePath: post.authorProfilePath,
+    content: "",
+  }));
 
   return (
     <article className="pt-24 pb-20 min-h-screen bg-white">
@@ -159,6 +185,49 @@ export default async function BlogPostPage({
           }))}
         />
       </div>
+
+      {(relatedEvent || relatedBlogs.length > 0) && (
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          {relatedBlogs.length > 0 && (
+            <section className="mt-20">
+              <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+                <span className="w-2 h-8 bg-ieee-cs-orange rounded-full mr-3"></span>
+                Related Blog Posts
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {relatedBlogs.map((post) => (
+                  <BlogCard key={post.id} post={post} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {relatedEvent && (
+            <section className="mt-20 mb-4 max-w-3xl">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                <span className="w-2 h-8 bg-ieee-cs-orange rounded-full mr-3"></span>
+                Related Event
+              </h2>
+              <Link
+                href={`/events/${relatedEvent.slug}`}
+                className="group block bg-gray-50 p-6 rounded-xl hover:bg-amber-50 transition-colors border border-gray-100"
+              >
+                <span className="text-xs font-bold text-gray-400 uppercase mb-2 block">
+                  {relatedEvent.category}
+                </span>
+                <h4 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-ieee-cs-orange transition-colors">
+                  {relatedEvent.title}
+                </h4>
+                <p className="text-sm text-gray-500 line-clamp-2">
+                  {relatedEvent.description
+                    ? plainDescription(relatedEvent.description)
+                    : ""}
+                </p>
+              </Link>
+            </section>
+          )}
+        </div>
+      )}
     </article>
   );
 }

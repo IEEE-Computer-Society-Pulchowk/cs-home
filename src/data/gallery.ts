@@ -6,27 +6,31 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Stemfluence 2.0",
     date: "2026",
     category: GalleryCategory.EVENT,
-    imageUrl: "/events/stemfluence/stemfluence-2026.webp",
+    event: "stemfluence",
+    imageUrl: "/events/stemfluence-2.0.jpeg",
   },
   {
     id: "g2",
     title: "IEEEXtreme 19.0",
     date: "2025",
     category: GalleryCategory.COMPETITION,
-    imageUrl: "/gallery/ieeextreme-19.0.webp",
+    event: "ieeextreme",
+    imageUrl: "/gallery/ieeextreme-19.0.jpg",
   },
   {
     id: "g3",
     title: "Concept Catalyst",
     date: "2025",
     category: GalleryCategory.COMPETITION,
-    imageUrl: "/events/concept-catalyst/concept-catalyst-2025.webp",
+    event: "concept-catalyst",
+    imageUrl: "/events/2025/concept-catalyst/concept-catalyst.jpg",
   },
   {
     id: "g4",
     title: "Web Scraping 101",
     date: "2025",
     category: GalleryCategory.WORKSHOP,
+    event: "web-scraping-101",
     imageUrl: "/events/web-scraping-101/web-scraping-101-2025.webp",
   },
   {
@@ -34,6 +38,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "IEEE Cubing Nepal 2025",
     date: "2025",
     category: GalleryCategory.COMPETITION,
+    event: "ieee-cubing-nepal-2025",
     imageUrl: "/events/ieee-cubing-nepal-2025/ieee-cubing-nepal-2025-2025.webp",
   },
   {
@@ -41,6 +46,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Scholars in the Making",
     date: "2025",
     category: GalleryCategory.COMPETITION,
+    event: "scholars-in-the-making",
     imageUrl: "/events/scholars-in-the-making/scholars-in-the-making-2025.webp",
   },
   {
@@ -48,6 +54,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Graphics Design Workshop",
     date: "2026",
     category: GalleryCategory.WORKSHOP,
+    event: "graphics-design-workshop",
     imageUrl: "/events/graphics-design-workshop/graphics-design-workshop-2026.webp",
   },
   {
@@ -55,6 +62,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Hack A Flag",
     date: "2025",
     category: GalleryCategory.COMPETITION,
+    event: "hack-a-flag",
     imageUrl: "/events/hack-a-flag/hack-a-flag-2025.webp",
   },
   {
@@ -62,6 +70,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Prof. Dr. Magne Jørgensen’s Session",
     date: "2025",
     category: GalleryCategory.TALK,
+    event: "prof-dr-magne-jorgensen-session",
     imageUrl: "/events/prof-dr-magne-jorgensen-session/prof-dr-magne-jorgensen-session-2025.webp",
   },
 ];

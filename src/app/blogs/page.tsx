@@ -24,6 +24,7 @@ export default function BlogsPage() {
         excerpt: post.excerpt ?? "",
         date: post.date ?? "",
         category: post.category ?? "General",
+        event: post.event,
         imageUrl: post.thumbnail,
         readTime: post.readTime ?? "",
         author: post.author ?? "Contributor",

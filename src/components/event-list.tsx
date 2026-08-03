@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { Suspense } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { IeeeEvent, EventCategory } from "@/types";
 import EventCard from "@/components/event-card";
@@ -23,31 +23,15 @@ const EventListContent: React.FC<EventListProps> = ({ events }) => {
 
     const categories = ["All", ...Object.values(EventCategory)];
 
-    const queryView = searchParams.get("view");
-    const initialView: View = VIEWS.includes(queryView as View)
-        ? (queryView as View)
+    // derived directly from the URL — the URL is the source of truth.
+    const view: View = VIEWS.includes(searchParams.get("view") as View)
+        ? (searchParams.get("view") as View)
         : "upcoming";
-
-    const queryCat = searchParams.get("cat");
-    const initialCat = categories.includes(queryCat ?? "")
-        ? (queryCat as EventCategory | "All")
+    const filter: EventCategory | "All" = categories.includes(
+        searchParams.get("cat") ?? "",
+    )
+        ? (searchParams.get("cat") as EventCategory | "All")
         : "All";
-
-    const [filter, setFilter] = useState<EventCategory | "All">(initialCat);
-    const [view, setView] = useState<View>(initialView);
-
-    // Sync state when the URL changes (back/forward buttons, manual edits).
-    const prevParams = searchParams.toString();
-    const [prevSearch, setPrevSearch] = useState(prevParams);
-    if (prevParams !== prevSearch) {
-        setPrevSearch(prevParams);
-        const v = searchParams.get("view");
-        setView(v && VIEWS.includes(v as View) ? (v as View) : "upcoming");
-        const c = searchParams.get("cat");
-        setFilter(
-            c && categories.includes(c) ? (c as EventCategory | "All") : "All",
-        );
-    }
 
     const updateParam = (key: string, value: string, defaultValue: string) => {
         const params = new URLSearchParams(searchParams.toString());
@@ -63,12 +47,10 @@ const EventListContent: React.FC<EventListProps> = ({ events }) => {
     };
 
     const handleView = (next: View) => {
-        setView(next);
         updateParam("view", next, "upcoming");
     };
 
     const handleCategory = (next: EventCategory | "All") => {
-        setFilter(next);
         updateParam("cat", next, "All");
     };
 
