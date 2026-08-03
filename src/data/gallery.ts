@@ -15,7 +15,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     date: "2025",
     category: GalleryCategory.COMPETITION,
     event: "ieeextreme",
-    imageUrl: "/gallery/ieeextreme-19.0.jpg",
+    imageUrl: "/gallery/ieeextreme-19.0.webp",
   },
   {
     id: "g3",
@@ -23,7 +23,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     date: "2025",
     category: GalleryCategory.COMPETITION,
     event: "concept-catalyst",
-    imageUrl: "/events/2025/concept-catalyst/concept-catalyst.jpg",
+    imageUrl: "/events/2025/concept-catalyst/concept-catalyst.webp",
   },
   {
     id: "g4",
