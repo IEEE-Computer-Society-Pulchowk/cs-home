@@ -57,4 +57,11 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     category: GalleryCategory.COMPETITION,
     imageUrl: "/events/hack-a-flag/hack-a-flag-2025.webp",
   },
+  {
+    id: "g9",
+    title: "Prof. Dr. Magne Jørgensen’s Session",
+    date: "2025",
+    category: GalleryCategory.TALK,
+    imageUrl: "/events/prof-dr-magne-jorgensen-session/prof-dr-magne-jorgensen-session-2025.webp",
+  },
 ];
