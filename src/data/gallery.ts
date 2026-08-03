@@ -23,7 +23,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     date: "2025",
     category: GalleryCategory.COMPETITION,
     event: "concept-catalyst",
-    imageUrl: "/events/2025/concept-catalyst/concept-catalyst.webp",
+    imageUrl: "/events/concept-catalyst/concept-catalyst-2025.webp",
   },
   {
     id: "g4",
