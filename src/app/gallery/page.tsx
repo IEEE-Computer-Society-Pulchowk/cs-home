@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useState, useMemo, Suspense } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { GALLERY_ITEMS } from "@/data/gallery";
@@ -24,49 +24,38 @@ const GalleryContent: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const categories: Array<GalleryCategory | "All"> = [
-    "All",
-    ...Array.from(new Set(GALLERY_ITEMS.map((item) => item.category))),
-  ];
-  const eventOptions = eventFilterOptions(GALLERY_ITEMS.map((i) => i.event));
-  const yearOptions = yearFilterOptions(GALLERY_ITEMS.map((item) => item.date));
+  const categories = useMemo<Array<GalleryCategory | "All">>(
+    () => [
+      "All",
+      ...Array.from(new Set(GALLERY_ITEMS.map((item) => item.category))),
+    ],
+    [],
+  );
+  const eventOptions = useMemo(
+    () => eventFilterOptions(GALLERY_ITEMS.map((i) => i.event)),
+    [],
+  );
+  const yearOptions = useMemo(
+    () => yearFilterOptions(GALLERY_ITEMS.map((item) => item.date)),
+    [],
+  );
 
   const queryCat = searchParams.get("cat");
-  const initialCat = categories.includes(queryCat as GalleryCategory | "All")
+  const filter = categories.includes(queryCat as GalleryCategory | "All")
     ? (queryCat as GalleryCategory | "All")
     : "All";
 
   const queryEvent = searchParams.get("event");
-  const initialEvent = eventOptions.some((o) => o.value === queryEvent)
+  const eventFilter = eventOptions.some((o) => o.value === queryEvent)
     ? (queryEvent as string)
     : ALL;
 
   const queryYear = searchParams.get("year");
-  const initialYear = yearOptions.some((o) => o.value === queryYear)
+  const yearFilter = yearOptions.some((o) => o.value === queryYear)
     ? (queryYear as string)
     : ALL;
 
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
-  const [filter, setFilter] = useState<GalleryCategory | "All">(initialCat);
-  const [eventFilter, setEventFilter] = useState(initialEvent);
-  const [yearFilter, setYearFilter] = useState(initialYear);
-
-  // Sync state when the URL changes (back/forward buttons, manual edits).
-  const prevParams = searchParams.toString();
-  const [prevSearch, setPrevSearch] = useState(prevParams);
-  if (prevParams !== prevSearch) {
-    setPrevSearch(prevParams);
-    const c = searchParams.get("cat");
-    setFilter(
-      c && categories.includes(c as GalleryCategory | "All")
-        ? (c as GalleryCategory | "All")
-        : "All",
-    );
-    const e = searchParams.get("event");
-    setEventFilter(e && eventOptions.some((o) => o.value === e) ? e : ALL);
-    const y = searchParams.get("year");
-    setYearFilter(y && yearOptions.some((o) => o.value === y) ? y : ALL);
-  }
 
   const updateParam = (key: string, value: string, defaultValue: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -82,17 +71,14 @@ const GalleryContent: React.FC = () => {
   };
 
   const handleFilter = (cat: GalleryCategory | "All") => {
-    setFilter(cat);
     updateParam("cat", cat, "All");
   };
 
   const handleEvent = (value: string) => {
-    setEventFilter(value);
     updateParam("event", value, ALL);
   };
 
   const handleYear = (value: string) => {
-    setYearFilter(value);
     updateParam("year", value, ALL);
   };
 

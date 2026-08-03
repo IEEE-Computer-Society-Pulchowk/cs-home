@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { SORTED_TEAM_YEARS, resolveTeamYear } from "@/data/team";
@@ -36,23 +36,12 @@ const TeamContent: React.FC = () => {
     const pathname = usePathname();
 
     const queryYear = searchParams.get("year");
-    const initialYear = queryYear && years.some((y) => y.year === queryYear)
-        ? queryYear
-        : (years[0]?.year ?? "");
-
-    const [selectedYear, setSelectedYear] = useState(initialYear);
-
-    // Sync selectedYear state when URL parameter changes (e.g. browser back/forward buttons)
-    const [prevQueryYear, setPrevQueryYear] = useState(queryYear);
-    if (queryYear !== prevQueryYear) {
-        setPrevQueryYear(queryYear);
-        if (queryYear && years.some((y) => y.year === queryYear)) {
-            setSelectedYear(queryYear);
-        }
-    }
+    const selectedYear =
+        queryYear && years.some((y) => y.year === queryYear)
+            ? queryYear
+            : (years[0]?.year ?? "");
 
     const handleYearChange = (year: string) => {
-        setSelectedYear(year);
         const params = new URLSearchParams(searchParams.toString());
         params.set("year", year);
         router.replace(`${pathname}?${params.toString()}`, { scroll: false });
