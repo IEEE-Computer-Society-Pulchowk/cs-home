@@ -43,4 +43,18 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     category: GalleryCategory.COMPETITION,
     imageUrl: "/events/scholars-in-the-making/scholars-in-the-making-2025.webp",
   },
+  {
+    id: "g7",
+    title: "Graphics Design Workshop",
+    date: "2026",
+    category: GalleryCategory.WORKSHOP,
+    imageUrl: "/events/graphics-design-workshop/graphics-design-workshop-2026.webp",
+  },
+  {
+    id: "g8",
+    title: "Hack A Flag",
+    date: "2025",
+    category: GalleryCategory.COMPETITION,
+    imageUrl: "/events/hack-a-flag/hack-a-flag-2025.webp",
+  },
 ];
