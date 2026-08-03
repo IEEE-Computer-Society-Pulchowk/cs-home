@@ -28,7 +28,7 @@ const GalleryContent: React.FC = () => {
     "All",
     ...Array.from(new Set(GALLERY_ITEMS.map((item) => item.category))),
   ];
-  const eventOptions = eventFilterOptions();
+  const eventOptions = eventFilterOptions(GALLERY_ITEMS.map((i) => i.event));
   const yearOptions = yearFilterOptions(GALLERY_ITEMS.map((item) => item.date));
 
   const queryCat = searchParams.get("cat");

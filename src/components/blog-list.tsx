@@ -30,7 +30,7 @@ const BlogListContent: React.FC<BlogListProps> = ({ posts }) => {
     "All",
     ...Array.from(new Set(posts.map((post) => post.category))),
   ];
-  const eventOptions = eventFilterOptions();
+  const eventOptions = eventFilterOptions(posts.map((p) => p.event));
   const yearOptions = yearFilterOptions(
     posts.map((p) => yearFromDate(p.date)).filter((y): y is string => !!y),
   );
