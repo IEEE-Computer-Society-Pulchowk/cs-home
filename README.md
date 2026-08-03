@@ -97,6 +97,7 @@ excerpt: "A brief summary of what the article talks about, shown on cards."
 date: "May 20, 2026"
 author: "PUL080BCT003"              # Resolves to the person's ID in people.ts
 category: "Technology"
+event: "linux-101"                  # Optional — event slug this post belongs to (omit for no event)
 readTime: "5 min read"
 thumbnail: "/blogs/website-launch.jpg"
 ---
@@ -178,6 +179,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "AI Workshop Group Photo",
     date: "2026",
     category: GalleryCategory.WORKSHOP,
+    event: "my-new-event",            // Optional — event slug this photo is for (omit for no event)
     imageUrl: "/gallery/ai-workshop-group.jpg",
   },
 ];
@@ -185,6 +187,26 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 * **Categories:** Use the `GalleryCategory` enum from [src/types.ts](file:///home/asp/Projects/cs-home/src/types.ts) — `MEETUP`, `EVENT`, `WORKSHOP`, `COMPETITION`, `TALK` (display labels: Meetup, Event, Workshop, Competition, Talk). Do not use raw strings; this keeps filters and types in sync.
 
 ---
+
+### 6. Associating Content with Events (Blogs & Gallery)
+
+Both blog posts and gallery items can be tied to an **event slug** via an
+optional `event` field. This does three things:
+
+- **Event page** — `src/app/events/[id]/page.tsx` shows the event's related
+  blog posts and gallery photos in dedicated sections.
+- **Blogs page** (`/blogs`) — filter by event and year with dropdowns.
+- **Gallery page** (`/gallery`) — filter by event and year with dropdowns.
+
+To link a post or photo to an event, set `event` to the event's `slug`
+(e.g. `linux-101`, `ieeextreme`). Leave it **absent** for content that belongs
+to no event — the filters offer an explicit **No Event** option that selects
+exactly those items.
+
+The dropdowns live in the URL (`?event=linux-101&year=2026`), so filters survive
+reloads and are shareable. The **Year** dropdown is derived from each item's
+`date` field (for blogs, the frontmatter date; for gallery photos, the `date`
+year string).
 
 ## 🖼️ Images
 
