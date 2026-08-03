@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useMemo, Suspense } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { FaSearch, FaFilter } from "react-icons/fa";
 import BlogCard from "@/components/blog-card";
@@ -26,52 +26,39 @@ const BlogListContent: React.FC<BlogListProps> = ({ posts }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const categories = [
-    "All",
-    ...Array.from(new Set(posts.map((post) => post.category))),
-  ];
-  const eventOptions = eventFilterOptions(posts.map((p) => p.event));
-  const yearOptions = yearFilterOptions(
-    posts.map((p) => yearFromDate(p.date)).filter((y): y is string => !!y),
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(posts.map((post) => post.category)))],
+    [posts],
+  );
+  const eventOptions = useMemo(
+    () => eventFilterOptions(posts.map((p) => p.event)),
+    [posts],
+  );
+  const yearOptions = useMemo(
+    () =>
+      yearFilterOptions(
+        posts.map((p) => yearFromDate(p.date)).filter((y): y is string => !!y),
+      ),
+    [posts],
   );
 
   const queryQ = searchParams.get("q");
-  const initialQ = queryQ ?? "";
+  const searchQuery = queryQ ?? "";
 
   const queryCat = searchParams.get("cat");
-  const initialCat = categories.includes(queryCat ?? "")
+  const selectedCategory = categories.includes(queryCat ?? "")
     ? (queryCat as string)
     : "All";
 
   const queryEvent = searchParams.get("event");
-  const initialEvent = eventOptions.some((o) => o.value === queryEvent)
+  const eventFilter = eventOptions.some((o) => o.value === queryEvent)
     ? (queryEvent as string)
     : ALL;
 
   const queryYear = searchParams.get("year");
-  const initialYear = yearOptions.some((o) => o.value === queryYear)
+  const yearFilter = yearOptions.some((o) => o.value === queryYear)
     ? (queryYear as string)
     : ALL;
-
-  const [searchQuery, setSearchQuery] = useState(initialQ);
-  const [selectedCategory, setSelectedCategory] = useState(initialCat);
-  const [eventFilter, setEventFilter] = useState(initialEvent);
-  const [yearFilter, setYearFilter] = useState(initialYear);
-
-  // Sync state when the URL changes (back/forward buttons, manual edits).
-  const prevParams = searchParams.toString();
-  const [prevSearch, setPrevSearch] = useState(prevParams);
-  if (prevParams !== prevSearch) {
-    setPrevSearch(prevParams);
-    const q = searchParams.get("q");
-    setSearchQuery(q ?? "");
-    const c = searchParams.get("cat");
-    setSelectedCategory(c && categories.includes(c) ? c : "All");
-    const e = searchParams.get("event");
-    setEventFilter(e && eventOptions.some((o) => o.value === e) ? e : ALL);
-    const y = searchParams.get("year");
-    setYearFilter(y && yearOptions.some((o) => o.value === y) ? y : ALL);
-  }
 
   const updateParam = (key: string, value: string, defaultValue: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -87,22 +74,18 @@ const BlogListContent: React.FC<BlogListProps> = ({ posts }) => {
   };
 
   const handleSearch = (value: string) => {
-    setSearchQuery(value);
     updateParam("q", value, "");
   };
 
   const handleCategory = (category: string) => {
-    setSelectedCategory(category);
     updateParam("cat", category, "All");
   };
 
   const handleEvent = (value: string) => {
-    setEventFilter(value);
     updateParam("event", value, ALL);
   };
 
   const handleYear = (value: string) => {
-    setYearFilter(value);
     updateParam("year", value, ALL);
   };
 
