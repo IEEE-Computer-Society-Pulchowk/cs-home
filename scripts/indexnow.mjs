@@ -10,7 +10,17 @@ const SITE = "https://ieeecs.pcampus.edu.np";
 const [arg] = process.argv.slice(2);
 const key = readKey();
 console.log(`IndexNow key: ${key}`);
-console.log(`keyLocation: ${SITE}/${key}.txt`);
+const keyLocation = `${SITE}/${key}.txt`;
+console.log(`keyLocation: ${keyLocation}`);
+
+const keyRes = await fetch(keyLocation);
+const keyBody = (await keyRes.text()).trim();
+console.log(`key check: GET ${keyLocation} -> HTTP ${keyRes.status}${keyRes.ok ? "" : " (key not reachable — deploy the key file first)"}`);
+if (!keyRes.ok || keyBody !== key) {
+    console.log(`error: key file content (${JSON.stringify(keyBody)}) does not match key (${JSON.stringify(key)})`);
+    process.exit(1);
+}
+console.log("key check: passed");
 
 let urls;
 if (arg) {
@@ -27,6 +37,23 @@ if (arg) {
 
 if (urls.length === 0) throw new Error("no URLs to submit");
 urls = urls.slice(0, 10000); // IndexNow per-submission limit
+
+console.log(`checking ${urls.length} URL(s) exist (HTTP 200)…`);
+const bad = [];
+for (const u of urls) {
+    try {
+        const r = await fetch(u);
+        if (!r.ok) bad.push({ url: u, status: r.status });
+    } catch {
+        bad.push({ url: u, status: "fetch failed" });
+    }
+}
+if (bad.length > 0) {
+    for (const { url, status } of bad) console.log(`  MISSING -> ${status} ${url}`);
+    console.log(`error: ${bad.length} URL(s) unreachable; fix or remove them before submitting`);
+    process.exit(1);
+}
+console.log("url check: all reachable");
 if (urls.length > 5) {
     console.log(`submitting ${urls.length} URL(s): first 5 ->`);
     for (const u of urls.slice(0, 5)) console.log(`  ${u}`);
