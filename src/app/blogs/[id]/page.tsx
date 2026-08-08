@@ -6,6 +6,7 @@ import ShareButton from "@/components/share-button";
 import { getPostBySlug, getAllPosts } from "@/lib/blogs";
 import { getEventBySlug } from "@/lib/events.server";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { transformPersonMentions } from "@/lib/mentions";
 import { plainDescription } from "@/lib/description";
 import type { BlogPost } from "@/types";
@@ -170,7 +171,7 @@ export default async function BlogPostPage({
         )}
 
         <div className="prose prose-lg prose-amber max-w-none text-gray-700 leading-relaxed">
-          <ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {transformPersonMentions(postData.content as string)}
           </ReactMarkdown>
         </div>

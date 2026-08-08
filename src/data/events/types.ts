@@ -4,7 +4,8 @@ export interface EventRecord {
   slug: string;
   title: string;
   category: EventCategory;
-  description: string;
+  description?: string;
+  descriptionFile?: string;
   thumbnail?: string;
   registrationUrl?: string;
   recurrence?: string;

@@ -5,6 +5,7 @@ import { getAllPosts } from "@/lib/blogs";
 import { plainDescription } from "@/lib/description";
 import EventYearPhase from "@/components/event-year-phase";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { transformPersonMentions } from "@/lib/mentions";
 import SmartImage from "@/components/smart-image";
 import NotFound from "@/components/not-found";
@@ -144,9 +145,22 @@ export default async function EventPage({
           </div>
         )}
 
+        {eventData.registrationUrl && (
+          <div className="mb-12 border-t border-gray-100 py-6 flex justify-end">
+            <a
+              href={eventData.registrationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-5 py-2.5 bg-amber-600 text-white rounded-full font-semibold hover:bg-amber-700"
+            >
+              Register
+            </a>
+          </div>
+        )}
+
         {eventData.description && (
           <div className="prose prose-lg prose-amber max-w-none text-gray-700 leading-relaxed mb-12">
-            <ReactMarkdown>{transformedDescription}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{transformedDescription}</ReactMarkdown>
           </div>
         )}
 

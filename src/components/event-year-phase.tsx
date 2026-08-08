@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, Suspense } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { transformPersonMentions } from "@/lib/mentions";
 import { FaCalendar, FaClock, FaMapMarker, FaRulerHorizontal } from "react-icons/fa";
 import type { EventPhase as Phase, EventYearDetail as YearDetails } from "@/types";
 
-export default function EventYearPhase({
+function EventYearPhaseContent({
   years = {},
   topDescription,
 }: {
@@ -126,19 +128,15 @@ export default function EventYearPhase({
     return { year: last[0], phaseIndex: last[1]?.phases?.length ? 0 : null };
   }, [entries, years, now]);
 
-  const [userSelectedYear, setSelectedYear] = useState<string | null>(null);
-  const [userSelectedPhaseIndex, setSelectedPhaseIndex] = useState<
-    number | null
-  >(null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const urlYear = searchParams.get("year");
+  const urlPhase = searchParams.get("phase");
 
   const selectedYear =
-    userSelectedYear && years[userSelectedYear]
-      ? userSelectedYear
-      : initialSelection.year;
-  const selectedPhaseIndex =
-    userSelectedYear && years[userSelectedYear]
-      ? userSelectedPhaseIndex
-      : initialSelection.phaseIndex;
+    urlYear && years[urlYear] ? urlYear : initialSelection.year;
 
   if (entries.length === 0) return null;
 
@@ -147,12 +145,32 @@ export default function EventYearPhase({
     : null;
   const phases = selectedDetails?.phases || [];
 
+  const parsedPhase = Number(urlPhase);
+  const hasValidUrlPhase =
+    urlPhase != null &&
+    Number.isInteger(parsedPhase) &&
+    parsedPhase >= 0 &&
+    parsedPhase < phases.length;
+
+  const autoPhaseIndex =
+    selectedYear === initialSelection.year
+      ? initialSelection.phaseIndex
+      : phases.length
+        ? 0
+        : null;
+
+  const selectedPhaseIndex = hasValidUrlPhase ? parsedPhase : autoPhaseIndex;
+
+  const setSelection = (year: string, phase: number | null) => {
+    const params = new URLSearchParams();
+    params.set("year", year);
+    if (phase != null) params.set("phase", String(phase));
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
   const currentRegistration = () => {
-    if (selectedPhaseIndex != null) {
-      const p = phases[selectedPhaseIndex];
-      return p?.registrationUrl ?? selectedDetails?.registrationUrl;
-    }
-    return selectedDetails?.registrationUrl;
+    if (selectedPhaseIndex == null) return undefined;
+    return phases[selectedPhaseIndex]?.registrationUrl;
   };
 
   return (
@@ -162,10 +180,12 @@ export default function EventYearPhase({
           {entries.map(([year]) => (
             <button
               key={year}
-              onClick={() => {
-                setSelectedYear(year);
-                setSelectedPhaseIndex(years[year]?.phases?.length ? 0 : null);
-              }}
+              onClick={() =>
+                setSelection(
+                  year,
+                  years[year]?.phases?.length ? 0 : null,
+                )
+              }
               className={`px-4 py-2 rounded-full font-semibold text-sm shadow-sm whitespace-nowrap ${selectedYear === year ? "bg-amber-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-amber-50"}`}
             >
               {year}
@@ -186,11 +206,18 @@ export default function EventYearPhase({
             {selectedDetails.slogan}
           </p>
         )}
+        {selectedDetails.description && (
+          <div className="prose prose-sm prose-amber max-w-none text-gray-700 leading-relaxed mb-6">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {transformPersonMentions(selectedDetails.description)}
+            </ReactMarkdown>
+          </div>
+        )}
         <div className="flex gap-3 flex-wrap mb-6">
           {phases.map((ph, idx) => (
             <button
               key={idx}
-              onClick={() => setSelectedPhaseIndex(idx)}
+              onClick={() => setSelection(selectedYear ?? "", idx)}
               className={`px-3 py-1 rounded-full text-xs font-medium ${selectedPhaseIndex === idx ? "bg-amber-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-amber-50"}`}
             >
               {ph.title ?? `Phase ${ph.phase ?? idx + 1}`}
@@ -222,7 +249,7 @@ export default function EventYearPhase({
                   )}
                 </div>
                 <div className="prose prose-sm prose-amber max-w-none text-gray-700 leading-relaxed">
-                  <ReactMarkdown>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {transformPersonMentions(
                       phases[selectedPhaseIndex].body ?? "",
                     )}
@@ -247,7 +274,7 @@ export default function EventYearPhase({
               <div>
                 {topDescription ? (
                   <div className="prose prose-lg prose-amber max-w-none text-gray-700 leading-relaxed">
-                    <ReactMarkdown>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {transformPersonMentions(topDescription)}
                     </ReactMarkdown>
                   </div>
@@ -276,5 +303,16 @@ export default function EventYearPhase({
         </div>
       </div>
     </div>
+  );
+}
+
+export default function EventYearPhase(props: {
+  years: Record<string, YearDetails>;
+  topDescription?: string;
+}) {
+  return (
+    <Suspense fallback={null}>
+      <EventYearPhaseContent {...props} />
+    </Suspense>
   );
 }

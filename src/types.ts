@@ -71,6 +71,8 @@ export interface EventPhase {
 export interface EventYearDetail {
   title: string;
   slogan?: string;
+  description?: string;
+  descriptionFile?: string;
   registrationUrl?: string;
   sort?: number;
   phases?: EventPhase[];
