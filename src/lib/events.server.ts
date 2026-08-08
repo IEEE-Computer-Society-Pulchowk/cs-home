@@ -43,21 +43,29 @@ const parseDateValue = (value: unknown): number | null => {
 const getPhaseStartDate = (phase: EventPhase): string | undefined =>
   phase.startDate ?? phase.date;
 
+const readEventFile = (
+  eventSlug: string,
+  file: string,
+  field: string,
+): string => {
+  const fullPath = path.join(
+    eventsDirectory,
+    eventSlug,
+    file.replace(/^\.\//, ""),
+  );
+
+  if (!fs.existsSync(fullPath)) {
+    throw new Error(
+      `Missing event ${field} file: ${fullPath} (event: ${eventSlug})`,
+    );
+  }
+
+  return fs.readFileSync(fullPath, "utf8");
+};
+
 const readEventPhaseBody = (eventSlug: string, phase: EventPhase): string => {
   if (phase.bodyFile) {
-    const fullPath = path.join(
-      eventsDirectory,
-      eventSlug,
-      phase.bodyFile.replace(/^\.\//, ""),
-    );
-
-    if (!fs.existsSync(fullPath)) {
-      throw new Error(
-        `Missing event phase body file: ${fullPath} (event: ${eventSlug})`,
-      );
-    }
-
-    return fs.readFileSync(fullPath, "utf8");
+    return readEventFile(eventSlug, phase.bodyFile, "phase body");
   }
 
   return phase.body ?? "";
@@ -70,6 +78,13 @@ const resolveEventYears = (
     (accumulator, [year, detail]) => {
       accumulator[year] = {
         ...detail,
+        description: detail.descriptionFile
+          ? readEventFile(
+              event.slug,
+              detail.descriptionFile,
+              "year description",
+            )
+          : detail.description,
         phases: (detail.phases ?? []).map((phase) => ({
           ...phase,
           body: readEventPhaseBody(event.slug, phase),
@@ -160,7 +175,9 @@ export function getEventBySlug(slug: string): EventLookupResult {
     slug: event.slug,
     title: event.title,
     category: event.category,
-    description: event.description,
+    description: event.descriptionFile
+      ? readEventFile(event.slug, event.descriptionFile, "description")
+      : event.description,
     thumbnail: eventThumbnail(event),
     registrationUrl: event.registrationUrl,
     recurrence: event.recurrence,
