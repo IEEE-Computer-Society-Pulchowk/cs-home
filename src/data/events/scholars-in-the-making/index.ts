@@ -8,14 +8,14 @@ export const ScholarsInTheMaking: EventRecord = {
   description: undefined,
   descriptionFile: "./description.md",
   thumbnail: "/events/scholars-in-the-making/scholars-in-the-making-2025.webp",
-  registrationUrl: "https://forms.gle/Efois1nzDfEPQWfZ9",
+  registrationUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeq3CypX3w6GyVkQ_DK0wCV5K_ucJsq3TrvR9MecLa1VEq_rA/viewform?usp=dialog",
   recurrence: "annual",
   years: {
     "2025-2026": {
       title: "Scholars in the Making",
       slogan: "Your research journey begins here.",
       descriptionFile: "./2025-2026-description.md",
-      registrationUrl: "https://forms.gle/Efois1nzDfEPQWfZ9",
+      registrationUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeq3CypX3w6GyVkQ_DK0wCV5K_ucJsq3TrvR9MecLa1VEq_rA/viewform?usp=dialog",
       phases: [
         {
           phase: 1,
@@ -63,8 +63,8 @@ export const ScholarsInTheMaking: EventRecord = {
           startTime: undefined,
           endTime: undefined,
           location: undefined,
-          registrationUrl: undefined,
-          duration: undefined,
+          registrationUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeq3CypX3w6GyVkQ_DK0wCV5K_ucJsq3TrvR9MecLa1VEq_rA/viewform?usp=dialog",
+          duration: "9am to 4pm",
           body: "",
           bodyFile: "./2025/4-sitm-miniconf.md",
         },],
