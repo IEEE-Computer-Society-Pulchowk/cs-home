@@ -76,7 +76,7 @@ export default async function PersonProfilePage({
               alt={person.name}
               id={person.id}
               sizes="(max-width: 768px) 70vw, 220px"
-              className="relative w-full max-w-[220px] aspect-square"
+              className="relative w-full max-w-55 aspect-square"
               isClickable={false}
             />
 
@@ -84,7 +84,7 @@ export default async function PersonProfilePage({
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
                 {person.name}
               </h1>
-              <p className="text-sm text-gray-500 mb-4">ID: {person.id}</p>
+              {/*<p className="text-sm text-gray-500 mb-4">ID: {person.id}</p>*/}
 
               {person.membership && person.membership > 100 && (
                 <p className="text-sm text-gray-600 mb-2">

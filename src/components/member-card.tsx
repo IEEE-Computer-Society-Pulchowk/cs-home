@@ -50,7 +50,7 @@ const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
         />
       </div>
 
-      <div className="p-5 flex flex-col items-center text-center flex-grow">
+      <div className="p-5 flex flex-col items-center text-center grow">
         <h3 className="font-semibold text-gray-900 text-lg leading-tight group-hover:text-ieee-cs-orange transition-colors duration-200">
           <Link href={profilePath ?? "#"}>
             {member.name}

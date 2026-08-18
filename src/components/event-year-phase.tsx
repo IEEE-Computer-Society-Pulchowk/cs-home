@@ -35,7 +35,7 @@ function EventYearPhaseContent({
       return `TBD`;
     }
 
-    if (!startDate && endDate ) {
+    if (!startDate && endDate) {
       return endDate;
     }
 
@@ -195,35 +195,35 @@ function EventYearPhaseContent({
       )}
       {selectedDetails && phases.length > 1 && (
         <>
-        {selectedDetails.title && (
-          <h3 className="text-xl font-bold text-gray-900 mb-2">
-            {selectedDetails.title}
-          </h3>
-        )}
+          {selectedDetails.title && (
+            <h3 className="text-xl font-bold text-gray-900 mb-2">
+              {selectedDetails.title}
+            </h3>
+          )}
 
-        {selectedDetails.slogan && (
-          <p className="text-sm text-amber-700 font-medium mb-3">
-            {selectedDetails.slogan}
-          </p>
-        )}
-        {selectedDetails.description && (
-          <div className="prose prose-sm prose-amber max-w-none text-gray-700 leading-relaxed mb-6">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {transformPersonMentions(selectedDetails.description)}
-            </ReactMarkdown>
-          </div>
-        )}
-        <div className="flex gap-3 flex-wrap mb-6">
-          {phases.map((ph, idx) => (
-            <button
-              key={idx}
-              onClick={() => setSelection(selectedYear ?? "", idx)}
-              className={`px-3 py-1 rounded-full text-xs font-medium ${selectedPhaseIndex === idx ? "bg-amber-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-amber-50"}`}
-            >
-              {ph.title ?? `Phase ${ph.phase ?? idx + 1}`}
-            </button>
-          ))}
-        </div></>
+          {selectedDetails.slogan && (
+            <p className="text-sm text-amber-700 font-medium mb-3">
+              {selectedDetails.slogan}
+            </p>
+          )}
+          {selectedDetails.description && (
+            <div className="prose prose-sm prose-amber max-w-none text-gray-700 leading-relaxed mb-6">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {transformPersonMentions(selectedDetails.description)}
+              </ReactMarkdown>
+            </div>
+          )}
+          <div className="flex gap-3 flex-wrap mb-6">
+            {phases.map((ph, idx) => (
+              <button
+                key={idx}
+                onClick={() => setSelection(selectedYear ?? "", idx)}
+                className={`px-3 py-1 rounded-full text-xs font-medium ${selectedPhaseIndex === idx ? "bg-amber-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-amber-50"}`}
+              >
+                {ph.title ?? `Phase ${ph.phase ?? idx + 1}`}
+              </button>
+            ))}
+          </div></>
       )}
 
       <div className="rounded-xl border border-gray-100 bg-gray-50 p-6">

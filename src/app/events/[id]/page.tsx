@@ -132,7 +132,7 @@ export default async function EventPage({
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         {eventData.thumbnail && (
           <div className="mb-12 rounded-xl overflow-hidden shadow-lg bg-gray-50 p-4">
-            <div className="relative aspect-[16/9] w-full">
+            <div className="relative aspect-video w-full">
               <SmartImage
                 src={eventData.thumbnail as string}
                 alt={eventData.title as string}

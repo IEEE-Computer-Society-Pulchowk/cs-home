@@ -10,131 +10,131 @@ import PageHeader from "@/components/page-header";
 const MAX_MEMBERS_PER_ROW = 4;
 
 const splitIntoBalancedRows = <T,>(items: T[], maxPerRow: number) => {
-    if (items.length <= maxPerRow) {
-        return [items];
-    }
+  if (items.length <= maxPerRow) {
+    return [items];
+  }
 
-    const rowCount = Math.ceil(items.length / maxPerRow);
-    const baseRowSize = Math.floor(items.length / rowCount);
-    const extraItems = items.length % rowCount;
-    const rows: T[][] = [];
-    let cursor = 0;
+  const rowCount = Math.ceil(items.length / maxPerRow);
+  const baseRowSize = Math.floor(items.length / rowCount);
+  const extraItems = items.length % rowCount;
+  const rows: T[][] = [];
+  let cursor = 0;
 
-    for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
-        const rowSize = baseRowSize + (rowIndex < extraItems ? 1 : 0);
-        rows.push(items.slice(cursor, cursor + rowSize));
-        cursor += rowSize;
-    }
+  for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
+    const rowSize = baseRowSize + (rowIndex < extraItems ? 1 : 0);
+    rows.push(items.slice(cursor, cursor + rowSize));
+    cursor += rowSize;
+  }
 
-    return rows;
+  return rows;
 };
 
 const TeamContent: React.FC = () => {
-    const years = SORTED_TEAM_YEARS;
-    const searchParams = useSearchParams();
-    const router = useRouter();
-    const pathname = usePathname();
+  const years = SORTED_TEAM_YEARS;
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
-    const queryYear = searchParams.get("year");
-    const selectedYear =
-        queryYear && years.some((y) => y.year === queryYear)
-            ? queryYear
-            : (years[0]?.year ?? "");
+  const queryYear = searchParams.get("year");
+  const selectedYear =
+    queryYear && years.some((y) => y.year === queryYear)
+      ? queryYear
+      : (years[0]?.year ?? "");
 
-    const handleYearChange = (year: string) => {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("year", year);
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-    };
+  const handleYearChange = (year: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("year", year);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
-    const currentYear =
-        years.find((entry) => entry.year === selectedYear) ?? years[0];
-    const currentData = currentYear ? resolveTeamYear(currentYear) : null;
+  const currentYear =
+    years.find((entry) => entry.year === selectedYear) ?? years[0];
+  const currentData = currentYear ? resolveTeamYear(currentYear) : null;
 
-    return (
-        <div className="pt-24 pb-20 min-h-screen bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <PageHeader
-                    title="Our Team"
-                    subtitle="The dedicated individuals working behind the scenes to drive innovation and foster a community of excellence."
+  return (
+    <div className="pt-24 pb-20 min-h-screen bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <PageHeader
+          title="Our Team"
+          subtitle="The dedicated individuals working behind the scenes to drive innovation and foster a community of excellence."
+        >
+          {/* Year Selector */}
+          <div className="relative inline-block text-left mt-6">
+            <div className="flex items-center justify-center gap-4 bg-gray-50 p-1.5 rounded-xl border border-gray-200">
+              {years.map((year) => (
+                <button
+                  key={year.year}
+                  onClick={() => handleYearChange(year.year)}
+                  className={`px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${selectedYear === year.year
+                    ? "bg-ieee-cs-orange text-white shadow-md"
+                    : "text-gray-500 hover:text-ieee-cs-orange hover:bg-white"
+                    }`}
                 >
-                    {/* Year Selector */}
-                    <div className="relative inline-block text-left mt-6">
-                        <div className="flex items-center justify-center gap-4 bg-gray-50 p-1.5 rounded-xl border border-gray-200">
-                            {years.map((year) => (
-                                <button
-                                    key={year.year}
-                                    onClick={() => handleYearChange(year.year)}
-                                    className={`px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${selectedYear === year.year
-                                        ? "bg-ieee-cs-orange text-white shadow-md"
-                                        : "text-gray-500 hover:text-ieee-cs-orange hover:bg-white"
-                                        }`}
-                                >
-                                    Committee {year.year}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                </PageHeader>
-
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={selectedYear}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.1 }}
-                    >
-                        {currentData?.committees.map((committee) => (
-                            <section key={committee.id} className="mb-20 last:mb-0">
-                                <div className="flex items-center mb-8">
-                                    <h2 className="text-2xl font-bold text-ieee-dark pr-4 bg-white z-10">
-                                        {committee.title}
-                                    </h2>
-                                    <div className="h-px bg-gray-200 flex-grow" />
-                                </div>
-
-                                <div className="flex flex-col gap-6">
-                                    {splitIntoBalancedRows(
-                                        committee.members,
-                                        MAX_MEMBERS_PER_ROW
-                                    ).map((row, rowIndex) => (
-                                        <div
-                                            key={`${committee.id}-row-${rowIndex}`}
-                                            className="flex flex-wrap justify-center gap-6"
-                                        >
-                                            {row.map((member) => (
-                                                <div
-                                                    key={member.id}
-                                                    className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)] xl:w-[calc(20%-20px)] max-w-[320px]"
-                                                >
-                                                    <MemberCard member={member} />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    ))}
-                                </div>
-                            </section>
-                        ))}
-                    </motion.div>
-                </AnimatePresence>
+                  Committee {year.year}
+                </button>
+              ))}
             </div>
-        </div>
-    );
+          </div>
+        </PageHeader>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedYear}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.1 }}
+          >
+            {currentData?.committees.map((committee) => (
+              <section key={committee.id} className="mb-20 last:mb-0">
+                <div className="flex items-center mb-8">
+                  <h2 className="text-2xl font-bold text-ieee-dark pr-4 bg-white z-10">
+                    {committee.title}
+                  </h2>
+                  <div className="h-px bg-gray-200 grow" />
+                </div>
+
+                <div className="flex flex-col gap-6">
+                  {splitIntoBalancedRows(
+                    committee.members,
+                    MAX_MEMBERS_PER_ROW
+                  ).map((row, rowIndex) => (
+                    <div
+                      key={`${committee.id}-row-${rowIndex}`}
+                      className="flex flex-wrap justify-center gap-6"
+                    >
+                      {row.map((member) => (
+                        <div
+                          key={member.id}
+                          className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)] xl:w-[calc(20%-20px)] max-w-[320px]"
+                        >
+                          <MemberCard member={member} />
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
 };
 
 const Team: React.FC = () => {
-    return (
-        <Suspense fallback={
-            <div className="pt-24 pb-20 min-h-screen bg-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <p className="text-gray-500">Loading team roster...</p>
-                </div>
-            </div>
-        }>
-            <TeamContent />
-        </Suspense>
-    );
+  return (
+    <Suspense fallback={
+      <div className="pt-24 pb-20 min-h-screen bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-gray-500">Loading team roster...</p>
+        </div>
+      </div>
+    }>
+      <TeamContent />
+    </Suspense>
+  );
 };
 
 export default Team;
