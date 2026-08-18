@@ -58,27 +58,43 @@ for (const { title, out } of missing) {
   ctx.drawImage(logo, 60, 60, 280, logo.height * scale);
 
   ctx.fillStyle = "#ffffff";
-  ctx.font = '56px "JetBrainsMono"';
   ctx.textBaseline = "top";
 
-  const maxWidth = W - 160;
-  const lines = [];
-  let line = "";
-  for (const word of title.split(/\s+/)) {
-    const test = line ? `${line} ${word}` : word;
-    if (ctx.measureText(test).width > maxWidth && line) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = test;
+  const area = { x: 80, top: 320, bottom: H - 30 };
+  const wrap = (font) => {
+    ctx.font = font;
+    const maxWidth = W - 160;
+    const lines = [];
+    let line = "";
+    for (const word of title.split(/\s+/)) {
+      const test = line ? `${line} ${word}` : word;
+      if (ctx.measureText(test).width > maxWidth && line) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = test;
+      }
     }
-  }
-  lines.push(line);
+    lines.push(line);
+    return lines;
+  };
 
-  let y = 320;
+  // ponytail: shrink font until the wrapped title fits the card; floor at 28
+  // so endless-looping is impossible even for absurd titles.
+  let size = 56;
+  let lines = wrap(`${size}px "JetBrainsMono"`);
+  while (
+    area.top + lines.length * Math.round(size * 1.25) > area.bottom &&
+    size > 28
+  ) {
+    size -= 4;
+    lines = wrap(`${size}px "JetBrainsMono"`);
+  }
+
+  let y = area.top;
   for (const ln of lines) {
-    ctx.fillText(ln, 80, y);
-    y += 70;
+    ctx.fillText(ln, area.x, y);
+    y += Math.round(size * 1.25);
   }
 
   const outPath = join(PUBLIC, out.slice(1));
