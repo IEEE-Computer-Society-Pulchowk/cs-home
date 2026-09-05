@@ -7,7 +7,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     date: "2026",
     category: GalleryCategory.EVENT,
     event: "stemfluence",
-    imageUrl: "/events/stemfluence/stemfluence-2026.webp",
+    imageUrl: "/gallery/steamfluence/stemfluence-2026.webp",
   },
   {
     id: "g2",
@@ -15,7 +15,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     date: "2025",
     category: GalleryCategory.COMPETITION,
     event: "ieeextreme",
-    imageUrl: "/gallery/ieeextreme-19.0.webp",
+    imageUrl: "/gallery/ieeeXtreme/ieeextreme-19.0.webp",
   },
   {
     id: "g3",

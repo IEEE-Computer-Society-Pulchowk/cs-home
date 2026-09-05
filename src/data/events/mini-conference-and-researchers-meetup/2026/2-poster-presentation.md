@@ -1,0 +1,1 @@
+The Professionals Block opens with talks from industry and academic researchers, followed by a photo session and briefing for the networking session. Participants then present their posters to the judges during the poster review and networking session over an early lunch break.

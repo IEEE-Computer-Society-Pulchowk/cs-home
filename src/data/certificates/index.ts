@@ -379,6 +379,90 @@ export const CERTIFICATES: Certificate[] = [
     "name": "AAYUSH SUBEDI",
     "eventSlug": "linux-101",
     "templateId": "2026-linux101-mentor"
+  },
+  {
+    "email": "neupane.ashok.9696@gmail.com",
+    "name": "Ashok Neupane",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "saugatadhikari.2002@gmail.com",
+    "name": "Saugat Adhikari",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "sachinacharya44@gmail.com",
+    "name": "Sachin Acharya",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "bhusalabhigyan@gmail.com",
+    "name": "Abhigyan Bhusal",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "deepanzcreedd001@gmail.com",
+    "name": "Dipan Bartaula",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "kashishbataju999@gmail.com",
+    "name": "Kashish Bataju",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "kojusaurabh@gmail.com",
+    "name": "Saurabh Koju",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "ankitbelbase034@gmail.com",
+    "name": "Ankit Belbase",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "bisram019@gmail.com",
+    "name": "Bishram Acharya",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "anju9chhetri@gmail.com",
+    "name": "Anju Chhetri",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "anuragsah80@gmail.com",
+    "name": "Anurag Sah",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "apala.t@ieee.org",
+    "name": "Apala Timalsina",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "salyani.kushal@gmail.com",
+    "name": "Kushal Paudel",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
+  },
+  {
+    "email": "ghimirebhabuk@gmail.com",
+    "name": "Bhabuk Ghimire",
+    "eventSlug": "mini-conference-and-researchers-meetup",
+    "templateId": "2026-mini-conference-and-researchers-meetup-reviewers"
   }
 ];
 

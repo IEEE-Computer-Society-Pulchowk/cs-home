@@ -1,0 +1,3 @@
+The day opens with a keynote address, followed by **"From Curiosity to Research: Bridging Academic and Industry Research"** by **Er. Sachin Pokharel (Third Factor AI)**.
+
+Shortlisted students then present their research papers before a panel of judges in the Student Researchers Block, with each presentation evaluated in a judging round. The session ends with a tea break and the token-of-love distribution for the judges and reviewers.

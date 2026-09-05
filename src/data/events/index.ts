@@ -8,9 +8,10 @@ import { ScholarsInTheMaking } from "./scholars-in-the-making";
 import { GraphicsDesignWorkshop } from "./graphics-design-workshop";
 import { HackAFlag } from "./hack-a-flag";
 import { ProfDrMagneJorgensenSession } from "./prof-dr-magne-jorgensen-session";
+import { MiniConferenceAndResearchersMeetup } from "./mini-conference-and-researchers-meetup";
 import type { EventRecord } from "./types";
 
-export const EVENTS = [IEEEXtreme, Stemfluence, WebScraping101, Linux101, ConceptCatalyst, IEEECubingNepal2025, ScholarsInTheMaking, GraphicsDesignWorkshop, HackAFlag, ProfDrMagneJorgensenSession];
+export const EVENTS = [IEEEXtreme, Stemfluence, WebScraping101, Linux101, ConceptCatalyst, IEEECubingNepal2025, ScholarsInTheMaking, GraphicsDesignWorkshop, HackAFlag, ProfDrMagneJorgensenSession, MiniConferenceAndResearchersMeetup];
 
 export type { EventRecord } from "./types";
 

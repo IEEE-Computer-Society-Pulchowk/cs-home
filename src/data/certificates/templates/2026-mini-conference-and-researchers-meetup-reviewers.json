@@ -1,0 +1,23 @@
+{
+  "templateId": "2026-mini-conference-and-researchers-meetup-reviewers",
+  "displayName": "Deepfusion Nepal Computer Science Researchers Meetup and Mini-Conference (Reviewer)",
+  "viewBox": {
+    "width": 1600,
+    "height": 1131
+  },
+  "background": "/certificates/templates/2026-mini-conference-and-researchers-meetup-reviewers.svg",
+  "fields": {
+    "name": {
+      "x": 120,
+      "y": 550,
+      "width": 1000,
+      "height": 110,
+      "fontSize": 82,
+      "minFontSize": 32,
+      "fontFamily": "Cinzel-Bold",
+      "fill": "#000000",
+      "textAnchor": "start",
+      "overflow": "fill"
+    }
+  }
+}

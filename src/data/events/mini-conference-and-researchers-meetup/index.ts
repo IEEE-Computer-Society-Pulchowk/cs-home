@@ -1,0 +1,61 @@
+import { EventCategory } from "@/types";
+import type { EventRecord } from "../types";
+
+export const MiniConferenceAndResearchersMeetup: EventRecord = {
+  slug: "mini-conference-and-researchers-meetup",
+  title: "Mini Conference and Researchers Meetup",
+  category: EventCategory.SOCIAL,
+  description: undefined,
+  descriptionFile: "./description.md",
+  thumbnail: "/events/mini-conference-and-researchers-meetup/mini-conference-and-researchers-meetup-2025.webp",
+  registrationUrl: undefined,
+  recurrence: "annual",
+  years: {
+    "2026": {
+      title: "Deepfusion Nepal Computer Science Researchers Meetup and Mini-Conference",
+      slogan: "Your research journey begins here.",
+      descriptionFile: "./2026-description.md",
+      registrationUrl: undefined,
+      phases: [
+        {
+          phase: 1,
+          title: "Research Paper Presentation",
+          startDate: "August 15, 2026",
+          endDate: "August 15, 2026",
+          startTime: "9am",
+          endTime: "12pm",
+          location: undefined,
+          registrationUrl: undefined,
+          duration: undefined,
+          body: "",
+          bodyFile: "./2026/1-research-paper-presentation.md",
+        },
+        {
+          phase: 2,
+          title: "Poster Presentation",
+          startDate: "August 15, 2026",
+          endDate: "August 15, 2026",
+          startTime: "12pm",
+          endTime: "2pm",
+          location: undefined,
+          registrationUrl: undefined,
+          duration: undefined,
+          body: "",
+          bodyFile: "./2026/2-poster-presentation.md",
+        },
+        {
+          phase: 3,
+          title: "Researcher's Meetup",
+          startDate: "August 15, 2026",
+          endDate: "August 15, 2026",
+          startTime: "2pm",
+          endTime: "4pm",
+          location: undefined,
+          registrationUrl: undefined,
+          duration: undefined,
+          body: "",
+          bodyFile: "./2026/3-researcher-meetup.md",
+        },],
+    },
+  },
+};
