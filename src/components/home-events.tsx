@@ -4,6 +4,7 @@ import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
 import EventCard from "@/components/event-card";
+import Reveal from "@/components/reveal";
 import { IeeeEvent } from "@/types";
 
 interface HomeEventsProps {
@@ -14,29 +15,32 @@ const HomeEvents: React.FC<HomeEventsProps> = ({ events }) => {
     return (
         <section className="py-24 bg-gray-50 border-t border-gray-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-end mb-12">
+                <Reveal>
+                    <div className="flex justify-between items-end mb-12">
                     <div>
-                        <span className="text-ieee-cs-orange font-semibold text-sm uppercase tracking-wider mb-2 block">
+                        <span className="text-amber-700 font-semibold text-sm uppercase tracking-wider mb-2 block">
                             Mark Your Calendars
                         </span>
-                        <h2 className="text-3xl font-bold text-gray-900">
+                        <h2 className="text-3xl font-bold text-gray-900 flex items-center">
+                            <span className="w-2 h-8 bg-ieee-cs-orange rounded-full mr-3" aria-hidden="true"></span>
                             Upcoming Events
                         </h2>
                     </div>
                     <Link
                         href="/events"
-                        className="hidden sm:inline-flex items-center text-gray-600 hover:text-ieee-cs-orange transition-colors font-medium"
+                        className="hidden sm:inline-flex items-center text-gray-600 hover:text-black transition-colors font-medium"
                     >
                         View All <FaArrowRight size={18} className="ml-2" />
                     </Link>
                 </div>
+                </Reveal>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className={`grid gap-8 ${events.length === 1 ? "grid-cols-1 max-w-md mx-auto" : "grid-cols-1 md:grid-cols-3"}`}>
                     {events.length > 0 ? (
-                        events.map((event) => (
-                            <div key={event.id} className="h-full">
+                        events.map((event, i) => (
+                            <Reveal key={event.id} delay={i * 80} className="h-full">
                                 <EventCard event={event} />
-                            </div>
+                            </Reveal>
                         ))
                     ) : (
                         <p className="col-span-3 text-center text-gray-500 py-10">
@@ -48,7 +52,7 @@ const HomeEvents: React.FC<HomeEventsProps> = ({ events }) => {
                 <div className="mt-10 text-center sm:hidden">
                     <Link
                         href="/events"
-                        className="inline-flex items-center text-ieee-cs-orange font-medium"
+                        className="inline-flex items-center text-gray-900 font-medium"
                     >
                         View All Events{" "}
                         <FaArrowRight size={18} className="ml-2" />

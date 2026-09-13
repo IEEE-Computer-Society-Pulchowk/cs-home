@@ -12,7 +12,7 @@ interface BlogCardProps {
 const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
   if (featured) {
     return (
-      <div className="group relative grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-8 bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
+      <div className="group relative grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-8 bg-white rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-ieee-cs-orange/10 transition-shadow duration-200 ease-out">
         <div className="h-64 md:h-full bg-gray-100 relative overflow-hidden flex items-center justify-center">
           {post.imageUrl ? (
             <SmartImage
@@ -24,11 +24,11 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
               className=""
             />
           ) : (
-            <div className="w-full h-full bg-linear-to-br from-ieee-cs-orange to-ieee-dark flex items-center justify-center">
+            <div className="w-full h-full bg-linear-to-br from-ieee-cs-orange to-black flex items-center justify-center">
               <span className="text-white/20 text-6xl font-bold">Blog</span>
             </div>
           )}
-          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-ieee-cs-orange uppercase tracking-wide">
+          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-black uppercase tracking-wide">
             {post.category}
           </div>
         </div>
@@ -40,7 +40,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
               {post.authorProfilePath ? (
                 <Link
                   href={post.authorProfilePath}
-                  className="hover:text-ieee-cs-orange transition-colors"
+className="hover:text-black transition-colors"
                 >
                   {post.author}
                 </Link>
@@ -53,7 +53,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
             </span>
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 group-hover:text-ieee-cs-orange transition-colors">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 group-hover:text-black transition-colors">
             <Link href={`/blogs/${post.id}`}>{post.title}</Link>
           </h2>
 
@@ -64,7 +64,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
           <div>
             <Link
               href={`/blogs/${post.id}`}
-              className="inline-flex items-center text-ieee-cs-orange font-semibold hover:text-ieee-dark transition-colors"
+              className="inline-flex items-center text-gray-900 font-semibold hover:text-gray-500 transition-colors"
             >
               Read Article{" "}
               <FaArrowRight
@@ -79,7 +79,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
   }
 
   return (
-    <div className="group bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full">
+    <div className="group bg-white rounded-xl overflow-hidden hover:shadow-xl hover:shadow-ieee-cs-orange/10 transition-shadow duration-200 ease-out flex flex-col h-full">
       <div className="h-48 bg-gray-100 relative overflow-hidden">
         {post.imageUrl ? (
           <SmartImage
@@ -92,7 +92,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
         ) : (
           <div className="w-full h-full bg-linear-to-br from-gray-100 to-gray-200" />
         )}
-        <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-[10px] font-bold text-ieee-cs-orange uppercase tracking-wide">
+        <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-[10px] font-bold text-black uppercase tracking-wide">
           {post.category}
         </div>
       </div>
@@ -103,7 +103,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
           <span>{post.readTime}</span>
         </div>
 
-        <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight group-hover:text-ieee-cs-orange transition-colors">
+        <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight group-hover:text-black transition-colors">
           <Link href={`/blogs/${post.id}`}>{post.title}</Link>
         </h3>
 
@@ -117,7 +117,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
             {post.authorProfilePath ? (
               <Link
                 href={post.authorProfilePath}
-                className="hover:text-ieee-cs-orange transition-colors"
+                className="hover:text-black transition-colors"
               >
                 {post.author}
               </Link>
@@ -127,7 +127,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, featured = false }) => {
           </span>
           <Link
             href={`/blogs/${post.id}`}
-            className="text-sm font-semibold text-ieee-cs-orange flex items-center hover:underline"
+            className="text-sm font-semibold text-gray-900 flex items-center hover:underline"
           >
             Read <FaArrowRight size={14} className="ml-1" />
           </Link>

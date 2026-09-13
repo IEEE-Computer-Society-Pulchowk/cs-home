@@ -64,7 +64,7 @@ export default async function PersonProfilePage({
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <Link
           href="/team"
-          className="inline-flex items-center text-sm text-gray-500 hover:text-ieee-cs-orange mb-8"
+          className="inline-flex items-center text-sm text-gray-500 hover:text-black mb-8"
         >
           Back to Team
         </Link>
@@ -94,7 +94,7 @@ export default async function PersonProfilePage({
 
               {roles.length > 0 && (
                 <div className="mb-6">
-                  <p className="text-sm font-medium text-ieee-cs-orange mb-3">
+                  <p className="text-sm font-medium text-gray-900 mb-3">
                     Roles
                   </p>
                   <div className="flex flex-col gap-2">
@@ -118,7 +118,7 @@ export default async function PersonProfilePage({
                         href={social.href}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-500 hover:text-ieee-cs-orange hover:border-ieee-cs-orange/30 transition-colors"
+                        className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-500 hover:text-black hover:border-black/30 transition-colors"
                         aria-label={`${social.label} profile of ${person.name}`}
                       >
                         <Icon size={18} />

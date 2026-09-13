@@ -11,7 +11,7 @@ export default function BackLink({
   return (
     <Link
       href={href}
-      className="inline-flex items-center text-gray-500 hover:text-ieee-cs-orange transition-colors mb-8 group"
+      className="inline-flex items-center text-gray-500 hover:text-black transition-colors mb-8 group"
     >
       <FaArrowLeft
         size={16}

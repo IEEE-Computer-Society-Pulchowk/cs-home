@@ -17,12 +17,12 @@ export default function RelatedGrid({
           <Link
             key={item.href}
             href={item.href}
-            className="group block bg-gray-50 p-6 rounded-xl hover:bg-amber-50 transition-colors"
+            className="group block bg-gray-50 p-6 rounded-xl hover:bg-gray-50 transition-colors"
           >
             <span className="text-xs font-bold text-gray-400 uppercase mb-2 block">
               {item.eyebrow}
             </span>
-            <h4 className="font-bold text-gray-900 group-hover:text-ieee-cs-orange transition-colors mb-2">
+            <h4 className="font-bold text-gray-900 group-hover:text-black transition-colors mb-2">
               {item.title}
             </h4>
             <p className="text-sm text-gray-500 line-clamp-2">{item.body}</p>

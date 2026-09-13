@@ -26,10 +26,10 @@ export default function ShareButton() {
   return (
     <button
       onClick={handleShare}
-      className={`transition-all duration-300 p-2 rounded-full flex items-center justify-center ${
+      className={`transition-[scale,color,background-color] duration-200 ease-out p-2 rounded-full flex items-center justify-center ${
         copied
           ? "text-emerald-600 bg-emerald-50 scale-110"
-          : "text-gray-400 hover:text-ieee-cs-orange hover:bg-amber-50"
+          : "text-gray-400 hover:text-black hover:bg-gray-100"
       }`}
       title={copied ? "Copied to clipboard!" : "Share article"}
       aria-label="Share article"

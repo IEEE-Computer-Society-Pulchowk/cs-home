@@ -38,7 +38,7 @@ const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
   ].filter(Boolean) as Array<{ label: string; url: string }>;
 
   return (
-    <div className="group relative bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:border-ieee-cs-orange/30 transition-all duration-300 flex flex-col overflow-hidden h-full">
+    <div className="group relative bg-gray-50 rounded-xl hover:shadow-md hover:shadow-ieee-cs-orange/10 transition-shadow duration-200 ease-out flex flex-col overflow-hidden h-full">
       {/* Image / Placeholder */}
       <div className="p-4 pb-0">
         <PersonAvatar
@@ -51,19 +51,19 @@ const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
       </div>
 
       <div className="p-5 flex flex-col items-center text-center grow">
-        <h3 className="font-semibold text-gray-900 text-lg leading-tight group-hover:text-ieee-cs-orange transition-colors duration-200">
+        <h3 className="font-semibold text-gray-900 text-lg leading-tight group-hover:text-black transition-colors duration-200">
           <Link href={profilePath ?? "#"}>
             {member.name}
           </Link>
         </h3>
         {member.role && (
-          <p className="text-ieee-cs-orange/80 text-sm font-medium mt-1 mb-3">
+          <p className="text-gray-500 text-sm font-medium mt-1 mb-3">
             {member.role}
           </p>
         )}
 
         {socialLinks.length > 0 && (
-          <div className="mt-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0 flex items-center gap-3">
+          <div className="mt-auto pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100 transition-[opacity,translate] duration-200 ease-out pointer-fine:translate-y-2 pointer-fine:group-hover:translate-y-0 flex items-center gap-3">
             {socialLinks.map((social) => {
               const Icon = getSocialIcon(social.label);
 
@@ -73,7 +73,7 @@ const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
                   href={social.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center text-gray-400 hover:text-amber-700 transition-colors"
+                  className="inline-flex items-center text-gray-400 hover:text-black transition-colors"
                   aria-label={`${social.label} profile of ${member.name}`}
                 >
                   <Icon size={18} />

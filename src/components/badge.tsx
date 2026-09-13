@@ -1,6 +1,6 @@
 const TONES = {
-  amber: "bg-amber-50 text-ieee-cs-orange",
-  green: "bg-green-50 text-orange-700",
+  amber: "bg-ieee-cs-orange text-black",
+  green: "bg-gray-100 text-gray-900",
 };
 
 export default function Badge({

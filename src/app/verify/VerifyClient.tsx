@@ -40,12 +40,12 @@ export default function VerifyClient() {
             name="email"
             defaultValue={email ?? ""}
             placeholder="e.g. someone@example.com"
-            className="text-black flex-1 rounded-lg border border-gray-300 px-4 py-2.5 focus:border-ieee-cs-orange focus:outline-none"
+            className="text-black flex-1 rounded-lg border border-gray-300 px-4 py-2.5 focus:border-black focus:outline-none"
             required
           />
           <button
             type="submit"
-            className="rounded-lg bg-ieee-cs-orange px-6 py-2.5 font-semibold text-white transition-colors hover:opacity-90"
+            className="rounded-lg bg-black px-6 py-2.5 font-semibold text-white transition-colors hover:bg-gray-800"
           >
             Verify
           </button>
@@ -62,8 +62,8 @@ export default function VerifyClient() {
         )}
 
         {email && certificates.length > 0 && (
-          <div className="mx-auto mt-10 max-w-2xl rounded-lg border border-amber-200 bg-amber-50 p-6">
-            <p className="font-semibold text-ieee-cs-orange text-center">
+          <div className="mx-auto mt-10 max-w-2xl rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <p className="font-semibold text-gray-900 text-center">
               {certificates.length} certificate{certificates.length > 1 ? "s" : ""} found
             </p>
             <div className="mt-4 space-y-3">
@@ -74,7 +74,7 @@ export default function VerifyClient() {
                 return (
                   <div
                     key={`${cert.templateId}-${cert.email}`}
-                    className="flex items-center justify-between rounded-lg border border-amber-100 bg-white px-4 py-3"
+                    className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3"
                   >
                     <div>
                       <p className="font-semibold text-gray-800">{template?.displayName ?? cert.templateId}</p>
@@ -82,7 +82,7 @@ export default function VerifyClient() {
                         {event?.title}
                       </p>
                     </div>
-                    <Link href={certPath} className="text-sm font-medium text-ieee-cs-orange hover:underline">
+                    <Link href={certPath} className="text-sm font-medium text-black hover:underline">
                       View / Download
                     </Link>
                   </div>

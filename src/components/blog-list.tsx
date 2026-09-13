@@ -125,7 +125,7 @@ const BlogListContent: React.FC<BlogListProps> = ({ posts }) => {
         />
 
         {/* Search & Filter Bar */}
-        <div className="mb-12 bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-4">
+        <div className="mb-12 bg-white p-4 rounded-xl space-y-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="relative w-full md:w-96">
               <FaSearch
@@ -137,7 +137,7 @@ const BlogListContent: React.FC<BlogListProps> = ({ posts }) => {
                 placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-ieee-cs-orange/20 focus:border-ieee-cs-orange transition-all"
+                className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-[border-color,box-shadow] duration-150 ease-out"
               />
             </div>
 
