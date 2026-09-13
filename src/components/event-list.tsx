@@ -87,13 +87,13 @@ const EventListContent: React.FC<EventListProps> = ({ events }) => {
         {/* Controls */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
           {/* View Toggle */}
-          <div className="bg-white p-1 rounded-lg border border-gray-200 shadow-sm inline-flex">
+          <div className="bg-white p-1 rounded-lg inline-flex">
             {VIEWS.map((v) => (
               <button
                 key={v}
                 onClick={() => handleView(v)}
-                className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${view === v
-                    ? "bg-ieee-cs-orange text-white shadow-sm"
+                className={`px-6 py-2 rounded-md text-sm font-medium transition-[scale,background-color] duration-150 ease-out active:scale-[0.97] ${view === v
+                    ? "bg-black text-white shadow-sm"
                     : "text-gray-600 hover:bg-gray-50"
                   }`}
               >

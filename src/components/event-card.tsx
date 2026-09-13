@@ -12,7 +12,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
   return (
     <Link
       href={`/events/${event.id}`}
-      className="flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 group"
+      className="flex flex-col h-full bg-white rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-ieee-cs-orange/10 transition-shadow duration-200 ease-out group"
     >
       {/* Image area */}
       <div className="h-48 bg-gray-100 relative overflow-hidden">
@@ -32,7 +32,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
 
         {/* Category Badge */}
         <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-sm border border-gray-100">
-          <span className="text-xs font-bold text-ieee-dark uppercase tracking-wide">
+          <span className="text-xs font-bold text-black uppercase tracking-wide">
             {event.category}
           </span>
         </div>
@@ -46,7 +46,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
           </div>
         )}
 
-        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-ieee-cs-orange transition-colors duration-200">
+        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-black transition-colors duration-200">
           {event.title}
         </h3>
 
@@ -55,7 +55,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
         </p>
 
         <div className="mt-auto">
-          <span className="inline-flex items-center text-sm font-semibold text-ieee-cs-orange hover:text-ieee-dark transition-colors group-hover:translate-x-1 duration-300">
+          <span className="inline-flex items-center text-sm font-semibold text-gray-900 hover:text-gray-500 transition-colors group-hover:translate-x-1 duration-300">
             View Details <FaArrowRight size={16} className="ml-1" />
           </span>
         </div>

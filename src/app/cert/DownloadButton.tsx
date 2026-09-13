@@ -125,7 +125,7 @@ export default function DownloadButton({
   return (
     <button
       onClick={download}
-      className="mt-6 inline-flex items-center rounded-lg bg-ieee-cs-orange px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:opacity-90"
+      className="mt-6 inline-flex items-center rounded-lg bg-black px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-gray-800"
     >
       Download as image
     </button>

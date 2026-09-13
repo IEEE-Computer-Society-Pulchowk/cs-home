@@ -21,7 +21,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-ieee-cs-orange/20 focus:border-ieee-cs-orange"
+      className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
     >
       {options.map((opt) => (
         <option key={opt.value} value={opt.value}>

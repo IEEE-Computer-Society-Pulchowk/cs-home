@@ -28,6 +28,12 @@ export default function Home() {
             registrationUrl: event.registrationUrl as string | undefined,
         }))
         .filter((e) => e.isUpcoming)
+        .sort((a, b) => {
+            const aTime = Date.parse(a.date ?? "");
+            const bTime = Date.parse(b.date ?? "");
+            if (Number.isNaN(aTime) || Number.isNaN(bTime)) return 0;
+            return aTime - bTime;
+        })
         .slice(0, 3);
 
     return (

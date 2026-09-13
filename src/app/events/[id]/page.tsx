@@ -151,7 +151,7 @@ export default async function EventPage({
               href={eventData.registrationUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-5 py-2.5 bg-amber-600 text-white rounded-full font-semibold hover:bg-amber-700"
+              className="inline-flex items-center px-5 py-2.5 bg-black text-white rounded-full font-semibold hover:bg-gray-800"
             >
               Register
             </a>

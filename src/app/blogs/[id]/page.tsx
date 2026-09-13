@@ -135,7 +135,7 @@ export default async function BlogPostPage({
               {postData.authorProfilePath ? (
                 <Link
                   href={postData.authorProfilePath as string}
-                  className="text-sm font-bold text-gray-900 hover:text-ieee-cs-orange transition-colors"
+                  className="text-sm font-bold text-gray-900 hover:text-black transition-colors"
                 >
                   {postData.author}
                 </Link>
@@ -211,12 +211,12 @@ export default async function BlogPostPage({
               </h2>
               <Link
                 href={`/events/${relatedEvent.slug}`}
-                className="group block bg-gray-50 p-6 rounded-xl hover:bg-amber-50 transition-colors border border-gray-100"
+                className="group block bg-gray-50 p-6 rounded-xl hover:bg-gray-100 transition-colors border border-gray-100"
               >
                 <span className="text-xs font-bold text-gray-400 uppercase mb-2 block">
                   {relatedEvent.category}
                 </span>
-                <h4 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-ieee-cs-orange transition-colors">
+                <h4 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-black transition-colors">
                   {relatedEvent.title}
                 </h4>
                 <p className="text-sm text-gray-500 line-clamp-2">

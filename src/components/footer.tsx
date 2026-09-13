@@ -60,6 +60,14 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link
+                  href="/verify"
+                  className="hover:text-white transition-colors"
+                >
+                  Verify Certificate
+                </Link>
+              </li>
+              <li>
                 <a
                   href="https://www.ieee.org"
                   target="_blank"
@@ -110,25 +118,28 @@ const Footer: React.FC = () => {
             <div className="flex space-x-4 pt-2">
               <a
                 href="https://www.facebook.com/pulchowkcompsbc"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-ieee-cs-orange transition-colors"
                 target="_blank"
                 rel="noreferrer"
+                aria-label="IEEE Computer Society Pulchowk on Facebook"
               >
                 <FaFacebook size={20} />
               </a>
               <a
                 href="https://www.linkedin.com/company/ieee-compsbc-pulchowk/"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-ieee-cs-orange transition-colors"
                 target="_blank"
                 rel="noreferrer"
+                aria-label="IEEE Computer Society Pulchowk on LinkedIn"
               >
                 <FaLinkedin size={20} />
               </a>
               <a
                 href="https://www.instagram.com/ieeecs.pul/"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-ieee-cs-orange transition-colors"
                 target="_blank"
                 rel="noreferrer"
+                aria-label="IEEE Computer Society Pulchowk on Instagram"
               >
                 <FaInstagram size={20} />
               </a>
@@ -136,12 +147,30 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
           <p>
             &copy; {new Date().getFullYear()} IEEE Computer Society Pulchowk
             SBC. All rights reserved.
           </p>
 
+          <div className="flex items-center gap-6">
+            <a
+              href="https://www.ieee.org/security_privacy.html"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-white transition-colors"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="https://www.ieee.org/about/corporate/legal.html"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-white transition-colors"
+            >
+              Terms of Use
+            </a>
+          </div>
         </div>
       </div>
     </footer>

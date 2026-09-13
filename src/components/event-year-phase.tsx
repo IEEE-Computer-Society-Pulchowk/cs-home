@@ -186,7 +186,7 @@ function EventYearPhaseContent({
                   years[year]?.phases?.length ? 0 : null,
                 )
               }
-              className={`px-4 py-2 rounded-full font-semibold text-sm shadow-sm whitespace-nowrap ${selectedYear === year ? "bg-amber-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-amber-50"}`}
+              className={`px-4 py-2 rounded-full font-semibold text-sm shadow-sm whitespace-nowrap ${selectedYear === year ? "bg-black text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
             >
               {year}
             </button>
@@ -202,7 +202,7 @@ function EventYearPhaseContent({
           )}
 
           {selectedDetails.slogan && (
-            <p className="text-sm text-amber-700 font-medium mb-3">
+            <p className="text-sm text-gray-600 font-medium mb-3">
               {selectedDetails.slogan}
             </p>
           )}
@@ -218,7 +218,7 @@ function EventYearPhaseContent({
               <button
                 key={idx}
                 onClick={() => setSelection(selectedYear ?? "", idx)}
-                className={`px-3 py-1 rounded-full text-xs font-medium ${selectedPhaseIndex === idx ? "bg-amber-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-amber-50"}`}
+                className={`px-3 py-1 rounded-full text-xs font-medium ${selectedPhaseIndex === idx ? "bg-black text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
               >
                 {ph.title ?? `Phase ${ph.phase ?? idx + 1}`}
               </button>
@@ -262,7 +262,7 @@ function EventYearPhaseContent({
                   {selectedDetails.title}
                 </h4>
                 {selectedDetails.slogan && (
-                  <p className="text-sm text-amber-700 font-medium mb-3">
+<p className="text-sm text-gray-600 font-medium mb-3">
                     {selectedDetails.slogan}
                   </p>
                 )}
@@ -294,7 +294,7 @@ function EventYearPhaseContent({
                 href={currentRegistration()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-full font-semibold hover:bg-amber-700"
+                className="inline-flex items-center px-4 py-2 bg-black text-white rounded-full font-semibold hover:bg-gray-800"
               >
                 Register
               </a>

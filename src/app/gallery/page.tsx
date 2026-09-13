@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, Suspense } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { GALLERY_ITEMS } from "@/data/gallery";
 import { GalleryItem, GalleryCategory } from "@/types";
 import { FaSearchPlus, FaTimes } from "react-icons/fa";
@@ -17,7 +17,7 @@ import {
 } from "@/lib/filters";
 
 const newLocal =
-  "absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6";
+  "absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 pointer-fine:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6";
 
 const GalleryContent: React.FC = () => {
   const searchParams = useSearchParams();
@@ -56,6 +56,7 @@ const GalleryContent: React.FC = () => {
     : ALL;
 
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const updateParam = (key: string, value: string, defaultValue: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -109,9 +110,9 @@ const GalleryContent: React.FC = () => {
               <button
                 key={cat}
                 onClick={() => handleFilter(cat)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-[scale,background-color] duration-150 ease-out active:scale-[0.97] ${
                   filter === cat
-                    ? "bg-ieee-cs-orange text-white shadow-md"
+                    ? "bg-black text-white shadow-md"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
               >
@@ -147,7 +148,7 @@ const GalleryContent: React.FC = () => {
                 src={item.imageUrl}
                 alt={item.title}
                 href={item.imageUrl}
-                className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-auto object-cover transition-transform duration-500 ease-out pointer-fine:group-hover:scale-105"
                 onClick={(e) => {
                   e.preventDefault();
                   setSelectedImage(item);
@@ -157,7 +158,7 @@ const GalleryContent: React.FC = () => {
 
               {/* Overlay */}
               <div className={newLocal}>
-                <span className="text-amber-300 text-xs font-bold uppercase tracking-wider mb-1">
+                <span className="text-white text-xs font-bold uppercase tracking-wider mb-1">
                   {item.category} • {item.date}
                 </span>
                 <h3 className="text-white font-bold text-lg">{item.title}</h3>
@@ -174,9 +175,13 @@ const GalleryContent: React.FC = () => {
       <AnimatePresence>
         {selectedImage && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.98 }}
+            transition={{
+              duration: prefersReducedMotion ? 0 : 0.22,
+              ease: "easeOut",
+            }}
             className="fixed inset-0 z-60 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >

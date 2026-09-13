@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Suspense } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { SORTED_TEAM_YEARS, resolveTeamYear } from "@/data/team";
 import MemberCard from "@/components/member-card";
@@ -35,6 +35,7 @@ const TeamContent: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const prefersReducedMotion = useReducedMotion();
   const queryYear = searchParams.get("year");
   const selectedYear =
     queryYear && years.some((y) => y.year === queryYear)
@@ -65,9 +66,9 @@ const TeamContent: React.FC = () => {
                 <button
                   key={year.year}
                   onClick={() => handleYearChange(year.year)}
-                  className={`px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${selectedYear === year.year
-                    ? "bg-ieee-cs-orange text-white shadow-md"
-                    : "text-gray-500 hover:text-ieee-cs-orange hover:bg-white"
+                  className={`px-6 py-2 rounded-lg text-sm font-semibold transition-[scale,background-color,box-shadow] duration-150 ease-out active:scale-[0.97] ${selectedYear === year.year
+                    ? "bg-black text-white shadow-md"
+                    : "text-gray-500 hover:text-black hover:bg-white"
                     }`}
                 >
                   Committee {year.year}
@@ -77,18 +78,19 @@ const TeamContent: React.FC = () => {
           </div>
         </PageHeader>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={selectedYear}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.1 }}
-          >
+        <motion.div
+          key={selectedYear}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: prefersReducedMotion ? 0 : 0.15,
+            ease: "easeOut",
+          }}
+        >
             {currentData?.committees.map((committee) => (
               <section key={committee.id} className="mb-20 last:mb-0">
                 <div className="flex items-center mb-8">
-                  <h2 className="text-2xl font-bold text-ieee-dark pr-4 bg-white z-10">
+                  <h2 className="text-2xl font-bold text-black pr-4 bg-white z-10">
                     {committee.title}
                   </h2>
                   <div className="h-px bg-gray-200 grow" />
@@ -117,7 +119,6 @@ const TeamContent: React.FC = () => {
               </section>
             ))}
           </motion.div>
-        </AnimatePresence>
       </div>
     </div>
   );

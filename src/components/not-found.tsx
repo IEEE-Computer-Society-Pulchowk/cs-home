@@ -16,7 +16,7 @@ export default function NotFound({
       <div className="text-center">
         <h1 className="mb-2 text-2xl font-bold text-gray-900">{title}</h1>
         {message && <p className="mb-4 text-gray-500">{message}</p>}
-        <Link href={backHref} className="text-ieee-cs-orange hover:underline">
+        <Link href={backHref} className="text-black hover:underline">
           {backLabel}
         </Link>
       </div>

@@ -32,7 +32,7 @@ export default function CertClient() {
         <div className="w-full max-w-2xl rounded-xl border border-red-200 bg-red-50 p-6 text-center">
           <p className="font-semibold text-red-700">Certificate Not Found</p>
           <p className="mt-1 text-sm text-red-600">Use /cert?templateId=...&email=...</p>
-          <Link href="/verify" className="mt-4 inline-block text-sm text-ieee-cs-orange hover:underline">
+          <Link href="/verify" className="mt-4 inline-block text-sm text-black hover:underline">
             Find certificates by email
           </Link>
         </div>
@@ -49,7 +49,7 @@ export default function CertClient() {
         <DownloadButton svgId="cert-svg" filename={`${cert.templateId}-${filenamePart(cert.email)}`} />
         <Link
           href={`/verify?email=${cert.email}`}
-          className="mt-3 text-sm text-gray-500 hover:text-ieee-cs-orange hover:underline border-amber-400"
+          className="mt-3 text-sm text-gray-500 hover:text-black hover:underline border-gray-300"
         >
           Find all certificates for this email
         </Link>

@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Instrument_Sans, Space_Grotesk } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const sans = Instrument_Sans({ subsets: ["latin"], variable: "--font-sans" });
+const display = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
 
 const SITE_URL = "https://ieeecs.pcampus.edu.np";
 
@@ -112,13 +116,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
+      <body
+        className={`${sans.variable} ${display.variable} min-h-screen flex flex-col`}
+      >
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-black focus:px-4 focus:py-2 focus:text-white"
+        >
+          Skip to content
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Navbar />
-        <main className="flex-grow">{children}</main>
+        <main id="main" className="flex-grow">{children}</main>
         <Footer />
         <SpeedInsights />
         <Analytics />

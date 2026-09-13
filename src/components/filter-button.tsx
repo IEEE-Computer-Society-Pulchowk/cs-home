@@ -12,8 +12,8 @@ export default function FilterButton({
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-1.5 rounded-full text-xs font-medium border transition-all whitespace-nowrap ${active
-          ? "bg-ieee-dark text-white border-ieee-dark"
+      className={`px-4 py-1.5 rounded-full text-xs font-medium border transition-[scale,background-color] duration-150 ease-out active:scale-[0.97] whitespace-nowrap ${active
+          ? "bg-black text-white border-black"
           : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
         } ${className}`}
     >
